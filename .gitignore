@@ -31,9 +31,9 @@ backend/build/
 backend/.vscode/
 
 ### Custom ###
-backend/src/main/resources/
-backend/src/main/java/com/williamdsw/semsys/aws/
-backend/src/main/java/com/williamdsw/semsys/mail/
+#backend/src/main/resources/
+#backend/src/main/java/com/williamdsw/semsys/aws/
+#backend/src/main/java/com/williamdsw/semsys/mail/
 
 #### FRONTEND ####
 
