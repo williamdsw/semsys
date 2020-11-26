@@ -23,14 +23,14 @@
     "@avatsaev/angular-jwt": "^4.0.3",
     "@ngx-translate/core": "^12.1.2",
     "@ngx-translate/http-loader": "^4.0.0",
-    "bootstrap": "^4.4.1",
-    "ngx-bootstrap": "^5.5.0",
+    "bootstrap": "^4.5.3",
+    "minimist": "1.2.5",
+    "ngx-bootstrap": "^6.2.0",
     "ngx-mask": "^11.1.4",
     "rxjs": "~6.6.3",
     "rxjs-compat": "^6.5.4",
     "tslib": "^2.0.0",
-    "zone.js": "~0.10.3",
-    "minimist": "1.2.5"
+    "zone.js": "~0.10.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.1100.2",
