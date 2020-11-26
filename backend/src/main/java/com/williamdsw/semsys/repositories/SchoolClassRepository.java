@@ -11,7 +11,6 @@ import com.williamdsw.semsys.domain.SchoolClass;
 @Repository
 public interface SchoolClassRepository extends JpaRepository<SchoolClass, Integer>
 {
-	// Lars Ulrich!
 	@Transactional (readOnly = true)
 	public List<SchoolClass> findByCourseId (Integer courseId);
 	
