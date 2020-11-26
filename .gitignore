@@ -31,9 +31,9 @@ backend/build/
 backend/.vscode/
 
 ### Custom ###
-#backend/src/main/resources/*.properties
-#backend/src/main/java/com/williamdsw/semsys/aws/AwsConstants.java
-#backend/src/main/java/com/williamdsw/semsys/mail/MailConstants.java
+backend/src/main/resources/*.properties
+backend/src/main/java/com/williamdsw/semsys/aws/AwsConstants.java
+backend/src/main/java/com/williamdsw/semsys/mail/MailConstants.java
 
 
 
