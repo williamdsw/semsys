@@ -24,70 +24,67 @@ import com.williamdsw.semsys.security.JWTUtil;
 import com.williamdsw.semsys.security.SecurityConstants;
 import com.williamdsw.semsys.security.UserDetailsSS;
 
-public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter
-{
+public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+
 	// FIELDS
-	
+
 	private AuthenticationManager authenticationManager;
 	private JWTUtil jwtUtil;
-	
+
 	// CONSTRUCTOR
-	
-	public JWTAuthenticationFilter (AuthenticationManager authenticationManager, JWTUtil jwtUtil) 
-	{
-		this.setAuthenticationFailureHandler (new JWtAuthenticationFailureHandler ());
+
+	public JWTAuthenticationFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil) {
+		this.setAuthenticationFailureHandler(new JWtAuthenticationFailureHandler());
 		this.authenticationManager = authenticationManager;
 		this.jwtUtil = jwtUtil;
 	}
-	
+
 	// OVERRIDED FUNCTIONS
-	
+
 	@Override
-	public Authentication attemptAuthentication (HttpServletRequest request, HttpServletResponse response) throws AuthenticationException 
-	{
-		try 
-		{
-			CredentialsDTO dto = new ObjectMapper ().readValue (request.getInputStream (), CredentialsDTO.class);
-			UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken (dto.getSocialSecurityNumber(), dto.getPassword(), new ArrayList<> ());
-			Authentication authentication = authenticationManager.authenticate (authenticationToken);
+	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+		try {
+			CredentialsDTO dto = new ObjectMapper().readValue(request.getInputStream(), CredentialsDTO.class);
+			UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(dto.getSocialSecurityNumber(), dto.getPassword(), new ArrayList<>());
+			Authentication authentication = authenticationManager.authenticate(authenticationToken);
 			return authentication;
 		} 
-		catch (IOException exception) 
-		{
-			throw new RuntimeException (exception);
+		catch (IOException exception) {
+			throw new RuntimeException(exception);
 		}
 	}
-	
+
 	@Override
-	protected void successfulAuthentication (HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException
-	{
-		UserDetailsSS user = (UserDetailsSS) authResult.getPrincipal ();
-		String token = jwtUtil.generateToken (user.getUsername ());
-		response.addHeader (SecurityConstants.getAuthorizationHeader (), String.format ("%s %s", SecurityConstants.getTokenPrefix (), token));
-		response.addHeader ("access-control-expose-headers", SecurityConstants.getAuthorizationHeader ());
+	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, 
+											FilterChain chain, Authentication authResult) throws IOException, ServletException {
+		UserDetailsSS user = (UserDetailsSS) authResult.getPrincipal();
+		String token = jwtUtil.generateToken(user.getUsername());
+		String headerValue = String.format("%s %s", SecurityConstants.getTokenPrefix(), token);
+		response.addHeader(SecurityConstants.getAuthorizationHeader(), headerValue);
+		response.addHeader("access-control-expose-headers", SecurityConstants.getAuthorizationHeader());
 	}
-	
+
 	// INNER CLASSES
-	
-	private class JWtAuthenticationFailureHandler implements AuthenticationFailureHandler
-	{
+
+	private class JWtAuthenticationFailureHandler implements AuthenticationFailureHandler {
 		// OVERRIDED FUNCTIONS
-		
+
 		@Override
-		public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException 
-		{
-			response.setStatus (HttpStatus.UNAUTHORIZED.value ());
-			response.setContentType ("application/json");
-			response.getWriter ().append (buildJson ());
+		public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
+											AuthenticationException exception) throws IOException, ServletException {
+			response.setStatus(HttpStatus.UNAUTHORIZED.value());
+			response.setContentType("application/json");
+			response.getWriter().append(buildJson());
 		}
-		
+
 		// HELPER FUNCTIONS
-		
-		private String buildJson () throws JsonProcessingException
-		{
-			StandardError error = new StandardError (System.currentTimeMillis (), HttpStatus.UNAUTHORIZED.value (), "Unauthorized", "Invalid SSN or Password", "/login");
-			ObjectMapper mapper = new ObjectMapper ();
-			return mapper.writeValueAsString (error);
+
+		private String buildJson() throws JsonProcessingException {
+			String title = "Unauthorized";
+			String message = "Invalid SSN or Password";
+			StandardError error = new StandardError(System.currentTimeMillis(), HttpStatus.UNAUTHORIZED.value(), title, message, "/login");
+			ObjectMapper mapper = new ObjectMapper();
+			return mapper.writeValueAsString(error);
 		}
 	}
 }

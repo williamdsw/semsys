@@ -1,35 +1,29 @@
-package com.williamdsw.semsys.domain.dto;
+package com.williamdsw.semsys.domain.newdto;
 
 import java.io.Serializable;
 import java.util.Date;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.williamdsw.semsys.domain.Report;
+import javax.validation.constraints.NotEmpty;
 
-public class ReportDTO implements Serializable {
+import com.williamdsw.semsys.domain.dto.MeetingScheduleDTO;
+
+public class ReportNewDTO implements Serializable {
 	// FIELDS
 
 	private static final long serialVersionUID = 1L;
 	private Integer id;
+
+	@NotEmpty(message = "Title is required!")
 	private String title;
+
+	@NotEmpty(message = "Content is required!")
 	private String content;
 
-	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date emission;
-
 	private MeetingScheduleDTO schedule;
 
 	// CONSTRUCTORS
 
-	public ReportDTO() {
-	}
-
-	public ReportDTO(Report report) {
-		super();
-		this.id = report.getId();
-		this.title = report.getTitle();
-		this.content = report.getContent();
-		this.emission = report.getEmission();
-		this.schedule = new MeetingScheduleDTO(report.getSchedule());
+	public ReportNewDTO() {
 	}
 
 	// GETTERS / SETTERS

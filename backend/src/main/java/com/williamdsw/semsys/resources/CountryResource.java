@@ -22,42 +22,44 @@ import com.williamdsw.semsys.services.StateService;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping (path = "/v1/public/countries")
-public class CountryResource 
-{
+@RequestMapping(path = "/v1/public/countries")
+public class CountryResource {
+
 	// FIELDS
-	
-	@Autowired private CountryService countryService;
-	@Autowired private StateService stateService;
-	@Autowired private CityService cityService;
-	
+
+	@Autowired
+	private CountryService countryService;
+
+	@Autowired
+	private StateService stateService;
+
+	@Autowired
+	private CityService cityService;
+
 	// ENDPOINTS
-	
-	@ApiOperation (value = "Find all countries", response = CountryDTO[].class)
+
+	@ApiOperation(value = "Find all countries", response = CountryDTO[].class)
 	@GetMapping
-	public ResponseEntity<List<CountryDTO>> findAll ()
-	{
-		List<Country> countries = countryService.findAll ();
-		List<CountryDTO> listDto = countries.stream ().map (country -> new CountryDTO (country)).collect (Collectors.toList ()); 
-		return ResponseEntity.ok ().body (listDto);
+	public ResponseEntity<List<CountryDTO>> findAll() {
+		List<Country> countries = countryService.findAll();
+		List<CountryDTO> listDto = countries.stream().map(country -> new CountryDTO(country)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
 	}
-	
-	@ApiOperation (value = "Find all states by given country", response = StateDTO[].class)
-	@GetMapping (path = "/{countryId}/states")
-	public ResponseEntity<List<StateDTO>> findStates (@PathVariable Integer countryId)
-	{
-		List<State> states = stateService.findByCountry (countryId);
-		List<StateDTO> listDto = states.stream ().map (state -> new StateDTO (state)).collect (Collectors.toList ());
-		return ResponseEntity.ok ().body (listDto);
+
+	@ApiOperation(value = "Find all states by given country", response = StateDTO[].class)
+	@GetMapping(path = "/{countryId}/states")
+	public ResponseEntity<List<StateDTO>> findStates(@PathVariable Integer countryId) {
+		List<State> states = stateService.findByCountry(countryId);
+		List<StateDTO> listDto = states.stream().map(state -> new StateDTO(state)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
 	}
-	
-	@ApiOperation (value = "Find all cities by given state and country", response = CityDTO[].class)
-	@GetMapping (path = "/{countryId}/states/{stateId}/cities")
-	public ResponseEntity<List<CityDTO>> findCities (@PathVariable Integer countryId, @PathVariable Integer stateId)
-	{
-		countryService.findById (countryId);
-		List<City> cities = cityService.findByState (stateId);
-		List<CityDTO> listDto = cities.stream ().map (city -> new CityDTO (city)).collect (Collectors.toList ());
-		return ResponseEntity.ok ().body (listDto);
+
+	@ApiOperation(value = "Find all cities by given state and country", response = CityDTO[].class)
+	@GetMapping(path = "/{countryId}/states/{stateId}/cities")
+	public ResponseEntity<List<CityDTO>> findCities(@PathVariable Integer countryId, @PathVariable Integer stateId) {
+		countryService.findById(countryId);
+		List<City> cities = cityService.findByState(stateId);
+		List<CityDTO> listDto = cities.stream().map(city -> new CityDTO(city)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
 	}
 }

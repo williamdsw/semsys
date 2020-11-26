@@ -11,31 +11,36 @@ import javax.persistence.OneToOne;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Address implements Serializable
-{
+public class Address implements Serializable {
 	// FIELDS
-	
+
 	private static final long serialVersionUID = 1L;
-	
-	@Id @GeneratedValue (strategy = GenerationType.IDENTITY)
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String street;
 	private String number;
 	private String complement;
 	private String zipCode;
-	
-	@JsonIgnore @OneToOne @JoinColumn (name = "person_id")
+
+	@JsonIgnore
+	@OneToOne
+	@JoinColumn(name = "person_id")
 	private Person person;
-	
-	@ManyToOne @JoinColumn (name = "city_id")
+
+	@ManyToOne
+	@JoinColumn(name = "city_id")
 	private City city;
-	
+
 	// CONSTRUCTORS
-	
-	public Address () {}
-	public Address (Integer id, String publicPlace, String number, String complement, String zipCode, Person person, City city) 
-	{
-		super ();
+
+	public Address() {
+	}
+
+	public Address(Integer id, String publicPlace, String number, String complement, String zipCode, Person person,
+			City city) {
+		super();
 		this.id = id;
 		this.street = publicPlace;
 		this.number = number;
@@ -44,91 +49,77 @@ public class Address implements Serializable
 		this.person = person;
 		this.city = city;
 	}
-	
+
 	// GETTERS / SETTERS
-	
-	public Integer getId () 
-	{
+
+	public Integer getId() {
 		return id;
 	}
-	
-	public void setId (Integer id) 
-	{
+
+	public void setId(Integer id) {
 		this.id = id;
 	}
-	
-	public String getStreet () 
-	{
+
+	public String getStreet() {
 		return street;
 	}
-	
-	public void setStreet (String street) 
-	{
+
+	public void setStreet(String street) {
 		this.street = street;
 	}
-	
-	public String getNumber () 
-	{
+
+	public String getNumber() {
 		return number;
 	}
-	
-	public void setNumber (String number) 
-	{
+
+	public void setNumber(String number) {
 		this.number = number;
 	}
-	
-	public String getComplement () 
-	{
+
+	public String getComplement() {
 		return complement;
 	}
-	
-	public void setComplement (String complement) 
-	{
+
+	public void setComplement(String complement) {
 		this.complement = complement;
 	}
-	
-	public String getZipCode () 
-	{
+
+	public String getZipCode() {
 		return zipCode;
 	}
-	
-	public void setZipCode (String zipCode) 
-	{
+
+	public void setZipCode(String zipCode) {
 		this.zipCode = zipCode;
 	}
-	
-	public Person getPerson () 
-	{
+
+	public Person getPerson() {
 		return person;
 	}
-	
-	public void setPerson (Person person) 
-	{
+
+	public void setPerson(Person person) {
 		this.person = person;
 	}
-	
+
 	public City getCity() {
 		return city;
 	}
-	
+
 	public void setCity(City city) {
 		this.city = city;
 	}
-	
+
 	// OVERRIDED FUNCTIONS
-	
+
 	@Override
-	public int hashCode () 
-	{
+	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-	
+
 	@Override
-	public boolean equals (Object obj) 
-	{
+	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -136,8 +127,7 @@ public class Address implements Serializable
 		if (getClass() != obj.getClass())
 			return false;
 		Address other = (Address) obj;
-		if (id == null) 
-		{
+		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))

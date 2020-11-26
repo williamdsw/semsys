@@ -10,22 +10,22 @@ import com.williamdsw.semsys.repositories.CountryRepository;
 import com.williamdsw.semsys.services.exceptions.ObjectNotFoundException;
 
 @Service
-public class CountryService 
-{
+public class CountryService {
+
 	// FIELDS
-	
-	@Autowired private CountryRepository countryRepository;
-	
+
+	@Autowired
+	private CountryRepository countryRepository;
+
 	// HELPER FUNCTIONS
-	
-	public Country findById (Integer countryId)
-	{
-		Optional<Country> country = countryRepository.findById (countryId);
-		return country.orElseThrow (() -> new ObjectNotFoundException (String.format ("Country not found for id : %s", countryId)));
+
+	public Country findById(Integer countryId) {
+		Optional<Country> country = countryRepository.findById(countryId);
+		String message = String.format("Country not found for id : %s", countryId);
+		return country.orElseThrow(() -> new ObjectNotFoundException(message));
 	}
-	
-	public List<Country> findAll ()
-	{
-		return countryRepository.findAllByOrderByName ();
+
+	public List<Country> findAll() {
+		return countryRepository.findAllByOrderByName();
 	}
 }

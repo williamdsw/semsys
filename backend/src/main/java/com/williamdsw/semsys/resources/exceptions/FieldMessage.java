@@ -2,43 +2,40 @@ package com.williamdsw.semsys.resources.exceptions;
 
 import java.io.Serializable;
 
-public class FieldMessage implements Serializable
-{
+public class FieldMessage implements Serializable {
+
 	// FIELDS
-	
+
 	private static final long serialVersionUID = 1L;
 	private String field;
 	private String message;
-	
+
 	// CONSTRUCTORS
-	
-	public FieldMessage () {}
-	public FieldMessage (String field, String message) 
-	{
-		super ();
+
+	public FieldMessage() {
+	}
+
+	public FieldMessage(String field, String message) {
+		super();
 		this.field = field;
 		this.message = message;
 	}
-	
+
 	// GETTERS / SETTERS
-	
-	public String getField () 
-	{
+
+	public String getField() {
 		return field;
 	}
-	
-	public void setField (String field) 
-	{
+
+	public void setField(String field) {
 		this.field = field;
 	}
-	
-	public String getMessage () 
-	{
+
+	public String getMessage() {
 		return message;
 	}
-	
-	public void setMessage (String message) 
-	{
+
+	public void setMessage(String message) {
 		this.message = message;
 	}
 }

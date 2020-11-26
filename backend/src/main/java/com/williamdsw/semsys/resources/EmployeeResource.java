@@ -21,83 +21,80 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.williamdsw.semsys.domain.Employee;
 import com.williamdsw.semsys.domain.dto.EmployeeDTO;
-import com.williamdsw.semsys.domain.dto.EmployeeNewDTO;
+import com.williamdsw.semsys.domain.newdto.EmployeeNewDTO;
 import com.williamdsw.semsys.services.EmployeeService;
 import com.williamdsw.semsys.services.PersonService;
 
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping (path = "/v1")
-public class EmployeeResource 
-{
+@RequestMapping(path = "/v1")
+public class EmployeeResource {
+
 	// FIELDS
-	
-	@Autowired private EmployeeService employeeService;
-	@Autowired private PersonService personService;
-	
+
+	@Autowired
+	private EmployeeService employeeService;
+
+	@Autowired
+	private PersonService personService;
+
 	// ENDPOINTS
-	
-	@ApiOperation (value = "Find all employees", response = EmployeeDTO[].class)
-	@PreAuthorize ("hasAnyRole('EMPLOYEE') or hasAnyRole('STUDENT')")
-	@GetMapping (path = "/protected/employees")
-	public ResponseEntity<List<EmployeeDTO>> findAllEmployees ()
-	{
-		List<Employee> employees = employeeService.findAllEmployees ();
-		List<EmployeeDTO> listDto = employees.stream ().map (employee -> new EmployeeDTO (employee)).collect (Collectors.toList ());
-		return ResponseEntity.ok ().body (listDto);
+
+	@ApiOperation(value = "Find all employees", response = EmployeeDTO[].class)
+	@PreAuthorize("hasAnyRole('EMPLOYEE') or hasAnyRole('STUDENT')")
+	@GetMapping(path = "/protected/employees")
+	public ResponseEntity<List<EmployeeDTO>> findAllEmployees() {
+		List<Employee> employees = employeeService.findAllEmployees();
+		List<EmployeeDTO> listDto = employees.stream().map(employee -> new EmployeeDTO(employee)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
 	}
 
-	
-	@ApiOperation (value = "Find all employees by name", response = EmployeeDTO[].class)
-	@PreAuthorize ("hasAnyRole('EMPLOYEE')")
-	@GetMapping (path = "/protected/employees/name")
-	public ResponseEntity<List<EmployeeDTO>> findAllByName (@RequestParam (value = "name", defaultValue = "") String name)
-	{
-		List<Employee> employees = employeeService.findAllByName (name);
-		List<EmployeeDTO> listDto = employees.stream ().map (employee -> new EmployeeDTO (employee)).collect (Collectors.toList ());
-		return ResponseEntity.ok ().body (listDto);
+	@ApiOperation(value = "Find all employees by name", response = EmployeeDTO[].class)
+	@PreAuthorize("hasAnyRole('EMPLOYEE')")
+	@GetMapping(path = "/protected/employees/name")
+	public ResponseEntity<List<EmployeeDTO>> findAllByName(
+			@RequestParam(value = "name", defaultValue = "") String name) {
+		List<Employee> employees = employeeService.findAllByName(name);
+		List<EmployeeDTO> listDto = employees.stream().map(employee -> new EmployeeDTO(employee)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
 	}
-	
-	@ApiOperation (value = "Find employee by email", response = EmployeeDTO.class)
-	@PreAuthorize ("hasRole('ADMIN')")
-	@GetMapping (path = "/admin/employees/email")
-	public ResponseEntity<EmployeeDTO> findByEmail (@RequestParam (value = "value") String email)
-	{
-		Employee employee = employeeService.findByEmail (email);
-		EmployeeDTO dto = new EmployeeDTO (employee);
-		return ResponseEntity.ok ().body (dto);
+
+	@ApiOperation(value = "Find employee by email", response = EmployeeDTO.class)
+	@PreAuthorize("hasRole('ADMIN')")
+	@GetMapping(path = "/admin/employees/email")
+	public ResponseEntity<EmployeeDTO> findByEmail(@RequestParam(value = "value") String email) {
+		Employee employee = employeeService.findByEmail(email);
+		EmployeeDTO dto = new EmployeeDTO(employee);
+		return ResponseEntity.ok().body(dto);
 	}
-	
-	@ApiOperation (value = "Find employee by SSN", response = EmployeeDTO.class)
-	@PreAuthorize ("hasRole('ADMIN')")
-	@GetMapping (path = "/admin/employees/ssn")
-	public ResponseEntity<EmployeeDTO> findBySSN (@RequestParam (value = "value") String ssn)
-	{
-		Employee employee = employeeService.findBySocialSecurityNumber (ssn);
-		EmployeeDTO dto = new EmployeeDTO (employee);
-		return ResponseEntity.ok ().body (dto);
+
+	@ApiOperation(value = "Find employee by SSN", response = EmployeeDTO.class)
+	@PreAuthorize("hasRole('ADMIN')")
+	@GetMapping(path = "/admin/employees/ssn")
+	public ResponseEntity<EmployeeDTO> findBySSN(@RequestParam(value = "value") String ssn) {
+		Employee employee = employeeService.findBySocialSecurityNumber(ssn);
+		EmployeeDTO dto = new EmployeeDTO(employee);
+		return ResponseEntity.ok().body(dto);
 	}
-	
-	@ApiOperation (value = "Insert new employee")
-	@PreAuthorize ("hasRole('ADMIN')")
-	@PostMapping (path = "/admin/employees")
-	public ResponseEntity<Void> insert (@Valid @RequestBody EmployeeNewDTO dto)
-	{
-		Employee employee = employeeService.fromDTO (dto);		
-		employee = (Employee) personService.insert (employee);
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest ().path("/{id}").buildAndExpand (employee.getId ()).toUri ();
-		return ResponseEntity.created (location).build ();		
+
+	@ApiOperation(value = "Insert new employee")
+	@PreAuthorize("hasRole('ADMIN')")
+	@PostMapping(path = "/admin/employees")
+	public ResponseEntity<Void> insert(@Valid @RequestBody EmployeeNewDTO dto) {
+		Employee employee = employeeService.fromDTO(dto);
+		employee = (Employee) personService.insert(employee);
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(employee.getId()).toUri();
+		return ResponseEntity.created(location).build();
 	}
-	
-	@ApiOperation (value = "Update employee's data")
-	@PreAuthorize ("hasRole('EMPLOYEE')")
-	@PutMapping (path = "/protected/employees/{id}")
-	public ResponseEntity<Void> update (@Valid @RequestBody EmployeeDTO dto, @PathVariable Integer id)
-	{
-		Employee employee = employeeService.fromDTO (dto);
-		employee.setId (id);
-		personService.update (employee);
-		return ResponseEntity.noContent ().build ();
+
+	@ApiOperation(value = "Update employee's data")
+	@PreAuthorize("hasRole('EMPLOYEE')")
+	@PutMapping(path = "/protected/employees/{id}")
+	public ResponseEntity<Void> update(@Valid @RequestBody EmployeeDTO dto, @PathVariable Integer id) {
+		Employee employee = employeeService.fromDTO(dto);
+		employee.setId(id);
+		personService.update(employee);
+		return ResponseEntity.noContent().build();
 	}
 }

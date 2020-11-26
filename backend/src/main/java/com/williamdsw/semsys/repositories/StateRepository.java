@@ -7,8 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.williamdsw.semsys.domain.State;
 
 @Repository
-public interface StateRepository extends JpaRepository<State, Integer> 
-{	
-	@Transactional (readOnly = true)
-	public List<State> findByCountryIdOrderByNameAsc (Integer countryId);
+public interface StateRepository extends JpaRepository<State, Integer> {
+
+	@Transactional(readOnly = true)
+	public List<State> findByCountryIdOrderByNameAsc(Integer countryId);
+
 }

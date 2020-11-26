@@ -9,25 +9,23 @@ import com.williamdsw.semsys.services.mail.EmailService;
 import com.williamdsw.semsys.services.mail.MockMailService;
 
 @Configuration
-@Profile ("test")
-public class TestConfig 
-{
+@Profile("test")
+public class TestConfig {
 	// FIELDS
-	
-	@Autowired private MockDatabaseService mockDatabaseService;
-	
+
+	@Autowired
+	private MockDatabaseService mockDatabaseService;
+
 	// BEANS
-	
+
 	@Bean
-	public boolean mockDatabase () throws Exception
-	{
+	public boolean mockDatabase() throws Exception {
 		mockDatabaseService.mockDatabase();
 		return true;
 	}
-	
+
 	@Bean
-	public EmailService emailService ()
-	{
-		return new MockMailService ();
+	public EmailService emailService() {
+		return new MockMailService();
 	}
 }

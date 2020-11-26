@@ -7,8 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.williamdsw.semsys.domain.Country;
 
 @Repository
-public interface CountryRepository extends JpaRepository<Country, Integer> 
-{
-	@Transactional (readOnly = true)
-	public List<Country> findAllByOrderByName ();
+public interface CountryRepository extends JpaRepository<Country, Integer> {
+
+	@Transactional(readOnly = true)
+	public List<Country> findAllByOrderByName();
+
 }

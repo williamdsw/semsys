@@ -7,18 +7,20 @@ import com.williamdsw.semsys.domain.City;
 import com.williamdsw.semsys.repositories.CityRepository;
 
 @Service
-public class CityService 
-{
+public class CityService {
+
 	// FIELDS
-	
-	@Autowired private CityRepository cityRepository;
-	@Autowired private StateService stateService;
-	
+
+	@Autowired
+	private CityRepository cityRepository;
+
+	@Autowired
+	private StateService stateService;
+
 	// HELPER FUNCTIONS
-	
-	public List<City> findByState (Integer stateId)
-	{
-		stateService.findById (stateId);
-		return cityRepository.findByStateIdOrderByNameAsc (stateId);
+
+	public List<City> findByState(Integer stateId) {
+		stateService.findById(stateId);
+		return cityRepository.findByStateIdOrderByNameAsc(stateId);
 	}
 }

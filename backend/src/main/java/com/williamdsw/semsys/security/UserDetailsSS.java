@@ -8,84 +8,82 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.williamdsw.semsys.domain.enums.Profile;
 
-public class UserDetailsSS implements UserDetails
-{
+public class UserDetailsSS implements UserDetails {
+
 	// FIELDS
-	
+
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String socialSecurityNumber;
 	private String password;
 	private Collection<? extends GrantedAuthority> authorities;
-	
+
 	// CONSTRUCTORS
-	
-	public UserDetailsSS () {}
-	public UserDetailsSS(Integer id, String socialSecurityNumber, String password, Set<Profile> profiles) 
-	{
+
+	public UserDetailsSS() {
+	}
+
+	public UserDetailsSS(Integer id, String socialSecurityNumber, String password, Set<Profile> profiles) {
 		super();
 		this.id = id;
 		this.socialSecurityNumber = socialSecurityNumber;
 		this.password = password;
-		this.authorities = profiles.stream ().map (profile -> new SimpleGrantedAuthority (profile.getDescription ())).collect(Collectors.toList ());
+		this.authorities = profiles.stream().map(
+				profile -> new SimpleGrantedAuthority(profile.getDescription())
+			).collect(Collectors.toList());
 	}
-	
+
 	// GETTERS / SETTERS
-	
-	public Integer getId () 
-	{
+
+	public Integer getId() {
 		return id;
 	}
-	
+
 	// OVERRIDED FUNCTIONS
 
 	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities () 
-	{
+	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return this.authorities;
 	}
 
 	@Override
-	public String getPassword () 
-	{
+	public String getPassword() {
 		return this.password;
 	}
 
 	@Override
-	public String getUsername () 
-	{
+	public String getUsername() {
 		return this.socialSecurityNumber;
 	}
 
 	@Override
-	public boolean isAccountNonExpired () 
-	{
+	public boolean isAccountNonExpired() {
 		return true;
 	}
 
 	@Override
-	public boolean isAccountNonLocked () 
-	{
+	public boolean isAccountNonLocked() {
 		return true;
 	}
 
 	@Override
-	public boolean isCredentialsNonExpired () 
-	{
+	public boolean isCredentialsNonExpired() {
 		return true;
 	}
 
 	@Override
-	public boolean isEnabled () 
-	{
+	public boolean isEnabled() {
 		return true;
 	}
-	
+
 	// HELPER FUNCTIONS
-	
-	public boolean hasRole (Profile profile)
-	{
-		SimpleGrantedAuthority role = new SimpleGrantedAuthority (profile.getDescription ());
-		return this.getAuthorities ().contains (role);
+
+	public boolean hasRole(Profile profile) {
+		if (profile == null) {
+			return false;
+		}
+		
+		SimpleGrantedAuthority role = new SimpleGrantedAuthority(profile.getDescription());
+		return this.getAuthorities().contains(role);
 	}
 }

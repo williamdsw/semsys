@@ -5,4 +5,5 @@ import org.springframework.stereotype.Repository;
 import com.williamdsw.semsys.domain.Address;
 
 @Repository
-public interface AddressRepository extends JpaRepository<Address, Integer> {}
+public interface AddressRepository extends JpaRepository<Address, Integer> {
+}

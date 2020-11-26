@@ -20,41 +20,43 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.williamdsw.semsys.domain.enums.Profile;
 
 @Entity
-@Inheritance (strategy = InheritanceType.JOINED)
-@JsonTypeInfo (use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
-public abstract class Person implements Serializable
-{
+@Inheritance(strategy = InheritanceType.JOINED)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
+public abstract class Person implements Serializable {
 	// FIELDS
-	
+
 	private static final long serialVersionUID = 1L;
-	
-	@Id @GeneratedValue (strategy = GenerationType.IDENTITY)
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+
 	private String name;
 	private String email;
 	private String socialSecurityNumber;
-	
+
 	@JsonIgnore
 	private String password;
-	
-	@OneToOne (mappedBy = "person", cascade = CascadeType.ALL)
+
+	@OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
 	private Address address;
-	
+
 	@ElementCollection
-	@CollectionTable (name = "phone_number")
+	@CollectionTable(name = "phone_number")
 	private Set<String> phoneNumbers = new HashSet<>();
-	
+
 	@JsonIgnore
-	@ElementCollection (fetch = FetchType.EAGER)
-	@CollectionTable (name = "profile")
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "profile")
 	private Set<Integer> profiles = new HashSet<>();
-	
+
 	// CONSTRUCTORS
-	
-	public Person () {}
-	public Person (Integer id, String name, String email, String socialSecurityNumber, String password, Address address) 
-	{
-		super ();
+
+	public Person() {
+	}
+
+	public Person(Integer id, String name, String email, String socialSecurityNumber, String password, Address address) {
+		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
@@ -62,98 +64,81 @@ public abstract class Person implements Serializable
 		this.password = password;
 		this.address = address;
 	}
-	
+
 	// GETTERS / SETTERS
 
-	public Integer getId () 
-	{
+	public Integer getId() {
 		return id;
 	}
-	
-	public void setId (Integer id) 
-	{
+
+	public void setId(Integer id) {
 		this.id = id;
 	}
-	
-	public String getName () 
-	{
+
+	public String getName() {
 		return name;
 	}
-	
-	public void setName (String name) 
-	{
+
+	public void setName(String name) {
 		this.name = name;
 	}
-	
-	public String getEmail () 
-	{
+
+	public String getEmail() {
 		return email;
 	}
-	
-	public void setEmail (String email) 
-	{
+
+	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	public String getSocialSecurityNumber () 
-	{
+
+	public String getSocialSecurityNumber() {
 		return socialSecurityNumber;
 	}
-	
-	public void setSocialSecurityNumber (String socialSecurityNumber) 
-	{
+
+	public void setSocialSecurityNumber(String socialSecurityNumber) {
 		this.socialSecurityNumber = socialSecurityNumber;
 	}
-	
-	public String getPassword () 
-	{
+
+	public String getPassword() {
 		return password;
 	}
-	
-	public void setPassword (String password) 
-	{
+
+	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	public Address getAddress () 
-	{
+
+	public Address getAddress() {
 		return address;
 	}
-	
-	public void setAddress (Address address) 
-	{
+
+	public void setAddress(Address address) {
 		this.address = address;
 	}
-	
-	public Set<String> getPhoneNumbers () 
-	{
+
+	public Set<String> getPhoneNumbers() {
 		return phoneNumbers;
 	}
-	
-	public void setPhoneNumbers (Set<String> phoneNumbers) 
-	{
+
+	public void setPhoneNumbers(Set<String> phoneNumbers) {
 		this.phoneNumbers = phoneNumbers;
 	}
-	
-	public Set<Profile> getProfiles() 
-	{
-		return profiles.stream ().map (code -> Profile.toEnum (code)).collect (Collectors.toSet ());
+
+	public Set<Profile> getProfiles() {
+		return profiles.stream().map(code -> Profile.toEnum(code)).collect(Collectors.toSet());
 	}
 
 	// OVERRIDED FUNCTIONS
-	
+
 	@Override
-	public int hashCode () 
-	{
+	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-	
+
 	@Override
-	public boolean equals (Object obj) 
-	{
+	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -161,20 +146,17 @@ public abstract class Person implements Serializable
 		if (getClass() != obj.getClass())
 			return false;
 		Person other = (Person) obj;
-		if (id == null) 
-		{
+		if (id == null) {
 			if (other.id != null)
 				return false;
-		} 
-		else if (!id.equals(other.id))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
-	
+
 	// HELPER FUNCTIONS
-	
-	public void addProfile (Profile profile)
-	{
-		profiles.add (profile.getCode ());
+
+	public void addProfile(Profile profile) {
+		profiles.add((profile != null ? profile.getCode() : Profile.STUDENT.getCode()));
 	}
 }

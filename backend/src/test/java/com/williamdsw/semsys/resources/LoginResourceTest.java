@@ -16,59 +16,56 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.williamdsw.semsys.resources.utils.HeaderUtils;
 
-@ExtendWith (SpringExtension.class)
-@SpringBootTest (webEnvironment = WebEnvironment.RANDOM_PORT)
+@ExtendWith(SpringExtension.class)
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @EnableAutoConfiguration
-@ActiveProfiles (profiles = "test")
-public class LoginResourceTest extends GlobalResourceConfigureTest 
-{
+@ActiveProfiles(profiles = "test")
+public class LoginResourceTest extends GlobalResourceConfigureTest {
+
 	// FIELDS
-	
+
 	private final String LOGIN_URL = "/login";
-	
+
 	// TESTS
-	
+
 	@Test
-	public void loginWithAdminCredentialsShouldReturnStatusCode200 ()
-	{
-		String json = HeaderUtils.getCredentialsJson ("039-58-6788", "111");
+	public void loginWithAdminCredentialsShouldReturnStatusCode200() {
+		String json = HeaderUtils.getCredentialsJson("039-58-6788", "111");
 		HttpEntity<String> entity = new HttpEntity<>(json, null);
-		ResponseEntity<String> response = restTemplate.exchange (LOGIN_URL, HttpMethod.POST, entity, String.class);
-		Assertions.assertEquals (response.getStatusCodeValue (), HttpStatus.OK.value ());
-		String bearer = response.getHeaders ().getFirst (HttpHeaders.AUTHORIZATION);
-		System.out.println ("Admin Bearer: " + bearer);
+		ResponseEntity<String> response = restTemplate.exchange(LOGIN_URL, HttpMethod.POST, entity, String.class);
+		Assertions.assertEquals(response.getStatusCodeValue(), HttpStatus.OK.value());
+		String bearer = response.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
+		System.out.println("Admin Bearer: " + bearer);
 	}
-	
+
 	@Test
-	public void loginWithEmployeeCredentialsShouldReturnStatusCode200 ()
-	{
-		String json = HeaderUtils.getCredentialsJson ("554-90-1122", "222");
+	public void loginWithEmployeeCredentialsShouldReturnStatusCode200() {
+		String json = HeaderUtils.getCredentialsJson("554-90-1122", "222");
 		HttpEntity<String> entity = new HttpEntity<>(json, null);
-		ResponseEntity<String> response = restTemplate.exchange (LOGIN_URL, HttpMethod.POST, entity, String.class);
-		Assertions.assertEquals (response.getStatusCodeValue (), HttpStatus.OK.value ());
-		String bearer = response.getHeaders ().getFirst (HttpHeaders.AUTHORIZATION);
-		System.out.println ("Employee Bearer: " + bearer);
+		ResponseEntity<String> response = restTemplate.exchange(LOGIN_URL, HttpMethod.POST, entity, String.class);
+		Assertions.assertEquals(response.getStatusCodeValue(), HttpStatus.OK.value());
+		String bearer = response.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
+		System.out.println("Employee Bearer: " + bearer);
 	}
-	
+
 	@Test
-	public void loginWithStudentCredentialsShouldReturnStatusCode200 ()
-	{
-		String json = HeaderUtils.getCredentialsJson ("500-28-0871", "555");
+	public void loginWithStudentCredentialsShouldReturnStatusCode200() {
+		String json = HeaderUtils.getCredentialsJson("500-28-0871", "555");
 		HttpEntity<String> entity = new HttpEntity<>(json, null);
-		ResponseEntity<String> response = restTemplate.exchange (LOGIN_URL, HttpMethod.POST, entity, String.class);
-		Assertions.assertEquals (response.getStatusCodeValue (), HttpStatus.OK.value ());
-		String bearer = response.getHeaders ().getFirst (HttpHeaders.AUTHORIZATION);
-		System.out.println ("Student Bearer: " + bearer);
+		ResponseEntity<String> response = restTemplate.exchange(LOGIN_URL, HttpMethod.POST, entity, String.class);
+		Assertions.assertEquals(response.getStatusCodeValue(), HttpStatus.OK.value());
+		String bearer = response.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
+		System.out.println("Student Bearer: " + bearer);
 	}
-	
-	// Include <artifactId> httpclient </artifactId> to solve 401 - UNAUTHORIZED issue
+
+	// Include <artifactId> httpclient </artifactId> to solve 401 - UNAUTHORIZED
+	// issue
 	@Test
-	public void loginWithWrongCredentialsShouldReturnStatus401 ()
-	{
-		String json = HeaderUtils.getCredentialsJson ("123-45-6789", "000");
+	public void loginWithWrongCredentialsShouldReturnStatus401() {
+		String json = HeaderUtils.getCredentialsJson("123-45-6789", "000");
 		HttpEntity<String> entity = new HttpEntity<>(json, null);
-		ResponseEntity<String> response = restTemplate.exchange (LOGIN_URL, HttpMethod.POST, entity, String.class);
-		Assertions.assertEquals (response.getStatusCodeValue (), HttpStatus.UNAUTHORIZED.value ());
-		System.out.println (response.getBody ());
+		ResponseEntity<String> response = restTemplate.exchange(LOGIN_URL, HttpMethod.POST, entity, String.class);
+		Assertions.assertEquals(response.getStatusCodeValue(), HttpStatus.UNAUTHORIZED.value());
+		System.out.println(response.getBody());
 	}
 }

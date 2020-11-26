@@ -10,24 +10,19 @@ import com.williamdsw.semsys.repositories.PersonRepository;
 import com.williamdsw.semsys.security.UserDetailsSS;
 
 @Service
-public class UserDetailsServiceImplementation implements UserDetailsService
-{
-	// FIELDS
-	
-	@Autowired private PersonRepository<Person> personRepository;
+public class UserDetailsServiceImplementation implements UserDetailsService {
 
-	// OVERRIDED FUNCTIONS
-	
+	@Autowired
+	private PersonRepository<Person> personRepository;
+
 	@Override
-	public UserDetails loadUserByUsername (String ssn) throws UsernameNotFoundException 
-	{
-		Person person = personRepository.findBySocialSecurityNumber (ssn);
-		if (person == null)
-		{
-			throw new UsernameNotFoundException (ssn);
+	public UserDetails loadUserByUsername(String ssn) throws UsernameNotFoundException {
+		Person person = personRepository.findBySocialSecurityNumber(ssn);
+		if (person == null) {
+			throw new UsernameNotFoundException(ssn);
 		}
-		
-		UserDetailsSS userDetails = new UserDetailsSS (person.getId (), person.getSocialSecurityNumber (), person.getPassword (), person.getProfiles ());		
+
+		UserDetailsSS userDetails = new UserDetailsSS(person.getId(), person.getSocialSecurityNumber(), person.getPassword(), person.getProfiles());
 		return userDetails;
 	}
 

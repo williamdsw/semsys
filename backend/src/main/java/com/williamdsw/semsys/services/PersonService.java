@@ -28,132 +28,126 @@ import com.williamdsw.semsys.services.exceptions.ObjectNotFoundException;
 import com.williamdsw.semsys.services.security.UserService;
 
 @Service
-public class PersonService 
-{
+public class PersonService {
+
 	// FIELDS
-	
-	@Autowired private PersonRepository<Person> personRepository;
-	@Autowired private AddressRepository addressRepository;
-	@Autowired private SchoolClassRepository schoolClassRepository;
-	@Autowired private S3Service s3Service;
-	@Autowired private ImageService imageService;
-	
+
+	@Autowired
+	private PersonRepository<Person> personRepository;
+
+	@Autowired
+	private AddressRepository addressRepository;
+
+	@Autowired
+	private SchoolClassRepository schoolClassRepository;
+
+	@Autowired
+	private S3Service s3Service;
+
+	@Autowired
+	private ImageService imageService;
+
 	// HELPER FUNCTIONS FOR RESOURCE
-	
-	public List<Person> findAllPersons ()
-	{
-		UserService.checkAuthenticatedUser (Profile.ADMIN);
-		return personRepository.findAll ();
+
+	public List<Person> findAllPersons() {
+		UserService.checkAuthenticatedUser(Profile.ADMIN);
+		return personRepository.findAll();
 	}
-	
-	public Person findById (Integer id)
-	{
-		UserDetailsSS user = UserService.getAuthenticated ();
-		if (user == null || !user.hasRole (Profile.EMPLOYEE) && !user.hasRole (Profile.STUDENT) || 
-			user.hasRole (Profile.STUDENT) && !user.getId ().equals (id)) 
-		{
-			throw new AuthorizationException ("Access Denied!");
-		}
-				
-		Optional<Person> person = personRepository.findById (id);
-		return person.orElseThrow (() -> new ObjectNotFoundException (String.format ("Person not found for Id: %s", id))); 
-	}
-	
-	public Person findBySocialSecurityNumber (String socialSecurityNumber)
-	{
-		Person person = personRepository.findBySocialSecurityNumber (socialSecurityNumber);
-		if (person == null)
-		{
-			throw new ObjectNotFoundException (String.format ("Person not found for SSN: %s ", socialSecurityNumber));
-		}
-		
-		return person;
-	}
-	
-	public Person findByEmail (String email)
-	{
-		Person person = personRepository.findByEmail (email);
-		if (person == null) 
-		{
-			throw new ObjectNotFoundException (String.format ("Email %s not registered", email));
-		}
-		
-		return person;
-	}
-	
-	@Transactional
-	public Person insert (Person person)
-	{
-		if (person instanceof Employee)
-		{
-			UserService.checkAuthenticatedUser (Profile.ADMIN);
+
+	public Person findById(Integer id) {
+		UserDetailsSS user = UserService.getAuthenticated();
+		if (user == null || !user.hasRole(Profile.EMPLOYEE) && !user.hasRole(Profile.STUDENT) || 
+			user.hasRole(Profile.STUDENT) && !user.getId().equals(id)) {
+			throw new AuthorizationException("Access Denied!");
 		}
 
-		person.setId (null);
-		person = personRepository.save (person);
-		addressRepository.save (person.getAddress ());
-		
-		if (person instanceof Student)
-		{
+		Optional<Person> person = personRepository.findById(id);
+		String message = String.format("Person not found for Id: %s", id);
+		return person.orElseThrow(() -> new ObjectNotFoundException(message));
+	}
+
+	public Person findBySocialSecurityNumber(String socialSecurityNumber) {
+		Person person = personRepository.findBySocialSecurityNumber(socialSecurityNumber);
+		if (person == null) {
+			String message = String.format("Person not found for SSN: %s ", socialSecurityNumber);
+			throw new ObjectNotFoundException(message);
+		}
+
+		return person;
+	}
+
+	public Person findByEmail(String email) {
+		Person person = personRepository.findByEmail(email);
+		if (person == null) {
+			String message = String.format("Email %s not registered", email);
+			throw new ObjectNotFoundException(message);
+		}
+
+		return person;
+	}
+
+	@Transactional
+	public Person insert(Person person) {
+		if (person instanceof Employee) {
+			UserService.checkAuthenticatedUser(Profile.ADMIN);
+		}
+
+		person.setId(null);
+		person = personRepository.save(person);
+		addressRepository.save(person.getAddress());
+
+		if (person instanceof Student) {
 			Student student = (Student) person;
-			schoolClassRepository.save (student.getSchoolClass ());
-		}
-		
-		return person;
-	}
-	
-	@Transactional
-	public Person update (Person person)
-	{
-		if (person instanceof Employee)
-		{
-			UserService.checkAuthenticatedUser (Profile.EMPLOYEE);
-		}
-		else if (person instanceof Student)
-		{
-			UserService.checkAuthenticatedUser (Profile.STUDENT);
-		}
-		
-		UserDetailsSS user = UserService.getAuthenticated ();
-		if (user == null || !user.getId ().equals (person.getId ())) 
-		{
-			throw new AuthorizationException ("Access Denied!");
+			schoolClassRepository.save(student.getSchoolClass());
 		}
 
-		Person newPerson = findById (person.getId ());
-		updateData (person, newPerson);
-		return personRepository.save (newPerson);
+		return person;
 	}
-	
-	public void deleteById (Integer id)
-	{
-		UserService.checkAuthenticatedUser (Profile.ADMIN);
-		findById (id);
-		personRepository.deleteById (id);
-	}
-	
-	public URI uploadProfilePicture (MultipartFile multipartFile)
-	{
-		UserDetailsSS user = UserService.getAuthenticated ();
-		if (user == null || !user.hasRole (Profile.EMPLOYEE) && !user.hasRole (Profile.STUDENT))
-		{
-			throw new AuthorizationException ("Access Denied!");
+
+	@Transactional
+	public Person update(Person person) {
+		if (person instanceof Employee) {
+			UserService.checkAuthenticatedUser(Profile.EMPLOYEE);
+		} 
+		else if (person instanceof Student) {
+			UserService.checkAuthenticatedUser(Profile.STUDENT);
 		}
-		
-		Person person = findById (user.getId ());
-		String fileName = ImageUtil.buildFileName (person.getName ());
-		BufferedImage image = imageService.getJpgImageFromFile (multipartFile);
-		image = imageService.cropSquare (image);
-		image = imageService.resize (image, ImageUtil.getImageSize ());
-		InputStream inputStream = imageService.getInputStream (image, "jpg");
-		return s3Service.uploadFile (fileName, inputStream, "image");
+
+		UserDetailsSS user = UserService.getAuthenticated();
+		if (user == null || !user.getId().equals(person.getId())) {
+			throw new AuthorizationException("Access Denied!");
+		}
+
+		Person newPerson = findById(person.getId());
+		updateData(person, newPerson);
+		return personRepository.save(newPerson);
 	}
-	
+
+	public void deleteById(Integer id) {
+		UserService.checkAuthenticatedUser(Profile.ADMIN);
+		findById(id);
+		personRepository.deleteById(id);
+	}
+
+	public URI uploadProfilePicture(MultipartFile multipartFile) {
+		UserDetailsSS user = UserService.getAuthenticated();
+		if (user == null || !user.hasRole(Profile.EMPLOYEE) && !user.hasRole(Profile.STUDENT)) {
+			throw new AuthorizationException("Access Denied!");
+		}
+
+		Person person = findById(user.getId());
+		String fileName = ImageUtil.buildFileName(person.getName());
+		BufferedImage image = imageService.getJpgImageFromFile(multipartFile);
+		image = imageService.cropSquare(image);
+		image = imageService.resize(image, ImageUtil.getImageSize());
+		InputStream inputStream = imageService.getInputStream(image, "jpg");
+		return s3Service.uploadFile(fileName, inputStream, "image");
+	}
+
 	// HELPER FUNCTIONS
-	
-	private void updateData (Person person, Person newPerson)
-	{
-		newPerson.setName (person.getName ());
-		newPerson.setEmail (person.getEmail ());
+
+	private void updateData(Person person, Person newPerson) {
+		newPerson.setName(person.getName());
+		newPerson.setEmail(person.getEmail());
 	}
 }

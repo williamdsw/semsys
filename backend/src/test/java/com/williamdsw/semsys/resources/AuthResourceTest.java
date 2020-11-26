@@ -15,67 +15,67 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.williamdsw.semsys.domain.dto.EmailDTO;
 
-@ExtendWith (SpringExtension.class)
-@SpringBootTest (webEnvironment = WebEnvironment.RANDOM_PORT)
+@ExtendWith(SpringExtension.class)
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @EnableAutoConfiguration
-@ActiveProfiles (profiles = "test")
-public class AuthResourceTest extends GlobalResourceConfigureTest 
-{
+@ActiveProfiles(profiles = "test")
+public class AuthResourceTest extends GlobalResourceConfigureTest {
+
 	// FIELDS
-	
+
 	private final String FORGOT_PASSWORD_URL = "/v1/public/auth/forgot-password/";
 	private final String REFRESH_TOKEN_URL = "/v1/protected/auth/refresh-token/";
-	
+
 	// TESTS
-	
+
 	// --> FORGOT_PASSWORD_URL = "/v1/public/auth/forgot-password/"
-	
+
 	@Test
-	public void forgotPasswordWhenEmailDoesExistsReturnStatusCode204 ()
-	{
-		EmailDTO dto = new EmailDTO ("iommi@email.com");
+	public void forgotPasswordWhenEmailDoesExistsReturnStatusCode204() {
+		EmailDTO dto = new EmailDTO("iommi@email.com");
 		HttpEntity<EmailDTO> request = new HttpEntity<EmailDTO>(dto, null);
-		ResponseEntity<String> response = restTemplate.exchange (FORGOT_PASSWORD_URL, HttpMethod.POST, request, String.class);
-		Assertions.assertEquals (response.getStatusCodeValue (), HttpStatus.NO_CONTENT.value ());
-		System.out.println (response);
+		ResponseEntity<String> response = restTemplate.exchange(FORGOT_PASSWORD_URL, HttpMethod.POST, request,
+				String.class);
+		Assertions.assertEquals(response.getStatusCodeValue(), HttpStatus.NO_CONTENT.value());
+		System.out.println(response);
 	}
-	
+
 	@Test
-	public void forgotPasswordWhenEmailDoesNotExistsReturnStatusCode404 ()
-	{
-		EmailDTO dto = new EmailDTO ("invalid@email.com");
+	public void forgotPasswordWhenEmailDoesNotExistsReturnStatusCode404() {
+		EmailDTO dto = new EmailDTO("invalid@email.com");
 		HttpEntity<EmailDTO> request = new HttpEntity<EmailDTO>(dto, null);
-		ResponseEntity<String> response = restTemplate.exchange (FORGOT_PASSWORD_URL, HttpMethod.POST, request, String.class);
-		Assertions.assertEquals (response.getStatusCodeValue (), HttpStatus.NOT_FOUND.value ());
-		System.out.println (response.getBody ());
+		ResponseEntity<String> response = restTemplate.exchange(FORGOT_PASSWORD_URL, HttpMethod.POST, request,
+				String.class);
+		Assertions.assertEquals(response.getStatusCodeValue(), HttpStatus.NOT_FOUND.value());
+		System.out.println(response.getBody());
 	}
-	
+
 	// --> REFRESH_TOKEN_URL = "/v1/protected/auth/refresh-token/"
-	
+
 	@Test
-	public void refreshTokenWhenUserHasRoleEmployeeShouldReturnStatusCode204 ()
-	{
-		HttpEntity<Void> request = new HttpEntity<Void>(this.getEmployeeEntity ().getHeaders ());
-		ResponseEntity<String> response = restTemplate.exchange (REFRESH_TOKEN_URL, HttpMethod.POST, request, String.class);
-		Assertions.assertEquals (response.getStatusCodeValue (), HttpStatus.NO_CONTENT.value ());
-		System.out.println (response);
+	public void refreshTokenWhenUserHasRoleEmployeeShouldReturnStatusCode204() {
+		HttpEntity<Void> request = new HttpEntity<Void>(this.getEmployeeEntity().getHeaders());
+		ResponseEntity<String> response = restTemplate.exchange(REFRESH_TOKEN_URL, HttpMethod.POST, request,
+				String.class);
+		Assertions.assertEquals(response.getStatusCodeValue(), HttpStatus.NO_CONTENT.value());
+		System.out.println(response);
 	}
-	
+
 	@Test
-	public void refreshTokenWhenUserHasRoleStudentShouldReturnStatusCode204 ()
-	{
-		HttpEntity<Void> request = new HttpEntity<Void>(this.getStudentEntity ().getHeaders ());
-		ResponseEntity<String> response = restTemplate.exchange (REFRESH_TOKEN_URL, HttpMethod.POST, request, String.class);
-		Assertions.assertEquals (response.getStatusCodeValue (), HttpStatus.NO_CONTENT.value ());
-		System.out.println (response);
+	public void refreshTokenWhenUserHasRoleStudentShouldReturnStatusCode204() {
+		HttpEntity<Void> request = new HttpEntity<Void>(this.getStudentEntity().getHeaders());
+		ResponseEntity<String> response = restTemplate.exchange(REFRESH_TOKEN_URL, HttpMethod.POST, request,
+				String.class);
+		Assertions.assertEquals(response.getStatusCodeValue(), HttpStatus.NO_CONTENT.value());
+		System.out.println(response);
 	}
-	
+
 	@Test
-	public void refreshTokenWhenUserIsInvalidShouldReturnStatusCode403 ()
-	{
-		HttpEntity<Void> request = new HttpEntity<Void>(this.getWrongEntity ().getHeaders ());
-		ResponseEntity<String> response = restTemplate.exchange (REFRESH_TOKEN_URL, HttpMethod.POST, request, String.class);
-		Assertions.assertEquals (response.getStatusCodeValue (), HttpStatus.FORBIDDEN.value ());
-		System.out.println (response.getBody ());
+	public void refreshTokenWhenUserIsInvalidShouldReturnStatusCode403() {
+		HttpEntity<Void> request = new HttpEntity<Void>(this.getWrongEntity().getHeaders());
+		ResponseEntity<String> response = restTemplate.exchange(REFRESH_TOKEN_URL, HttpMethod.POST, request,
+				String.class);
+		Assertions.assertEquals(response.getStatusCodeValue(), HttpStatus.FORBIDDEN.value());
+		System.out.println(response.getBody());
 	}
 }

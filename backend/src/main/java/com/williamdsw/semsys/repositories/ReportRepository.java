@@ -12,14 +12,15 @@ import com.williamdsw.semsys.domain.Report;
 import com.williamdsw.semsys.domain.Student;
 
 @Repository
-public interface ReportRepository extends JpaRepository<Report, Integer>
-{
-	@Transactional (readOnly = true)
-	public Report findBySchedule (MeetingSchedule schedule);
-	
-	@Transactional (readOnly = true)
-	public List<Report> findByScheduleEmployee (Employee employee);
-	
-	@Transactional (readOnly = true)
-	public List<Report> findByScheduleStudent (Student student);
+public interface ReportRepository extends JpaRepository<Report, Integer> {
+
+	@Transactional(readOnly = true)
+	public Report findBySchedule(MeetingSchedule schedule);
+
+	@Transactional(readOnly = true)
+	public List<Report> findByScheduleEmployee(Employee employee);
+
+	@Transactional(readOnly = true)
+	public List<Report> findByScheduleStudent(Student student);
+
 }

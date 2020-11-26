@@ -4,14 +4,15 @@ import java.util.List;
 
 import com.williamdsw.semsys.domain.Student;
 
-public interface StudentRepository extends PersonRepository<Student>
-{
+public interface StudentRepository extends PersonRepository<Student> {
+
 	@Override
-	public List<Student> findAllByNameContainingIgnoreCase (String name);
-	
+	public List<Student> findAllByNameContainingIgnoreCase(String name);
+
 	@Override
-	public Student findByEmail (String email);
-	
+	public Student findByEmail(String email);
+
 	@Override
-	public Student findBySocialSecurityNumber (String socialSecurityNumber);
+	public Student findBySocialSecurityNumber(String socialSecurityNumber);
+
 }

@@ -17,117 +17,112 @@ import com.williamdsw.semsys.domain.Person;
 import com.williamdsw.semsys.domain.Report;
 import com.williamdsw.semsys.mail.MailConstants;
 
-public abstract class AbstractEmailService implements EmailService
-{
+public abstract class AbstractEmailService implements EmailService {
+
 	// FIELDS
-	
-	private String sender = MailConstants.getDefaultSender ();
-	
-	@Autowired private TemplateEngine templateEngine;
-	@Autowired private JavaMailSender javaMailSender;
-	
+
+	private String sender = MailConstants.getDefaultSender();
+
+	@Autowired
+	private TemplateEngine templateEngine;
+
+	@Autowired
+	private JavaMailSender javaMailSender;
+
 	// OVERRIDED FUNCTIONS
-	
+
 	@Override
-	public void sendMeetingScheduleConfirmationEmail (MeetingSchedule schedule) 
-	{
-		SimpleMailMessage message = prepareSimpleMailMessage (schedule.getStudent ().getEmail (), "A new meeting has been scheduled", schedule.toString ());
-		sendEmail (message);
+	public void sendMeetingScheduleConfirmationEmail(MeetingSchedule schedule) {
+		String title = "A new meeting has been scheduled";
+		SimpleMailMessage message = prepareSimpleMailMessage(schedule.getStudent().getEmail(), title, schedule.toString());
+		sendEmail(message);
 	}
-	
+
 	@Override
-	public void sendMeetingScheduleConfirmationHtmlEmail (MeetingSchedule schedule) 
-	{
-		try 
-		{
-			String htmlTemplate = htmlFromTemplate ("schedule", schedule, "schedule/meeting-schedule-confirmation");
-			MimeMessage message = prepareMimeMessage (schedule.getStudent ().getEmail (), "A new meeting has been scheduled", htmlTemplate);
-			sendHtmlEmail (message);
+	public void sendMeetingScheduleConfirmationHtmlEmail(MeetingSchedule schedule) {
+		try {
+			String title = "A new meeting has been scheduled";
+			String filePath = "schedule/meeting-schedule-confirmation";
+			String htmlTemplate = htmlFromTemplate("schedule", schedule, filePath);
+			MimeMessage message = prepareMimeMessage(schedule.getStudent().getEmail(), title, htmlTemplate);
+			sendHtmlEmail(message);
 		} 
-		catch (Exception e) 
-		{
-			sendMeetingScheduleConfirmationEmail (schedule);
+		catch (Exception e) {
+			sendMeetingScheduleConfirmationEmail(schedule);
 		}
 	}
 
 	@Override
-	public void sendIssuedReportEmail (Report report) 
-	{
-		SimpleMailMessage message = prepareSimpleMailMessage (report.getSchedule ().getStudent ().getEmail (), "A new report has been issued", report.toString ());
-		sendEmail (message);
+	public void sendIssuedReportEmail(Report report) {
+		String title = "A new report has been issued";
+		SimpleMailMessage message = prepareSimpleMailMessage(report.getSchedule().getStudent().getEmail(), title, report.toString());
+		sendEmail(message);
 	}
-	
+
 	@Override
-	public void sendIssuedReportHtmlEmail (Report report) 
-	{
-		try 
-		{
-			String htmlTemplate = htmlFromTemplate ("report", report, "report/issued-report");
-			MimeMessage message = prepareMimeMessage (report.getSchedule ().getStudent ().getEmail (), "A new report has been issued", htmlTemplate);
-			sendHtmlEmail (message);
+	public void sendIssuedReportHtmlEmail(Report report) {
+		try {
+			String title = "A new report has been issued";
+			String htmlTemplate = htmlFromTemplate("report", report, "report/issued-report");
+			MimeMessage message = prepareMimeMessage(report.getSchedule().getStudent().getEmail(), title, htmlTemplate);
+			sendHtmlEmail(message);
 		} 
-		catch (Exception e) 
-		{
-			sendIssuedReportEmail (report);
+		catch (Exception e) {
+			sendIssuedReportEmail(report);
 		}
 	}
-	
+
 	@Override
-	public void sendNewPasswordEmail (Person person, String newPassword) 
-	{
-		SimpleMailMessage message = prepareNewPasswordEmail (person, newPassword);
-		sendEmail (message);
+	public void sendNewPasswordEmail(Person person, String newPassword) {
+		SimpleMailMessage message = prepareNewPasswordEmail(person, newPassword);
+		sendEmail(message);
 	}
-	
+
 	// HELPER FUNCTIONS
-	
-	protected SimpleMailMessage prepareSimpleMailMessage (String recipient, String subject, String text) 
-	{
+
+	protected SimpleMailMessage prepareSimpleMailMessage(String recipient, String subject, String text) {
 		SimpleMailMessage message = new SimpleMailMessage();
 
 		// Parameters
-		message.setTo (recipient);
-		message.setFrom (sender);
-		message.setSubject (subject);
-		message.setSentDate(new Date (System.currentTimeMillis ()));
-		message.setText (text);
+		message.setTo(recipient);
+		message.setFrom(sender);
+		message.setSubject(subject);
+		message.setSentDate(new Date(System.currentTimeMillis()));
+		message.setText(text);
 
 		return message;
 	}
-	
-	protected MimeMessage prepareMimeMessage (String recipient, String subject, String htmlTemplate) throws MessagingException
-	{
-		MimeMessage message = javaMailSender.createMimeMessage ();
-		MimeMessageHelper helper = new MimeMessageHelper (message, true);
-		
+
+	protected MimeMessage prepareMimeMessage(String recipient, String subject, String htmlTemplate) throws MessagingException {
+		MimeMessage message = javaMailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
 		// Parameters
-		helper.setTo (recipient);
-		helper.setFrom (sender);
-		helper.setSubject (subject);
-		helper.setSentDate(new Date (System.currentTimeMillis ()));
-		helper.setText (htmlTemplate, true);
-		
+		helper.setTo(recipient);
+		helper.setFrom(sender);
+		helper.setSubject(subject);
+		helper.setSentDate(new Date(System.currentTimeMillis()));
+		helper.setText(htmlTemplate, true);
+
 		return message;
 	}
-	
-	protected String htmlFromTemplate (String objectName, Object object, String template)
-	{
-		Context context = new Context ();
-		context.setVariable (objectName, object);
-		return templateEngine.process (template, context);
+
+	protected String htmlFromTemplate(String objectName, Object object, String template) {
+		Context context = new Context();
+		context.setVariable(objectName, object);
+		return templateEngine.process(template, context);
 	}
-	
-	protected SimpleMailMessage prepareNewPasswordEmail (Person person, String newPassword)
-	{
-		SimpleMailMessage message = new SimpleMailMessage ();
-		
+
+	protected SimpleMailMessage prepareNewPasswordEmail(Person person, String newPassword) {
+		SimpleMailMessage message = new SimpleMailMessage();
+
 		// Parameters
-		message.setTo (person.getEmail ());
-		message.setFrom (sender);
-		message.setSubject ("New password request!");
-		message.setSentDate (new Date (System.currentTimeMillis ()));
-		message.setText (String.format ("New password generated:\n%s", newPassword));
-		
+		message.setTo(person.getEmail());
+		message.setFrom(sender);
+		message.setSubject("New password request!");
+		message.setSentDate(new Date(System.currentTimeMillis()));
+		message.setText(String.format("New password generated:\n%s", newPassword));
+
 		return message;
 	}
 }

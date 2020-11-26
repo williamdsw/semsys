@@ -9,30 +9,27 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
-public class SmtpMailService extends AbstractEmailService 
-{
-	// FIELDS
-	
-	private static final Logger LOG = LoggerFactory.getLogger (SmtpMailService.class);
-	
-	@Autowired private MailSender mailSender;
-	@Autowired private JavaMailSender javaMailSender;
-	
-	// OVERRIDED FUNCTIONS
-	
+public class SmtpMailService extends AbstractEmailService {
+
+	private static final Logger LOG = LoggerFactory.getLogger(SmtpMailService.class);
+
+	@Autowired
+	private MailSender mailSender;
+
+	@Autowired
+	private JavaMailSender javaMailSender;
+
 	@Override
-	public void sendEmail (SimpleMailMessage message) 
-	{
-		LOG.info ("Sending email...");
-		mailSender.send (message);
-		LOG.info ("Email sent!");
+	public void sendEmail(SimpleMailMessage message) {
+		LOG.info("Sending email...");
+		mailSender.send(message);
+		LOG.info("Email sent!");
 	}
-	
+
 	@Override
-	public void sendHtmlEmail (MimeMessage message) 
-	{
-		LOG.info ("Sending HTML email...");
-		javaMailSender.send (message);
-		LOG.info ("Email sent!");		
+	public void sendHtmlEmail(MimeMessage message) {
+		LOG.info("Sending HTML email...");
+		javaMailSender.send(message);
+		LOG.info("Email sent!");
 	}
 }

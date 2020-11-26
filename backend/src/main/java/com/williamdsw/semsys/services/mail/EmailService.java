@@ -6,15 +6,13 @@ import com.williamdsw.semsys.domain.MeetingSchedule;
 import com.williamdsw.semsys.domain.Person;
 import com.williamdsw.semsys.domain.Report;
 
-public interface EmailService 
-{
-	// HELPER FUNCTIONS
-	
-	public void sendMeetingScheduleConfirmationEmail (MeetingSchedule schedule);
-	public void sendMeetingScheduleConfirmationHtmlEmail (MeetingSchedule schedule);
-	public void sendIssuedReportEmail (Report report);
-	public void sendIssuedReportHtmlEmail (Report report);
-	public void sendEmail (SimpleMailMessage message);
-	public void sendHtmlEmail (MimeMessage message);
-	public void sendNewPasswordEmail (Person person, String newPassword);
+public interface EmailService {
+
+	public void sendMeetingScheduleConfirmationEmail(MeetingSchedule schedule);
+	public void sendMeetingScheduleConfirmationHtmlEmail(MeetingSchedule schedule);
+	public void sendIssuedReportEmail(Report report);
+	public void sendIssuedReportHtmlEmail(Report report);
+	public void sendEmail(SimpleMailMessage message);
+	public void sendHtmlEmail(MimeMessage message);
+	public void sendNewPasswordEmail(Person person, String newPassword);
 }

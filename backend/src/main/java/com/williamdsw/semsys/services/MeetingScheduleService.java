@@ -12,9 +12,9 @@ import com.williamdsw.semsys.domain.MeetingSchedule;
 import com.williamdsw.semsys.domain.Person;
 import com.williamdsw.semsys.domain.Student;
 import com.williamdsw.semsys.domain.dto.MeetingScheduleDTO;
-import com.williamdsw.semsys.domain.dto.MeetingScheduleNewDTO;
 import com.williamdsw.semsys.domain.enums.MeetingStatus;
 import com.williamdsw.semsys.domain.enums.Profile;
+import com.williamdsw.semsys.domain.newdto.MeetingScheduleNewDTO;
 import com.williamdsw.semsys.repositories.MeetingScheduleRepository;
 import com.williamdsw.semsys.repositories.PersonRepository;
 import com.williamdsw.semsys.security.UserDetailsSS;
@@ -25,125 +25,119 @@ import com.williamdsw.semsys.services.mail.EmailService;
 import com.williamdsw.semsys.services.security.UserService;
 
 @Service
-public class MeetingScheduleService 
-{
+public class MeetingScheduleService {
+
 	// FIELDS
-	
-	@Autowired private MeetingScheduleRepository scheduleRepository;
-	@Autowired private PersonRepository<Person> personRepository;
-	@Autowired private PersonService personService;
-	@Autowired private EmailService emailService;
-	
+
+	@Autowired
+	private MeetingScheduleRepository scheduleRepository;
+
+	@Autowired
+	private PersonRepository<Person> personRepository;
+
+	@Autowired
+	private PersonService personService;
+
+	@Autowired
+	private EmailService emailService;
+
 	// HELPER FUNCTIONS
-	
-	public List<MeetingSchedule> findAll ()
-	{
-		UserService.checkAuthenticatedUser (Profile.EMPLOYEE);
-		return scheduleRepository.findAll ();
+
+	public List<MeetingSchedule> findAll() {
+		UserService.checkAuthenticatedUser(Profile.EMPLOYEE);
+		return scheduleRepository.findAll();
 	}
-	
-	public MeetingSchedule findById (Integer id)
-	{
-		UserDetailsSS user = UserService.getAuthenticated ();
-		if (user == null || !user.hasRole (Profile.EMPLOYEE) && !user.hasRole (Profile.STUDENT)) 
-		{
-			throw new AuthorizationException ("Access Denied");
+
+	public MeetingSchedule findById(Integer id) {
+		UserDetailsSS user = UserService.getAuthenticated();
+		if (user == null || !user.hasRole(Profile.EMPLOYEE) && !user.hasRole(Profile.STUDENT)) {
+			throw new AuthorizationException("Access Denied");
 		}
-		
-		Optional<MeetingSchedule> schedule = scheduleRepository.findById (id);
-		return schedule.orElseThrow (() -> new ObjectNotFoundException (String.format ("Meeting Schedule not found for id: %s", id)));
+
+		Optional<MeetingSchedule> schedule = scheduleRepository.findById(id);
+		String message = String.format("Meeting Schedule not found for id: %s", id);
+		return schedule.orElseThrow(() -> new ObjectNotFoundException(message));
 	}
 
-	public List<MeetingSchedule> findByStatus (MeetingStatus status)
-	{
-		UserService.checkAuthenticatedUser (Profile.EMPLOYEE);
-		return scheduleRepository.findByStatus (status.getCode ());
+	public List<MeetingSchedule> findByStatus(MeetingStatus status) {
+		UserService.checkAuthenticatedUser(Profile.EMPLOYEE);
+		return scheduleRepository.findByStatus(status.getCode());
 	}
 
-	public List<MeetingSchedule> findByEmployee (Integer employeeId)
-	{
-		UserService.checkAuthenticatedUser (Profile.EMPLOYEE);
-		Employee employee = (Employee) personService.findById (employeeId);
-		return scheduleRepository.findByEmployee (employee);
+	public List<MeetingSchedule> findByEmployee(Integer employeeId) {
+		UserService.checkAuthenticatedUser(Profile.EMPLOYEE);
+		Employee employee = (Employee) personService.findById(employeeId);
+		return scheduleRepository.findByEmployee(employee);
 	}
 
-	public List<MeetingSchedule> findByStudent (Integer studentId)
-	{
-		UserDetailsSS user = UserService.getAuthenticated ();
-		if (user == null || !user.hasRole (Profile.EMPLOYEE) && !user.hasRole (Profile.STUDENT) ||
-			user.hasRole (Profile.STUDENT) && !user.getId ().equals (studentId)) 
-		{
-			throw new AuthorizationException ("Access Denied");
+	public List<MeetingSchedule> findByStudent(Integer studentId) {
+		UserDetailsSS user = UserService.getAuthenticated();
+		if (user == null || !user.hasRole(Profile.EMPLOYEE) && !user.hasRole(Profile.STUDENT)
+				|| user.hasRole(Profile.STUDENT) && !user.getId().equals(studentId)) {
+			throw new AuthorizationException("Access Denied");
 		}
-		
-		Student student = (Student) personService.findById (studentId);
-		return scheduleRepository.findByStudent (student);
+
+		Student student = (Student) personService.findById(studentId);
+		return scheduleRepository.findByStudent(student);
 	}
-	
+
 	@Transactional
-	public MeetingSchedule insert (MeetingSchedule schedule)
-	{
-		UserService.checkAuthenticatedUser (Profile.EMPLOYEE);
-		UserDetailsSS user = UserService.getAuthenticated ();
-		if (!user.getId ().equals (schedule.getEmployee ().getId ())) 
-		{
-			throw new AuthorizationException ("Access Denied");
+	public MeetingSchedule insert(MeetingSchedule schedule) {
+		UserService.checkAuthenticatedUser(Profile.EMPLOYEE);
+		UserDetailsSS user = UserService.getAuthenticated();
+		if (!user.getId().equals(schedule.getEmployee().getId())) {
+			throw new AuthorizationException("Access Denied");
 		}
-		
-		schedule.setId (null);
-		schedule.setMeetingStatus (MeetingStatus.SCHEDULED);
-		schedule = scheduleRepository.save (schedule);
-		personRepository.save (schedule.getEmployee ());
-		personRepository.save (schedule.getStudent ());
-		emailService.sendMeetingScheduleConfirmationHtmlEmail (schedule);
+
+		schedule.setId(null);
+		schedule.setMeetingStatus(MeetingStatus.SCHEDULED);
+		schedule = scheduleRepository.save(schedule);
+		personRepository.save(schedule.getEmployee());
+		personRepository.save(schedule.getStudent());
+		emailService.sendMeetingScheduleConfirmationHtmlEmail(schedule);
 		return schedule;
 	}
-	
+
 	@Transactional
-	public MeetingSchedule updateStatus (MeetingSchedule schedule)
-	{
-		UserService.checkAuthenticatedUser (Profile.EMPLOYEE);
-		
-		MeetingSchedule newSchedule = findById (schedule.getId ());
-		
-		UserDetailsSS user = UserService.getAuthenticated ();
-		if (!user.getId ().equals (newSchedule.getEmployee ().getId ())) 
-		{
-			throw new AuthorizationException ("Access Denied");
+	public MeetingSchedule updateStatus(MeetingSchedule schedule) {
+		UserService.checkAuthenticatedUser(Profile.EMPLOYEE);
+
+		MeetingSchedule newSchedule = findById(schedule.getId());
+
+		UserDetailsSS user = UserService.getAuthenticated();
+		if (!user.getId().equals(newSchedule.getEmployee().getId())) {
+			throw new AuthorizationException("Access Denied");
 		}
-		
-		updateData (schedule, newSchedule);
-		return scheduleRepository.save (newSchedule);
+
+		updateData(schedule, newSchedule);
+		return scheduleRepository.save(newSchedule);
 	}
-	
-	public MeetingSchedule fromDTO (MeetingScheduleDTO dto)
-	{
-		return new MeetingSchedule (dto.getId (), dto.getDatetime (), null, null, MeetingStatus.toEnum (dto.getMeetingStatus ()));
+
+	public MeetingSchedule fromDTO(MeetingScheduleDTO dto) {
+		return new MeetingSchedule(dto.getId(), dto.getDatetime(), null, null, MeetingStatus.toEnum(dto.getMeetingStatus()));
 	}
-	
-	public MeetingSchedule fromDTO (MeetingScheduleNewDTO dto)
-	{
-		MeetingSchedule schedule = new MeetingSchedule ();
-		schedule.setId (dto.getId ());
-		schedule.setDatetime (dto.getDatetime ());
-		schedule.setMeetingStatus (null);
-		
+
+	public MeetingSchedule fromDTO(MeetingScheduleNewDTO dto) {
+		MeetingSchedule schedule = new MeetingSchedule();
+		schedule.setId(dto.getId());
+		schedule.setDatetime(dto.getDatetime());
+		schedule.setMeetingStatus(null);
+
 		// IDs
-		Employee employee = (Employee) personService.findById (dto.getEmployeeId ());
-		Student student = (Student) personService.findById (dto.getStudentId ());
-		schedule.setEmployee (employee);
-		schedule.setStudent (student);
-		
+		Employee employee = (Employee) personService.findById(dto.getEmployeeId());
+		Student student = (Student) personService.findById(dto.getStudentId());
+		schedule.setEmployee(employee);
+		schedule.setStudent(student);
+
 		return schedule;
 	}
 
-	private void updateData (MeetingSchedule schedule, MeetingSchedule newSchedule)
-	{
-		if (newSchedule.getStatus ().equals (MeetingStatus.FINISHED) || newSchedule.getStatus ().equals (MeetingStatus.CANCELED))
-		{
-			throw new DataIntegrityException ("Cannot modify an finished or canceled meeting!");
+	private void updateData(MeetingSchedule schedule, MeetingSchedule newSchedule) {
+		if (newSchedule.getStatus().equals(MeetingStatus.FINISHED) || newSchedule.getStatus().equals(MeetingStatus.CANCELED)) {
+			String message = "Cannot modify an finished or canceled meeting!";
+			throw new DataIntegrityException(message);
 		}
-		
-		newSchedule.setMeetingStatus (schedule.getStatus ());
+
+		newSchedule.setMeetingStatus(schedule.getStatus());
 	}
 }

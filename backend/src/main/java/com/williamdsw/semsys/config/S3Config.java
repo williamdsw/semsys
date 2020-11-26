@@ -11,22 +11,21 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.williamdsw.semsys.aws.AwsConstants;
 
 @Configuration
-public class S3Config 
-{
+public class S3Config {
 	// FIELDS
-	
-	private String accessKeyId = AwsConstants.getAccessKeyId ();
-	private String secretAccessKey = AwsConstants.getSecretAccessKey ();
-	private String regionName = AwsConstants.getS3Region ();
-	
+
+	private String accessKeyId = AwsConstants.getAccessKeyId();
+	private String secretAccessKey = AwsConstants.getSecretAccessKey();
+	private String regionName = AwsConstants.getS3Region();
+
 	// BEANS
-	
+
 	@Bean
-	public AmazonS3 amazonS3 ()
-	{
-		BasicAWSCredentials credentials = new BasicAWSCredentials (accessKeyId, secretAccessKey);
-		AWSStaticCredentialsProvider provider = new AWSStaticCredentialsProvider (credentials);
-		AmazonS3 client = AmazonS3ClientBuilder.standard ().withRegion (Regions.fromName (regionName)).withCredentials (provider).build ();
+	public AmazonS3 amazonS3() {
+		BasicAWSCredentials credentials = new BasicAWSCredentials(accessKeyId, secretAccessKey);
+		AWSStaticCredentialsProvider provider = new AWSStaticCredentialsProvider(credentials);
+		Regions region = Regions.fromName(regionName);
+		AmazonS3 client = AmazonS3ClientBuilder.standard().withRegion(region).withCredentials(provider).build();
 		return client;
 	}
 }

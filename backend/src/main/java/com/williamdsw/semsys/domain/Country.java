@@ -11,87 +11,80 @@ import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Country implements Serializable
-{
+public class Country implements Serializable {
 	// FIELDS
-	
+
 	private static final long serialVersionUID = 1L;
-	
-	@Id @GeneratedValue (strategy = GenerationType.IDENTITY)
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+
 	private String name;
 	private String abbreviation;
-	
-	@JsonIgnore @OneToMany (mappedBy = "country")
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "country")
 	private List<State> states = new ArrayList<>();
-	
+
 	// CONSTRUCTORS
-	
-	public Country () {}
-	public Country (Integer id, String name, String abbreviation) 
-	{
-		super ();
+
+	public Country() {
+	}
+
+	public Country(Integer id, String name, String abbreviation) {
+		super();
 		this.id = id;
 		this.name = name;
 		this.abbreviation = abbreviation;
 	}
-	
+
 	// GETTERS / SETTERS
-	
-	public Integer getId () 
-	{
+
+	public Integer getId() {
 		return id;
 	}
-	
-	public void setId (Integer id) 
-	{
+
+	public void setId(Integer id) {
 		this.id = id;
 	}
-	
-	public String getName () 
-	{
+
+	public String getName() {
 		return name;
 	}
-	
-	public void setName (String name) 
-	{
+
+	public void setName(String name) {
 		this.name = name;
 	}
-	
-	public String getAbbreviation () 
-	{
+
+	public String getAbbreviation() {
 		return abbreviation;
 	}
-	
-	public void setAbbreviation (String abbreviation) 
-	{
+
+	public void setAbbreviation(String abbreviation) {
 		this.abbreviation = abbreviation;
 	}
-	
-	public List<State> getStates () 
-	{
+
+	public List<State> getStates() {
 		return states;
 	}
-	
-	public void setStates (List<State> states) 
-	{
+
+	public void setStates(List<State> states) {
 		this.states = states;
 	}
-	
+
 	// OVERRIDED FUNCTIONS
-	
+
 	@Override
-	public int hashCode () 
-	{
+	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-	
+
 	@Override
-	public boolean equals (Object obj) 
-	{
+	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -99,12 +92,10 @@ public class Country implements Serializable
 		if (getClass() != obj.getClass())
 			return false;
 		Country other = (Country) obj;
-		if (id == null) 
-		{
+		if (id == null) {
 			if (other.id != null)
 				return false;
-		} 
-		else if (!id.equals(other.id))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}

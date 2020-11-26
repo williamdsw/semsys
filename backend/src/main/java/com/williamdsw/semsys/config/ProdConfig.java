@@ -11,33 +11,30 @@ import com.williamdsw.semsys.services.mail.EmailService;
 import com.williamdsw.semsys.services.mail.SmtpMailService;
 
 @Configuration
-@Profile ("prod")
-public class ProdConfig 
-{
+@Profile("prod")
+public class ProdConfig {
 	// FIELDS
-	
-	@Value ("${spring.jpa.hibernate.ddl-auto}")
+
+	@Value("${spring.jpa.hibernate.ddl-auto}")
 	private String strategy;
-	
-	@Autowired private MockDatabaseService mockDatabaseService;
-	
+
+	@Autowired
+	private MockDatabaseService mockDatabaseService;
+
 	// BEANS
-	
+
 	@Bean
-	public boolean mockDatabase () throws Exception
-	{
-		if (!strategy.equals ("create")) 
-		{
+	public boolean mockDatabase() throws Exception {
+		if (!strategy.equals("create")) {
 			return false;
 		}
-		
-		mockDatabaseService.mockDatabase ();
+
+		mockDatabaseService.mockDatabase();
 		return true;
 	}
-	
+
 	@Bean
-	public EmailService emailService ()
-	{
-		return new SmtpMailService ();
+	public EmailService emailService() {
+		return new SmtpMailService();
 	}
 }

@@ -20,43 +20,39 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.williamdsw.semsys.domain.SchoolClass;
 import com.williamdsw.semsys.domain.dto.SchoolClassDTO;
-import com.williamdsw.semsys.domain.dto.SchoolClassNewDTO;
+import com.williamdsw.semsys.domain.newdto.SchoolClassNewDTO;
 import com.williamdsw.semsys.services.SchoolClassService;
 
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping (path = "/v1")
-public class SchoolClassResource 
-{
+@RequestMapping(path = "/v1")
+public class SchoolClassResource {
+
 	// FIELDS
-	
+
 	@Autowired
 	private SchoolClassService schoolClassService;
-	
+
 	// ENDPOINTS
-	
-	@ApiOperation (value = "Find all classes by given course and name", response = SchoolClassDTO[].class)
-	@GetMapping (path = "/public/courses/{courseId}/classes")
-	public ResponseEntity<List<SchoolClassDTO>> findAllClassesByCourseAndName 
-	(
-		@PathVariable Integer courseId,
-		@RequestParam (value = "name", defaultValue = "") String name
-	)
-	{
-		List<SchoolClass> classes = schoolClassService.findByCourseAndName (courseId, name);
-		List<SchoolClassDTO> listDto = classes.stream ().map (schoolClass -> new SchoolClassDTO (schoolClass)).collect (Collectors.toList ());
-		return ResponseEntity.ok ().body (listDto);
+
+	@ApiOperation(value = "Find all classes by given course and name", response = SchoolClassDTO[].class)
+	@GetMapping(path = "/public/courses/{courseId}/classes")
+	public ResponseEntity<List<SchoolClassDTO>> findAllClassesByCourseAndName(@PathVariable Integer courseId,
+			@RequestParam(value = "name", defaultValue = "") String name) {
+		List<SchoolClass> classes = schoolClassService.findByCourseAndName(courseId, name);
+		List<SchoolClassDTO> listDto = classes.stream().map(schoolClass -> new SchoolClassDTO(schoolClass)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
 	}
-	
-	@ApiOperation (value = "Insert a new school class")
-	@PreAuthorize ("hasRole('ADMIN')")
-	@PostMapping (path = "/admin/classes")
-	public ResponseEntity<Void> insert (@Valid @RequestBody SchoolClassNewDTO dto)
-	{
-		SchoolClass schoolClass = schoolClassService.fromDTO (dto);
-		schoolClass = schoolClassService.insert (schoolClass);
-		URI location = ServletUriComponentsBuilder.fromCurrentServletMapping ().path ("/v1/public/courses/{id}/classes").buildAndExpand (schoolClass.getCourse ().getId ()).toUri ();
-		return ResponseEntity.created (location).build ();
+
+	@ApiOperation(value = "Insert a new school class")
+	@PreAuthorize("hasRole('ADMIN')")
+	@PostMapping(path = "/admin/classes")
+	public ResponseEntity<Void> insert(@Valid @RequestBody SchoolClassNewDTO dto) {
+		SchoolClass schoolClass = schoolClassService.fromDTO(dto);
+		schoolClass = schoolClassService.insert(schoolClass);
+		String path = "/v1/public/courses/{id}/classes";
+		URI location = ServletUriComponentsBuilder.fromCurrentServletMapping().path(path).buildAndExpand(schoolClass.getCourse().getId()).toUri();
+		return ResponseEntity.created(location).build();
 	}
 }

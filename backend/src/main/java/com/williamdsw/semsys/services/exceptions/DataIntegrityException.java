@@ -1,15 +1,10 @@
 package com.williamdsw.semsys.services.exceptions;
 
-public class DataIntegrityException extends RuntimeException 
-{
-	// FIELDS
-	
+public class DataIntegrityException extends RuntimeException {
+
 	private static final long serialVersionUID = 1L;
 
-	// CONSTRUCTOR
-	
-	public DataIntegrityException (String message) 
-	{
-		super (message);
+	public DataIntegrityException(String message) {
+		super(message);
 	}
 }

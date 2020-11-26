@@ -9,11 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.williamdsw.semsys.domain.SchoolClass;
 
 @Repository
-public interface SchoolClassRepository extends JpaRepository<SchoolClass, Integer>
-{
-	@Transactional (readOnly = true)
-	public List<SchoolClass> findByCourseId (Integer courseId);
-	
-	@Transactional (readOnly = true)
-	public List<SchoolClass> findByCourseIdAndNameContainingIgnoreCase (Integer courseId, String name);
+public interface SchoolClassRepository extends JpaRepository<SchoolClass, Integer> {
+
+	@Transactional(readOnly = true)
+	public List<SchoolClass> findByCourseId(Integer courseId);
+
+	@Transactional(readOnly = true)
+	public List<SchoolClass> findByCourseIdAndNameContainingIgnoreCase(Integer courseId, String name);
+
 }
