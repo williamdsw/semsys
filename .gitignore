@@ -3,8 +3,6 @@
 backend/HELP.md
 backend/target/
 backend/!.mvn/wrapper/maven-wrapper.jar
-backend/!**/src/main/**
-backend/!**/src/test/**
 
 ### STS ###
 backend/.apt_generated
@@ -31,6 +29,11 @@ backend/build/
 
 ### VS Code ###
 backend/.vscode/
+
+### Custom ###
+backend/src/main/resources/*.properties
+backend/src/main/java/com/williamdsw/semsys/aws/AwsConstants.java
+backend/src/main/java/com/williamdsw/semsys/mail/MailConstants.java
 
 
 
