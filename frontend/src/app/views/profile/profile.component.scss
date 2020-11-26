@@ -1,0 +1,32 @@
+.box-wrapper {
+    width: 50rem;
+    max-width: 50rem;
+
+    .card-body {
+
+        .user-image {
+            width: fit-content;
+            height: fit-content;
+    
+            .card-img {
+                max-width: 200px;
+                max-height: 200px;
+                border: 1px solid rgba($color: #000000, $alpha: 0.2);
+            }
+
+            .btn {
+                width: 200px;
+                max-width: 200px;
+            }
+        }
+
+        p.user-information { font-size: 16px;}
+    }
+}
+
+@media only screen and (max-width: 425px) {
+    .box-wrapper {
+        width: 100%;
+        max-width: 100%;
+    }
+}

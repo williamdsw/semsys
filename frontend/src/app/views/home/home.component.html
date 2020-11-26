@@ -1,0 +1,11 @@
+<!-- icons -->
+<div class="home-container mx-auto my-3 my-md-5 shadow">
+    <div class="row">
+        <ng-container *ngFor="let link of buildCarouselLinks ();">
+            <div class="col-12 col-md-auto my-3" *ngIf="link.checkProfile">
+                <img class="icon mx-auto" [src]="link.src" [alt]="link.alt | translate">
+                <a class="mt-3" [routerLink]="link.url"> {{ link.alt | translate }} </a>
+            </div>
+        </ng-container>
+    </div>
+</div>

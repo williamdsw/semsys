@@ -1,0 +1,67 @@
+<div class="container">
+    <div class="box-wrapper mx-auto my-3 my-md-5">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="text-center"> S E M S Y S </h4>
+            </div>
+
+            <div class="card-body">
+                <form class="needs-validation" novalidate [formGroup]="form" (ngSubmit)="onSubmit ();">
+
+                    <!-- social security number -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="ssnInput" class="required-label d-none d-md-block"> {{ 'global.social-security-number' | translate }} * </label>
+                                <input type="text" id="ssnInput" class="form-control" 
+                                    [placeholder]="'global.social-security-number' | translate" minlength="11" maxlength="11" 
+                                    formControlName="socialSecurityNumber" [ngClass]="buildValidationClass ('socialSecurityNumber')"
+                                    [mask]="inputMasks.socialSecurityNumber" [dropSpecialCharacters]="false">
+                                <app-error-message [control]="form.get ('socialSecurityNumber')" [label]="'Social Security Number'"></app-error-message>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- password -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="passwordInput" class="required-label d-none d-md-block"> {{ 'global.password' | translate }} * </label>
+                                <input type="password" id="passwordInput" class="form-control" 
+                                       [placeholder]="'global.password' | translate" maxlength="20" 
+                                       formControlName="password" [ngClass]="buildValidationClass ('password')">
+                                <app-error-message [control]="form.get ('password')" [label]="'Password'"></app-error-message>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <label class="required-label"> (*) {{ 'global.required-fields' | translate }} </label>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="d-none" #btnSubmit> Login </button>
+                </form>
+
+                <hr>
+                <div class="row">
+                    <div class="col-12">
+                        <a [routerLink]="['/forgot-password']"> {{ 'global.forgot-password' | translate }} </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col-md-6 my-1">
+                        <button type="button" class="btn btn-primary btn-block" (click)="onSignUp ();"> {{ 'global.buttons.sign-up-students' | translate }} </button>
+                    </div>
+                    <div class="col-md-6 my-1">
+                        <button type="button" class="btn btn-success btn-block" (click)="btnSubmit.click ();" [disabled]="!this.form.valid"> {{ 'global.buttons.login' | translate }} </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

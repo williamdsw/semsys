@@ -1,0 +1,49 @@
+<!-- table -->
+<div class="card-box shadow-lg mx-auto my-3 my-md-5">
+
+    <h2 class="mb-3"> {{ globalHeader | translate }} </h2>
+
+    <!-- search -->
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" [formControl]="queryField" [placeholder]="'global.messages.search-for-name' | translate">
+        <div class="input-group-append">
+            <button type="search" class="btn btn-primary" (click)="onSearch ();"> {{ 'global.buttons.search' | translate }} </button>
+        </div>
+    </div>
+
+    <div *ngIf="records$ | async as employees; else spanLoading;">
+        <div class="card-container" *ngIf="!hasError;">
+            <div class="row row-cols-1 row-cols-md-4">
+                <div class="col mb-4" *ngFor="let employee of employees;">
+                    <div class="card card-list-item">
+                        <div class="card-header card-name" [title]="employee.getName ()"> {{ employee.getName () }} </div>
+                        <img class="m-2 img-fluid" [src]="employee?.getImageUrl() || 'assets/images/avatar-blank.png'"
+                            alt="person">
+                        <div class="card-body">
+                            <p class="card-text"> {{ employee.getEmail () }} </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- actions -->
+    <div class="row mt-2">
+        <div class="col-auto">
+            <button type="button" class="btn btn-primary" (click)="redirectToNewEmployee ();"> {{ 'global.buttons.new-employee' | translate }} </button>
+        </div>
+    </div>
+
+    <ng-template #spanLoading>
+        <div class="bg-light p-3 text-center">
+            <span *ngIf="!hasError; else spanError;"> {{ 'global.messages.loading' | translate }} {{ 'global.menu-links.employees' | translate }} ... </span>
+        </div>
+    </ng-template>
+
+    <ng-template #spanError>
+        <span> {{ 'global.messages.system-error' | translate }} </span>
+        <button type="button" class="btn btn-info mx-1" (click)="onSearch ()"> {{ 'global.buttons.reload' | translate }} </button>
+    </ng-template>
+
+</div>

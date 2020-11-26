@@ -1,0 +1,35 @@
+<!-- modal -->
+<div class="modal-content" role="dialog" aria-hidden="true">
+
+    <!-- header -->
+    <div class="modal-header">
+        <h5 class="modal-title"> {{ 'report.report-details' | translate }} </h5>
+        <button type="button" class="close" aria-label="Close" (click)="modalRef.hide ()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+    </div>
+
+    <!-- body -->
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12 text-center"><h5> {{ title }} </h5></div>
+            <div class="col-12 border-top my-3"></div>
+
+            <div class="col-12"><span><b> {{ 'report.written-by' | translate }} : </b> {{ employeeName }} </span></div>
+            <div class="col-12"><span><b> {{ 'report.about' | translate }} : </b> {{ studentName }} </span></div>
+            <div class="col-12 border-top my-3"></div>
+
+            <div class="col-12 overflow-auto" style="max-height: 12rem;"><p> {{ content }} </p></div>
+            <div class="col-12 border-top my-3"></div>
+
+            <div class="col-12">
+                <h6> {{ 'report.issued-in' | translate }} {{ emission | date }} </h6>
+            </div>
+        </div>
+    </div>
+
+    <!-- footer -->
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="onClose ();"> {{ 'global.buttons.close' | translate }} </button>
+    </div>
+</div>

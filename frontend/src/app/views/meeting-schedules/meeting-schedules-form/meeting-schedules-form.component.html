@@ -1,0 +1,80 @@
+<!-- meeting schedule form -->
+<div class="modal-content" role="dialog" aria-hidden="true">
+
+    <!-- header -->
+    <div class="modal-header">
+        <h5 class="modal-title"> {{ 'global.buttons.new-meeting-schedule' | translate }} </h5>
+        <button type="button" class="close" aria-label="Close" (click)="onClose ();">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <!-- body -->
+    <div class="modal-body">
+        <form class="needs-validation" novalidate [formGroup]="form" (ngSubmit)="onSubmit ()">
+            <div>
+                <!-- employee -->
+                <div class="form-row">
+                    <div class="col-md-12 form-group">
+                        <label for="employeeSelect" class="required-label">
+                            {{ (userType === 'Employee' ? 'global.other.you' : 'meeting-schedules.employee') | translate }} *
+                        </label>
+                        <p *ngIf="userType === 'Employee'; else employeeSelect"> 
+                            {{ employees[currentUserIndex]?.getName () }}
+                        </p>
+
+                        <ng-template #employeeSelect>
+                            <select id="employeeSelect" class="form-control" formControlName="employeeId" [ngClass]="buildValidationClass ('employeeId')">
+                                <option *ngFor="let employee of employees;" [value]="employee.getId ()">
+                                    {{ employee.getName () }}
+                                </option>
+                            </select>
+                            <app-error-message [control]="form.get ('employeeId')" [label]="'meeting-schedules.employee' | translate"></app-error-message>
+                        </ng-template>
+                    </div>
+                </div>
+
+                <!-- student -->
+                <div class="form-row">
+                    <div class="col-md-12 form-group">
+                        <label for="studentSelect" class="required-label">
+                            {{ (userType === 'Student' ? 'meeting-schedules.you' : 'meeting-schedules.student') | translate }} *
+                        </label>
+                        <p *ngIf="userType === 'Student'; else studentSelect"> 
+                            {{ students[currentUserIndex]?.getName () }}
+                        </p>
+                        
+                        <ng-template #studentSelect>
+                            <select id="studentSelect" class="form-control" formControlName="studentId" [ngClass]="buildValidationClass ('employeeId')">
+                                <option *ngFor="let student of students;" [value]="student.getId ()">
+                                    {{ student.getName () }}
+                                </option>
+                            </select>
+                            <app-error-message [control]="form.get ('studentId')" [label]="'meeting-schedules.student' | translate"></app-error-message>
+                        </ng-template>
+                    </div>
+                </div>
+
+                <!-- datetime -->
+                <div class="form-row">
+                    <div class="col-md-12 form-group">
+                        <label class="required-label"> {{ 'meeting-schedules.datetime' | translate }} * </label>
+                        <input type="datetime-local" class="form-control" 
+                               #datetimeInput formControlName="datetime" [ngClass]="buildValidationClass ('datetime')" 
+                               [min]="todayDate.toISOString ().slice (0, 16)" [value]="todayDate.toISOString ().slice (0, 16)">
+                        <app-error-message [control]="form.get ('datetime')" [label]="'meeting-schedules.datetime' | translate"></app-error-message>
+                    </div>
+                </div>
+            </div>
+
+            <label class="required-label"> (*) {{ 'global.required-fields' | translate }} </label>
+            <button type="submit" class="d-none" #buttonSubmit> Submit </button>
+        </form>
+    </div>
+
+    <!-- footer -->
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="onClose ();"> {{ 'global.buttons.cancel' | translate }} </button>
+        <button type="button" class="btn btn-success float-right" (click)="buttonSubmit.click ()"> {{ 'global.buttons.submit' | translate }} </button>
+    </div>
+</div>

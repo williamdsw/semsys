@@ -1,0 +1,68 @@
+<!-- courses form -->
+<div class="modal-content" role="dialog" aria-hidden="true">
+
+    <!-- header -->
+    <div class="modal-header">
+        <h5 class="modal-title"> {{ 'global.buttons.new-class' | translate  }} </h5>
+        <button type="button" class="close" aria-label="Close" (click)="onClose();">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <!-- body -->
+    <div class="modal-body">
+        <form class="needs-validation" novalidate [formGroup]="form" (ngSubmit)="onSubmit ();">
+            
+            <!-- name -->
+            <div class="form-row">
+                <div class="col-md-12 form-group">
+                    <label for="inputCourseName" class="required-label"> {{ 'global.personal.name' | translate }} * </label>
+                    <input type="text" id="inputCourseName" class="form-control" minlength="5" maxlength="120"
+                           formControlName="name" [ngClass]="buildValidationClass ('name')">
+                    <app-error-message [control]="form.get ('name')" [label]="'global.personal.name' | translate" ></app-error-message>
+                </div>
+            </div>
+
+            <div class="form-row">
+
+                <!-- start -->
+                <div class="col-md-6 form-group">
+                    <label for="startInput" class="required-label"> {{ 'classes.start' | translate }} * </label>
+                    <input type="text" id="startInput" class="form-control" minlength="10" maxlength="10" 
+                           formControlName="start" [ngClass]="buildValidationClass ('start')"
+                           bsDatepicker [bsConfig]="bsDateConfig" [minDate]="todayDate">
+                    <app-error-message [control]="form.get ('start')" [label]="'classes.start' | translate"></app-error-message>
+                </div>
+
+                <!-- end -->
+                <div class="col-md-6 form-group">
+                    <label for="endInput" class="required-label"> {{ 'classes.end' | translate }} * </label>
+                    <input type="text" id="endInput" class="form-control" minlength="10" maxlength="10"
+                           formControlName="end" [ngClass]="buildValidationClass ('end')"
+                           bsDatepicker [bsConfig]="bsDateConfig" [minDate]="todayDate">
+                    <app-error-message [control]="form.get ('end')" [label]="'classes.end' | translate"></app-error-message>
+                </div>
+            </div>
+
+            <!-- course -->
+            <div class="form-row">
+                <div class="col-md-12 form-group">
+                    <label class="required-label"> {{ 'course.course' | translate }} * </label>
+                    <input type="text" class="form-control" [value]="this.currentCourse.getName ()" readonly disabled>
+                </div>
+            </div>
+
+            <b class="btn-outline-danger"> {{ errorMessage | translate }} </b>
+
+            <label class="required-label"> (*) {{ 'global.required-fields' | translate }} </label>
+            <button type="submit" class="d-none" #buttonSubmit> Submit </button>
+        </form>
+    </div>
+
+    <!-- footer -->
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="onClose ();"> {{ 'global.buttons.cancel' | translate }} </button>
+        <button type="button" class="btn btn-success float-right" (click)="buttonSubmit.click ()"> {{ 'global.buttons.submit' | translate }} </button>
+    </div>
+
+</div>

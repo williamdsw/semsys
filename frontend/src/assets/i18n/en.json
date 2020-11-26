@@ -1,0 +1,203 @@
+{
+    "global": {
+        "social-security-number": "Social Security Number",
+        "password": "Password",
+        "passwords": "Passwords",
+        "confirm-password": "Confirm Password",
+        "required-fields": "Required Fields",
+        "forgot-password": "I forgot my password",
+        "personal": {
+            "personal": "Personal",
+            "name": "Name",
+            "email": "Email",
+            "birthdate": "Birthdate",
+            "phone-number": "Phone Number",
+            "phone-numbers": "Phone Numbers"
+        },
+        "address": {
+            "address": "Address",
+            "country": "Country",
+            "state": "State",
+            "city": "City",
+            "street": "Street",
+            "complement": "Complement",
+            "number": "Number",
+            "zip-code": "Zip Code"
+        },
+        "buttons": {
+            "sign-up-students": "Sign Up for Students",
+            "login": "Login",
+            "cancel": "Cancel",
+            "close": "Close",
+            "submit": "Submit",
+            "delete": "Delete",
+            "reload": "Reload",
+            "search": "Search",
+            "new-employee": "New Employee",
+            "new-meeting-schedule": "New Meeting Schedule",
+            "new-report": "New Report",
+            "new-course": "New Course",
+            "new-class": "New Class",
+            "no": "No",
+            "yes": "Yes",
+            "ok": "Ok",
+            "apply": "Apply"
+        },
+        "menu-links": {
+            "persons": "Persons",
+            "employees": "Employees",
+            "students": "Students",
+            "courses": "Courses",
+            "schedules": "Schedules",
+            "my-schedules": "My Schedules",
+            "my-reports": "My Reports",
+            "profile": "Profile",
+            "settings": "Settings",
+            "about": "About",
+            "logout": "Logout"
+        },
+        "messages": {
+            "loading": "Loading",
+            "system-error": "System error! Please, try again later or contact the Administrator.",
+            "search-for-name": "Search for name...",
+            "nothing-found": "Nothing found!",
+            "not-found": "Page not found!"
+        },
+        "other": {
+            "you": "You",
+            "my": "My",
+            "all": "All"
+        },
+        "validations-messages": {
+            "required": "This field is required",
+            "min-length": "Min length is",
+            "max-length": "Max length is",
+            "email": "Email is invalid!",
+            "equals-to": "are not equals!",
+            "characters": "characters"
+        }
+    },
+    "modal": {
+        "titles": {
+            "error": "Error",
+            "attention": "Attention",
+            "confirmation": "Confirmation",
+            "success": "Success",
+            "check-your-email": "If this email exists, a new password will be sent...",
+            "required-title": "Please fill or review those required fields above"
+        },
+        "messages": {
+            "confirmation": "Are you sure?",
+            "zipcode-not-found": "Zip code not found!",
+            "ssn-not-found": "Unable to find SSN!",
+            "ssn-found": "This SSN already exists! Please insert a different one or check your login!",
+            "email-found": "This email already exists!",
+            "post-error": "Something went wrong! Please try again!",
+            "post-success": "Complete registration!",
+            "delete-error": "Some error happened on delete this register!",
+            "delete-success": "Register deleted successfully!",
+            "forgot-password-success": "Your new password has been sent to your email!",
+            "enter-valid-email": "Enter a valid email!",
+            "unable-load": "Unable to load some resources!",
+            "setting-applied": "Settings Applied!",
+            "please-wait": "Please Wait..."
+        }
+    },
+    "sign-up": {
+        "your-course": "Your Course",
+        "your-class": "Your Class"
+    },
+    "forgot-password": {
+        "back-login": "Back to Login"
+    },
+    "meeting-schedules": {
+        "employee": "Employee",
+        "student": "Student",
+        "datetime": "Date & Time",
+        "current-status": "Current Status",
+        "status": {
+            "status": "Status",
+            "scheduled": "Scheduled",
+            "finished": "Finished",
+            "canceled": "Canceled"
+        },
+        "buttons": {
+            "cancel-schedule": "Cancel Schedule"
+        },
+        "messages": {
+            "cancel-confirmation": "Are you sure that you want to cancel this meeting? This cannot be undone!",
+            "cancel-success": "Meeting canceled successfully!",
+            "cancel-error": "Error on cancel the meeting!",
+            "scheduled-success": "Meeting scheduled!",
+            "scheduled-error": "Error on schedule your meeting!"
+        }
+    },
+    "profile": {
+        "other-info": "Other Info",
+        "buttons": {
+            "select-file": "Select File",
+            "change-image": "Change Image",
+            "upload-image": "Upload Image"
+        }
+    },
+    "report": {
+        "issuer": "Issuer",
+        "about": "About",
+        "title": "Title",
+        "content": "Content",
+        "emission": "Emission",
+        "written-by": "Written By",
+        "information": "Information",
+        "details": "Details",
+        "employee-reports-not-found": "Nothing found! Please make a report after finish some meeting!",
+        "student-reports-not-found": "There is no report about you",
+        "report-details": "Report Details",
+        "issued-in": "Issued in",
+        "messages": {
+            "report-success": "New report issued!",
+            "report-error": "Error on issue your report!"
+        }
+    },
+    "course": {
+        "course": "Course",
+        "filter": "Filter",
+        "period": {
+            "period": "Period",
+            "choose-period": "Choose a Period",
+            "morning": "Morning",
+            "afternoon": "Afternoon",
+            "evening": "Evening"
+        },
+        "type": {
+            "type": "Type",
+            "choose-type": "Choose a Type",
+            "technical-course": "Technical Course",
+            "licentiate": "Licentiate",
+            "bachelor-degree": "Bachelor Degree"
+        },
+        "classes": {
+            "classes": "Classes",
+            "list": "List",
+            "new": "New"
+        },
+        "messages": {
+            "course-success": "Course created!",
+            "course-error": "Error on creation of the Course!",
+            "confirmation": "Are you sure that you want to delete this Course and its respective Classes?"
+        }
+    },
+    "classes": {
+        "start": "Start",
+        "end": "End",
+        "messages": {
+            "class-success": "Class created!",
+            "class-error": "Error on creation of the Class!",
+            "start-greater-than-end": "Start date cannot be greater than end date!"
+        }
+    },
+    "settings": {
+        "language": "Language",
+        "choose-language": "Choose an language!",
+        "choose-different-language": "Choose an different language from the current!"
+    }
+}

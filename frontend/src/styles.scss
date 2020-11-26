@@ -1,0 +1,196 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '~bootstrap/dist/css/bootstrap.css';
+@import '~ngx-bootstrap/datepicker/bs-datepicker.css';
+
+/* ------------------------------------------------ */
+/* VARIABLES */
+
+$base-green: #abf089;
+$base-green-dark: #007a1b;
+$base-green-alpha: rgba(0, 189, 41, 0.1);
+$base-white: #fff;
+$base-white-alpha: rgba(255, 255, 255, 0.3);
+
+/* ------------------------------------------------ */
+/* BOOTSTRAP */
+
+.form-control {
+    border: 1px solid $base-green-alpha;
+    border-radius: 0;
+    border-left: 5px solid $base-green;
+    font-style: italic;
+}
+
+.table-responsive {
+    max-height: 18rem;
+    background-color: $base-white;
+
+    thead {
+        background-color: $base-green;
+        color: black;
+    }
+}
+
+.card {
+    border-radius: 0px !important;
+
+    .card-header {
+        border-top: 0.5rem solid $base-green;
+    }
+}
+
+.card.custom-accordion {
+    .card-header {
+        border-radius: 0;
+
+        .btn.btn-link {
+            font-weight: bold;
+        }
+    }
+}
+
+/* ------------------------------------------------ */
+/* GLOBAL */
+
+html, body { height: 100%; margin: 0; padding: 0; }
+body { font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+body {
+    background: url('assets/images/background.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+button {
+    border-radius: 0 !important;
+}
+
+.required-label {
+    font-weight: bold;
+    display: block;
+    margin: 1rem auto;
+    cursor: pointer;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+/* ------------------------------------------------ */
+/* DEFAULT FORM */
+
+.box-wrapper {
+    width: 30rem;
+    height: fit-content;
+}
+
+@media only screen and (max-width: 425px) {
+    .box-wrapper {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .text-center {
+        font-size: 1.25rem;
+    }
+}
+
+
+.box {
+    width: 100%;
+    opacity: 1;
+    padding: 10px;
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    transform: scale(1);
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    margin: auto;
+}
+
+.box-wrapper .form-box {
+    min-width: 100%;
+    max-width: 300px;
+    width: 100%;
+}
+
+.box-wrapper .full-width-field {
+    width: 100%;
+    margin: 10px auto !important;
+}
+
+
+/* ------------------------------------------------ */
+/* DEFAULT TABLE | DEFAULT CARD TABLE */
+
+div.table-box, div.card-box {
+    max-width: 930px;
+    padding: 1rem;
+}
+
+div.table-box h2, div.card-box h2 {
+    display: block;
+    text-align: center;
+}
+
+div.table-box input, div.table-box select {
+    width: 100%;
+}
+
+div.table-box, div.card-box {
+    background-color: $base-white-alpha;
+    border-top: 1rem solid $base-green-dark;
+}
+
+.card-container {
+    width: 100%;
+    max-width: 100%;
+    max-height: 26rem;
+    overflow-x: scroll;
+}
+
+@media only screen and (max-width: 425px) {
+    .card-container {
+        max-height: 100%;
+        overflow: none;
+    }
+}
+
+div.card-box div.card-list-item {
+    width: 100%;
+}
+
+div.card-box div.card-header.card-name {
+    font-weight: bold;
+}
+
+div.card-box div.card-header.card-name,
+div.card-box p.card-text {
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+}
+
+div.card-box div.card-body p.card-text {
+    text-align: center;
+    font-style: italic;
+}
+
+div.card-box img.avatar {
+    display: block;
+    border-radius: 100%;
+    border: 1px dashed rgba(0, 0, 0, 0.2);
+    width: 80%;
+    height: 80%;
+    margin: 0 auto;
+}
+
+div.table-responsive table.table input[type="radio"] {
+    cursor: pointer;
+}
