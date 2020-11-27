@@ -63,7 +63,7 @@ export class MeetingSchedulesFormComponent extends BaseFormComponent<MeetingSche
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subscription$.unsubscribe();
   }
 
   // OVERRIDED FUNCTIONS
@@ -71,7 +71,7 @@ export class MeetingSchedulesFormComponent extends BaseFormComponent<MeetingSche
   protected showValidationModal(form: any) {}
   protected submit() {
     this.model = Object.assign (this.model, this.form.value) as MeetingScheduleNewDTO;
-    this.subscription = this.meetingScheduleService.insertMeetingSchedule (this.model).subscribe (
+    this.subscription$ = this.meetingScheduleService.insertMeetingSchedule (this.model).subscribe (
       response => {
         if (response.hasOwnProperty ('error')) {
           this.confirmAndClose (false);
@@ -90,7 +90,7 @@ export class MeetingSchedulesFormComponent extends BaseFormComponent<MeetingSche
   // HELPER FUNCTIONS
 
   private loadEmployees() {
-    this.subscription = this.employeeService.findAllEmployees().subscribe(
+    this.subscription$ = this.employeeService.findAllEmployees().subscribe(
       (emps: EmployeeDTO[]) => {
         emps.map(employee => {
           let dto = new EmployeeDTO();
@@ -107,7 +107,7 @@ export class MeetingSchedulesFormComponent extends BaseFormComponent<MeetingSche
   }
 
   private loadStudents() {
-    this.subscription = this.studentService.findAllStudents().subscribe(
+    this.subscription$ = this.studentService.findAllStudents().subscribe(
       (studs: StudentDTO[]) => {
         studs.map(student => {
           let dto = new StudentDTO();

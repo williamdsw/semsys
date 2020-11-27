@@ -63,7 +63,7 @@ export class ModalService {
   }
 
   public showReportDetails(employeeName: string, studentName: string, title: string, content: string, emission: Date): void {
-    const modalRef = this.modalService.show (ReportDetailsModalComponent);
+    const modalRef = this.modalService.show (ReportDetailsModalComponent, { ignoreBackdropClick: true });
     modalRef.content.employeeName = employeeName;
     modalRef.content.studentName = studentName;
     modalRef.content.title = title;

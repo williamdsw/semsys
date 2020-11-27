@@ -12,16 +12,12 @@ import { BaseListComponent } from '../base-list/base-list.component';
 })
 export abstract class BaseCardListComponent<T = any> extends BaseListComponent<T> {
 
-  // CONSTRUCTOR
-
   constructor(
     protected translateService: TranslateService,
     protected storageService: StorageService,
     protected modalService: ModalService) {
     super(translateService, storageService, modalService);
   }
-
-  // ABSTRACT FUNCTIONS
 
   public abstract onDelete(model: T): void;
   public abstract onSearch(): void;

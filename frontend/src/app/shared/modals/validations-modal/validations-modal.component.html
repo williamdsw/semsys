@@ -1,9 +1,15 @@
-<!-- modal -->
+
+<!-- vlidations modal -->
 <div class="modal-content" role="dialog" aria-hidden="true">
 
     <!-- header -->
     <div class="modal-header">
-        <h5 class="modal-title"> {{ 'modal.titles.required-title' | translate }} </h5>
+        <header>
+            <h5 class="modal-title"> 
+                {{ 'modal.titles.required-title' | translate }} 
+            </h5>
+        </header>
+        
         <button type="button" class="close" aria-label="Close" (click)="onClose ();">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -11,11 +17,15 @@
 
     <!-- body -->
     <div class="modal-body overflow-auto" style="max-height: 20rem;">
-        <p *ngFor="let field of fields;"> {{ field }}  </p>
+        <p *ngFor="let field of fields;">
+            {{ field }}
+        </p>
     </div>
 
     <!-- footer -->
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="onClose ();"> OK </button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="onClose ();"> 
+            OK 
+        </button>
     </div>
 </div>

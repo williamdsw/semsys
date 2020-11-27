@@ -55,7 +55,7 @@ export class SchoolClassesFormComponent extends BaseFormComponent<SchoolClassNew
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe ();
+    this.subscription$.unsubscribe ();
   }
 
   // OVERRIDED FUNCTIONS
@@ -73,7 +73,7 @@ export class SchoolClassesFormComponent extends BaseFormComponent<SchoolClassNew
       return;
     }
 
-    this.subscription = this.schoolClassService.insertSchoolClass (this.model).subscribe (
+    this.subscription$ = this.schoolClassService.insertSchoolClass (this.model).subscribe (
       response => {
         if (response !== null && response.hasOwnProperty ('error')) {
           this.confirmAndClose (false);

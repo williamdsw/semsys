@@ -85,7 +85,7 @@ export class EmployeesFormComponent extends PersonsFormComponent<EmployeeNewDTO>
     }
 
     this.model.setPhoneNumbers (PHONE_NUMBERS);
-    this.subscription = this.employeeService.insertEmployee (this.model).subscribe (
+    this.subscription$ = this.employeeService.insertEmployee (this.model).subscribe (
       success => {
         this.modalService.showAlertSuccess ('modal.titles.success', 'modal.messages.post-success');
         this.resetForm ();

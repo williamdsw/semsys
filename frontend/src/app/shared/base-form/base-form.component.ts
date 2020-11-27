@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
+import { FormGroup, FormArray, FormBuilder, ValidationErrors } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
 import { INPUT_MASKS } from '../utils/input-mask';
 
-import { BaseTranslateComponent } from '../base-translate/base-translate.component';
 import { StorageService } from 'src/app/services/storage.service';
+
+import { BaseTranslateComponent } from '../base-translate/base-translate.component';
 
 @Component({
   selector: 'app-base-form',
@@ -15,16 +16,12 @@ import { StorageService } from 'src/app/services/storage.service';
 })
 export abstract class BaseFormComponent<T> extends BaseTranslateComponent {
 
-  // FIELDS
-
   public form: FormGroup;
-  public wasSubmitted: boolean = false;
-  public showModal: boolean = false;
-  protected subscription: Subscription;
+  public wasSubmitted = false;
+  public showModal = false;
+  protected subscription$: Subscription;
   public model: T;
   public inputMasks = INPUT_MASKS;
-
-  // CONSTRUCTOR
 
   constructor(
     protected translateService: TranslateService,
@@ -33,17 +30,13 @@ export abstract class BaseFormComponent<T> extends BaseTranslateComponent {
     protected router?: Router,
   ) {
     super(translateService, storageService);
-    this.subscription = new Subscription();
+    this.subscription$ = new Subscription();
   }
 
-  // ABSTRACT FUNCTIONS
+  protected abstract submit(): void;
+  protected abstract showValidationModal(form: any): void;
 
-  protected abstract submit();
-  protected abstract showValidationModal(form: any);
-
-  // HELPER FUNCTIONS 
-
-  public onSubmit() {
+  public onSubmit(): void {
 
     this.wasSubmitted = true;
 
@@ -59,51 +52,51 @@ export abstract class BaseFormComponent<T> extends BaseTranslateComponent {
     }
   }
 
-  protected checkValidations(currentForm: FormGroup | FormArray) {
+  protected checkValidations(currentForm: FormGroup | FormArray): void {
     Object.keys(currentForm.controls).forEach(field => {
-      const CONTROL = currentForm.get(field);
-      CONTROL.markAsDirty();
-      CONTROL.markAsTouched();
+      const control = currentForm.get(field);
+      control.markAsDirty();
+      control.markAsTouched();
 
-      if (CONTROL instanceof FormGroup || CONTROL instanceof FormArray) {
-        this.checkValidations(CONTROL);
+      if (control instanceof FormGroup || control instanceof FormArray) {
+        this.checkValidations(control);
       }
     });
   }
 
-  public checkIsValid(field: string) {
-    const FIELD = this.form.get(field);
-    return FIELD.valid;
+  public checkIsValid(field: string): boolean {
+    const control = this.form.get(field);
+    return control ? control.valid : false;
   }
 
-  public hasError(field: string) {
-    return this.form.get(field).errors;
+  public hasError(field: string): ValidationErrors {
+    const control = this.form.get(field);
+    return control ? control.errors : null;
   }
 
   public getField(field: string): FormArray {
-    return this.form.get(field) as FormArray;
+    const control = this.form.get(field);
+    return control ? control as FormArray : null;
   }
 
-  public getFieldProperty(field: string, property: string) {
-    return this.form.get(field)[property];
+  public getFieldProperty(field: string, property: string): any {
+    const control = this.form.get(field);
+    return control ? control[property] : null;
   }
 
-  public getCurrentValueLength(field: string, max: number) {
-    const CONTROL = this.form.get(field);
-
-    console.log(max);
-
-    return `${CONTROL.value.length} / ${max} characters long.`
+  public getCurrentValueLength(field: string, max: number): string {
+    const control = this.form.get(field);
+    return control ? `${control.value.length} / ${max}.` : '';
   }
 
-  public resetForm() {
+  public resetForm(): void {
     this.form.reset();
   }
 
-  public buildValidationClass(field: string) {
+  public buildValidationClass(field: string): object {
     return {
       'is-invalid': this.wasSubmitted && this.hasError(field),
       'is-valid': this.wasSubmitted && !this.hasError(field)
-    }
+    };
   }
 }

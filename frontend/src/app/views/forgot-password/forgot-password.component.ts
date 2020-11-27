@@ -31,7 +31,7 @@ export class ForgotPasswordComponent extends BaseFormComponent<EmailDTO> impleme
 
     this.showModal = true;
     this.model = new EmailDTO();
-    this.subscription = new Subscription();
+    this.subscription$ = new Subscription();
   }
 
   // LIFECYCLE HOOKS
@@ -44,7 +44,7 @@ export class ForgotPasswordComponent extends BaseFormComponent<EmailDTO> impleme
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subscription$.unsubscribe();
   }
 
   // OVERRIDED FUNCTIONS
@@ -53,7 +53,7 @@ export class ForgotPasswordComponent extends BaseFormComponent<EmailDTO> impleme
     this.model = Object.assign(this.model, this.form.value) as EmailDTO;
     const WAIT_MODAL = this.modalService.showWaitModal ();
 
-    this.subscription = this.authenticationService.forgotPassword(this.model).subscribe(
+    this.subscription$ = this.authenticationService.forgotPassword(this.model).subscribe(
       res => {
         this.modalService.hideModal (WAIT_MODAL);
         this.modalService.showAlertSuccess ('modal.titles.success', 'modal.titles.check-your-email');

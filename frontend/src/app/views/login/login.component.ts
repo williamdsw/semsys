@@ -48,7 +48,7 @@ export class LoginComponent extends BaseFormComponent<CredentialsDTO> implements
       password: [null, [Validators.required]]
     });
 
-    this.subscription = this.route.params.subscribe (
+    this.subscription$ = this.route.params.subscribe (
       (params: any) => {
         const KEY = 'socialSecurityNumber';
         const SOCIAL_SECURITY_NUMBER = params[KEY];
@@ -61,7 +61,7 @@ export class LoginComponent extends BaseFormComponent<CredentialsDTO> implements
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subscription$.unsubscribe();
   }
 
   // HELPER FUNCTIONS
@@ -71,7 +71,7 @@ export class LoginComponent extends BaseFormComponent<CredentialsDTO> implements
     this.model = Object.assign(this.model, this.form.value);
     const WAIT_MODAL = this.modalService.showWaitModal ();
 
-    this.subscription = this.authenticationService.authenticate(this.model).subscribe(
+    this.subscription$ = this.authenticationService.authenticate(this.model).subscribe(
       response => {
         const AUTHOTIZATION_BEARER = response.headers.get('Authorization');
         this.authenticationService.successfulLogin(AUTHOTIZATION_BEARER);
@@ -81,7 +81,7 @@ export class LoginComponent extends BaseFormComponent<CredentialsDTO> implements
         Object.assign(LOCAL_USER, this.storageService.getLocalUser());
 
         const URL = `${environment.API}/v1/public/persons/ssn`;
-        this.subscription = this.personService.findPersonBySSN (URL, LOCAL_USER.getSocialSecurityNumber()).subscribe(
+        this.subscription$ = this.personService.findPersonBySSN (URL, LOCAL_USER.getSocialSecurityNumber()).subscribe(
           (childResponse) => {
             this.modalService.hideModal (WAIT_MODAL);
 

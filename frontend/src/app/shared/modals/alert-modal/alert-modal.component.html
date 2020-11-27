@@ -1,12 +1,16 @@
+
 <!-- alert modal -->
-<div class="alert {{ type }} no-margin" role="alert">
+<div class="alert {{ type }} no-margin mb-0" role="alert">
     <div>
-        <span><b> {{ title | translate }} </b></span>
+        <span class="font-weight-bold"> 
+            {{ title | translate }} 
+        </span>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="onClose ();">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
+
     <hr>
 
-    <p [innerHtml]="message | translate"> </p>
+    <p [innerHtml]="message | translate"></p>
 </div>

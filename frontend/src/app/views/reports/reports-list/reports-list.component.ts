@@ -14,6 +14,7 @@ import { StudentDTO } from 'src/app/models/domain/dto/student.dto';
 import { MeetingScheduleDTO } from 'src/app/models/domain/dto/meeting-schedule.dto';
 
 import { BaseTableComponent } from 'src/app/shared/list-table/base-table/base-table.component';
+import { ReportDetails } from 'src/app/models/report-detail';
 
 @Component({
   selector: 'app-reports-list',
@@ -101,9 +102,14 @@ export class ReportsListComponent extends BaseTableComponent<ReportDTO> implemen
   // HELPER FUNCTIONS
 
   public showDetailModal(report: ReportDTO): void {
-    const EMPLOYEE_NAME = report.getSchedule ().getEmployee ().getName ();
-    const STUDENT_NAME = report.getSchedule ().getStudent ().getName ();
-    this.modalService.showReportDetails (EMPLOYEE_NAME, STUDENT_NAME, report.getTitle (), report.getContent (), report.getEmission ());
+    const employeeName = report.getSchedule ().getEmployee ().getName ();
+    const studentName = report.getSchedule().getStudent().getName();
+    const reportDetails: ReportDetails = {
+      employeeName, studentName, title: report.getTitle(),
+      content: report.getContent(), emission: report.getEmission()
+    };
+    
+    this.modalService.showReportDetails (employeeName, studentName, report.getTitle (), report.getContent (), report.getEmission ());
   }
 
   public containsProfile(profile: string) {

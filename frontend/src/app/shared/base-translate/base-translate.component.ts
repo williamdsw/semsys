@@ -9,23 +9,15 @@ import { StorageService } from 'src/app/services/storage.service';
 })
 export class BaseTranslateComponent {
 
-  // CONSTRUCTOR
-
   constructor(
     protected translateService: TranslateService,
     protected storageService: StorageService) {
     translateService.addLangs(['en', 'pt-br']);
     translateService.setDefaultLang (storageService.getDefaultLanguage ());
-    //console.log (storageService);
-    //translateService.setDefaultLang ('en');
-
-  
+    // translateService.setDefaultLang ('en');
   }
 
-  // HELPER FUNCTIONS
-
   protected setDefaultLanguage(language: string): void {
-    console.log ('set language?');
     this.storageService.setDefaultLanguage (language);
   }
 

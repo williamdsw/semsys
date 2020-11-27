@@ -4,47 +4,47 @@ export class FormValidators {
 
     // HELPER FUNCTIONS
 
-    public static equalsTo(otherField: string) {
+    public static equalsTo(otherField: string): object {
 
-        const VALIDATOR = (formControl: FormControl) => {
+        const validator = (formControl: FormControl) => {
 
             if (otherField == null ) {
                 throw new Error ('Other field is required!');
             }
 
-            const ROOT = (formControl.root as FormGroup);
-            if (!formControl.root || !ROOT.controls) {
+            const root = (formControl.root as FormGroup);
+            if (!formControl.root || !root.controls) {
                 return null;
             }
 
-            const FIELD = ROOT.get (otherField);
-            if (!FIELD) {
+            const field = root.get (otherField);
+            if (!field) {
                 throw new Error ('A valid field is required!');
             }
 
-            if (FIELD.value !== formControl.value) {
+            if (field.value !== formControl.value) {
                 return { equalsTo: otherField };
             }
 
             return null;
         };
 
-        return VALIDATOR;
+        return validator;
     }
 
-    public static zipCode(control: FormControl) {
+    public static zipCode(control: FormControl): object {
 
-        const ZIP_CODE = control.value;
-        if (ZIP_CODE && ZIP_CODE !== '') {
-            const VALIDATOR = /^[0-9]{5}(?:-[0-9]{4})?$/;
-            return VALIDATOR.test (ZIP_CODE) ? null : { invalidZipCode: true };
+        const zipCode = control.value;
+        if (zipCode && zipCode !== '') {
+            const validator = /^[0-9]{5}(?:-[0-9]{4})?$/;
+            return validator.test (zipCode) ? null : { invalidZipCode: true };
         }
 
         return null;
     }
 
-    public static getErrorMessage(fieldName: string, validatorName: string, validatorValue?: any) {
-        const CONFIG = {
+    public static getErrorMessage(fieldName: string, validatorName: string, validatorValue?: any): any {
+        const config = {
             required: `This field is required!`,
             minlength: `Minimum length is ${validatorValue.requiredLength} characters.`,
             maxlength: `Maximum length is ${validatorValue.requiredLength} characters.`,
@@ -52,6 +52,6 @@ export class FormValidators {
             equalsTo: `${fieldName} are not equals!`,
         };
 
-        return CONFIG[validatorName];
+        return config[validatorName];
     }
 }

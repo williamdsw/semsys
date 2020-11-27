@@ -105,7 +105,7 @@ export abstract class PersonsFormComponent<T> extends BaseFormComponent<T> imple
     }
 
     ngOnDestroy(): void {
-        this.subscription.unsubscribe ();
+        this.subscription$.unsubscribe ();
     }
 
     // OVERRIDED FUNCTIONS
@@ -145,7 +145,7 @@ export abstract class PersonsFormComponent<T> extends BaseFormComponent<T> imple
 
     private loadStates(countryId: string) {
         this.currentCountryId = parseInt (countryId, 10);
-        this.subscription = this.stateService.listStates (parseInt (countryId, 10)).subscribe (
+        this.subscription$ = this.stateService.listStates (parseInt (countryId, 10)).subscribe (
             (loadedStates: StateDTO[]) => {
                 this.states = loadedStates.map (state => {
                     const DTO = new StateDTO ();
@@ -169,7 +169,7 @@ export abstract class PersonsFormComponent<T> extends BaseFormComponent<T> imple
     }
 
     private loadCities(stateId: string) {
-        this.subscription = this.cityService.listCities (this.currentCountryId, parseInt (stateId, 10)).subscribe (
+        this.subscription$ = this.cityService.listCities (this.currentCountryId, parseInt (stateId, 10)).subscribe (
             (loadedCities: CityDTO[]) => {
                 this.cities = loadedCities.map (city => {
                     const DTO = new CityDTO ();
@@ -237,7 +237,7 @@ export abstract class PersonsFormComponent<T> extends BaseFormComponent<T> imple
         if (this.form.get('socialSecurityNumber').valid) {
             if (this.previousSocialSecurityNumber !== socialSecurityNumber) {
                 const URL = `${environment.API}/v1/public/persons/ssn`;
-                this.subscription = this.personService.findPersonBySSN(URL, socialSecurityNumber).subscribe(
+                this.subscription$ = this.personService.findPersonBySSN(URL, socialSecurityNumber).subscribe(
                     response => {
                         const DTO = response as PersonDTO;
                         if (DTO != null) {
@@ -259,7 +259,7 @@ export abstract class PersonsFormComponent<T> extends BaseFormComponent<T> imple
         if (this.form.get('email').valid) {
             if (this.previousEmail !== email) {
                 const URL = `${environment.API}/v1/public/persons/email`;
-                this.subscription = this.personService.findPersonByEmail(URL, email).subscribe(
+                this.subscription$ = this.personService.findPersonByEmail(URL, email).subscribe(
                     response => {
                         const DTO = response as PersonDTO;
                         if (DTO != null) {

@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 
+import { TranslateService } from '@ngx-translate/core';
 import { ModalService } from '../../../services/modal.service';
 import { StorageService } from 'src/app/services/storage.service';
 
 import { LocalUser } from 'src/app/models/local-user';
 
 import { BaseListComponent } from '../base-list/base-list.component';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-base-table',
@@ -15,13 +15,8 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export abstract class BaseTableComponent<T = any> extends BaseListComponent<T> {
 
-  // FIELDS
-
   protected _localUser = new LocalUser ();
-
   public tableHeaders: string[] = [];
-
-  // CONSTRUCTOR
 
   constructor(
     protected translateService: TranslateService,
@@ -31,8 +26,6 @@ export abstract class BaseTableComponent<T = any> extends BaseListComponent<T> {
     super(translateService, storageService, modalService);
   }
 
-  // ABSTRACT FUNCTIONS
-
-  protected abstract pipeFindAll(observable: Observable<any>);
+  protected abstract pipeFindAll(observable: Observable<any>): any;
   public abstract onReload(): void;
 }

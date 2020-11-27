@@ -9,24 +9,20 @@ import { TranslatePipe } from '@ngx-translate/core';
 })
 export class ErrorMessageComponent {
 
-  // FIELDS
-
   @Input() public control: FormControl;
   @Input() public label: string;
 
-  // CONSTRUCTOR
-
   constructor(private translate: TranslatePipe) { }
 
-  // HELPER FUNCTIONS
-
-  public get errorMessages() {
-
-    for (const PROPERTY_NAME in this.control.errors) {
-      if (this.control.errors.hasOwnProperty(PROPERTY_NAME) && this.control.dirty) {
-        return FormValidators.getErrorMessage(this.label, PROPERTY_NAME, this.control.errors[PROPERTY_NAME]);
+  public get errorMessages(): any {
+    const errors = this.control.errors;
+    for (const propertyName in errors) {
+      if (errors.hasOwnProperty(propertyName) && this.control.dirty) {
+        const propertyValue = errors[propertyName];
+        return FormValidators.getErrorMessage(this.label, propertyName, propertyValue);
       }
     }
+
     return null;
   }
 }

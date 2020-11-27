@@ -15,8 +15,6 @@ import { BaseTranslateComponent } from '../../base-translate/base-translate.comp
 })
 export abstract class BaseListComponent<T = any> extends BaseTranslateComponent implements OnInit {
 
-  // FIELDS
-
   public globalHeader = 'header';
   public records$: Observable<T[]>;
   public error$ = new Subject<boolean>();
@@ -27,7 +25,6 @@ export abstract class BaseListComponent<T = any> extends BaseTranslateComponent 
   protected selectedModel: T;
 
   // modal related
-
   protected confirmTitle = 'modal.titles.confirmation';
   protected confirmBody = 'modal.messages.confirmation';
   protected successTitle = 'modal.titles.success';
@@ -37,8 +34,6 @@ export abstract class BaseListComponent<T = any> extends BaseTranslateComponent 
   protected loadingErrorTitle = 'modal.titles.error';
   protected loadingErrorMessage = 'global.messages.system-error';
 
-  // CONSTRUCTOR
-
   constructor(
     protected translateService: TranslateService,
     protected storageService: StorageService,
@@ -46,17 +41,11 @@ export abstract class BaseListComponent<T = any> extends BaseTranslateComponent 
     super(translateService, storageService);
   }
 
-  // LIFECYCLE HOOKS
-
   ngOnInit(): void { }
-
-  // ABSTRACT FUNCTIONS
 
   public abstract onUpdate(): void;
   public abstract onDelete(model: T);
   protected abstract loadData(): void;
-
-  // HELPER FUNCTIONS
 
   protected handleError(title: string, message: string): void {
     this.modalService.showAlertDanger(title, message);

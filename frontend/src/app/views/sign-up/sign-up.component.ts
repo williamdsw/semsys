@@ -146,7 +146,7 @@ export class SignUpComponent extends PersonsFormComponent<StudentNewDTO> impleme
     }
 
     this.model.setPhoneNumbers (PHONE_NUMBERS);
-    this.subscription = this.studentService.insertStudent (this.model).subscribe (
+    this.subscription$ = this.studentService.insertStudent (this.model).subscribe (
       success => {
         this.modalService.hideModal (WAIT_MODAL);
         this.modalService.showAlertSuccess ('modal.titles.success', 'modal.messages.post-success');

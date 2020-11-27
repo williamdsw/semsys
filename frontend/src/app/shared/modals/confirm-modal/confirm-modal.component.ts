@@ -8,8 +8,6 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 })
 export class ConfirmModalComponent implements OnInit {
 
-  // FIELDS
-
   @Input() public title: string;
   @Input() public body: string;
   @Input() public cancelButtonText: string;
@@ -17,31 +15,25 @@ export class ConfirmModalComponent implements OnInit {
 
   public confirmResult: Subject<boolean>;
 
-  // CONSTRUCTOR
-
   constructor(public modalRef: BsModalRef) {
     this.cancelButtonText = 'global.buttons.no';
     this.okButtonText = 'global.buttons.yes';
   }
 
-  // LIFECYCLE HOOKS
-
   ngOnInit(): void {
     this.confirmResult = new Subject ();
   }
 
-  // HELPER FUNCTIONS
-
-  private confirmAndClose(value: boolean) {
+  private confirmAndClose(value: boolean): void {
     this.modalRef.hide ();
     this.confirmResult.next (value);
   }
 
-  public onClose() {
+  public onClose(): void {
     this.confirmAndClose (false);
   }
 
-  public onConfirm() {
+  public onConfirm(): void {
     this.confirmAndClose (true);
   }
 }

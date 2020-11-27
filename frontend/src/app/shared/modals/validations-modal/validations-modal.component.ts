@@ -7,19 +7,11 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 })
 export class ValidationsModalComponent implements OnInit {
 
-  // FIELDS
-
   @Input() public fields: string[] = [];
-
-  // CONSTRUCTOR
 
   constructor(public modalRef: BsModalRef) { }
 
-  // LIFECYCLE HOOKS
-
   ngOnInit(): void {}
-
-  // HELPER FUNCTIONS
 
   public onClose(): void {
     this.modalRef.hide ();

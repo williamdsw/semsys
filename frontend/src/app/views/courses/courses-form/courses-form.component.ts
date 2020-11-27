@@ -52,7 +52,7 @@ export class CoursesFormComponent extends BaseFormComponent<CourseNewDTO> implem
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subscription$.unsubscribe();
   }
 
   // OVERRIDED FUNCTIONS
@@ -60,7 +60,7 @@ export class CoursesFormComponent extends BaseFormComponent<CourseNewDTO> implem
   protected showValidationModal(form: any) {}
   protected submit() {
     this.model = Object.assign(this.model, this.form.value) as CourseNewDTO;
-    this.subscription = this.courseService.insertCourse(this.model).subscribe(
+    this.subscription$ = this.courseService.insertCourse(this.model).subscribe(
       response => {
         if (response != null && response.hasOwnProperty('error')) {
           this.confirmAndClose(false);

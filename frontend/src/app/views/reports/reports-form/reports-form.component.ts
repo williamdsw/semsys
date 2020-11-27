@@ -62,7 +62,7 @@ export class ReportsFormComponent extends BaseFormComponent<ReportDTO> implement
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe ();
+    this.subscription$.unsubscribe ();
   }
 
   // OVERRIDED FUNCTIONS
@@ -70,7 +70,7 @@ export class ReportsFormComponent extends BaseFormComponent<ReportDTO> implement
   protected showValidationModal(form: any) {}
   protected submit() {
     this.model = Object.assign (this.model, this.form.value) as ReportDTO;
-    this.subscription = this.reportService.insertReport (this.model).subscribe (
+    this.subscription$ = this.reportService.insertReport (this.model).subscribe (
       response => this.confirmAndClose (true),
       error => {
         console.log (error);

@@ -9,8 +9,9 @@ import { AlertModalComponent } from './modals/alert-modal/alert-modal.component'
 import { ConfirmModalComponent } from './modals/confirm-modal/confirm-modal.component';
 import { ReportDetailsModalComponent } from './modals/report-details-modal/report-details-modal.component';
 import { ValidationsModalComponent } from './modals/validations-modal/validations-modal.component';
-import { ErrorMessageComponent } from './error-message/error-message.component';
 import { WaitModalComponent } from './modals/wait-modal/wait-modal.component';
+
+import { ErrorMessageComponent } from './error-message/error-message.component';
 
 @NgModule({
   declarations: [
@@ -18,8 +19,8 @@ import { WaitModalComponent } from './modals/wait-modal/wait-modal.component';
     ConfirmModalComponent,
     ReportDetailsModalComponent,
     ValidationsModalComponent,
-    ErrorMessageComponent,
     WaitModalComponent,
+    ErrorMessageComponent,
   ],
   imports: [
     CommonModule,
@@ -31,8 +32,8 @@ import { WaitModalComponent } from './modals/wait-modal/wait-modal.component';
     ConfirmModalComponent,
     ReportDetailsModalComponent,
     ValidationsModalComponent,
-    ErrorMessageComponent,
     WaitModalComponent,
+    ErrorMessageComponent,
     NgxMaskModule,
     TranslateModule,
   ],
