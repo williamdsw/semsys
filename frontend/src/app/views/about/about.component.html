@@ -1,17 +1,33 @@
+
 <!-- about -->
-<div class="box-wrapper mx-auto my-3 my-md-5">
+<section class="box-wrapper mx-auto my-md-5 my-3">
     <div class="card alert-dark">
         <div class="card-body">
             <p class="slash"> &lt;&#47;&gt; </p>
-            <h3 class="text-center"> SEMSYS </h3>
+            <header>
+                <h3 class="text-center"> SEMSYS </h3>
+            </header>
+
+            <hr>
+
             <div class="row">
                 <div class="col-12">
-                    <p><b> Developed By : </b> William Santos </p>
-                    <p><b> Contact : </b><a href="https://github.com/williamdsw"> Contact </a></p>
-                    <p><b> Credits: </b></p>
-                    <p> Icons made by <a href="https://www.flaticon.com/br/autores/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/br/" title="Flaticon"> www.flaticon.com </a></p>
+                    <p> 
+                        <span class="font-weight-bold"> {{ 'about.developed-by' | translate }} </span> William Santos 
+                    </p>
+                    <p> 
+                        <span class="font-weight-bold"> {{ 'about.contact' | translate }} : </span>
+                        <a href="https://github.com/williamdsw"> github </a>
+                    </p>
+                    <p class="font-weight-bold"> {{ 'about.credits' | translate }} : </p>
+                    <p> 
+                        {{ 'about.icons-made-by' | translate }}
+                        <a href="https://www.flaticon.com/br/autores/freepik" title="Freepik"> Freepik </a> 
+                        {{ 'about.from' | translate }} 
+                        <a href="https://www.flaticon.com/br/" title="Flaticon"> www.flaticon.com </a>
+                    </p>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>

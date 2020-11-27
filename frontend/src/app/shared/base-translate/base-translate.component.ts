@@ -13,7 +13,7 @@ export class BaseTranslateComponent {
     protected translateService: TranslateService,
     protected storageService: StorageService) {
     translateService.addLangs(['en', 'pt-br']);
-    translateService.setDefaultLang (storageService.getDefaultLanguage ());
+    translateService.setDefaultLang(storageService.getDefaultLanguage());
     // translateService.setDefaultLang ('en');
   }
 

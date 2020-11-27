@@ -1,32 +1,40 @@
+
 <!-- settings -->
-<div class="box-wrapper mx-auto my-3 my-md-5">
+<section class="box-wrapper mx-auto my-3 my-md-5">
     <div class="card">
         <div class="card-header">
-            <h3 class="text-center"> {{ 'global.menu-links.settings' | translate }} </h3>
+            <header>
+                <h3 class="text-center"> 
+                    {{ 'global.menu-links.settings' | translate }} 
+                </h3>
+            </header>
         </div>
-
         <div class="card-body">
-
-            <!-- language -->
             <div class="row">
                 <div class="col-12">
                     <div class="form-group">
-                        <label for="languageSelect" class="d-none d-md-block"> {{ 'settings.language' | translate }} </label>
-                        <select #languageSelect id="languageSelect" class="form-control" (change)="currentLanguage = languageSelect.value" >
+                        <label for="languageSelect" class="d-none d-md-block">
+                            {{ 'settings.language' | translate }} 
+                        </label>
+                        <select id="languageSelect" class="form-control" #languageSelect (change)="currentLanguage = languageSelect.value">
                             <option value=""> Select an Language </option>
-                            <option *ngFor="let language of languages" [value]="language.value" [selected]="language.value == currentLanguage"> {{ language.description }} </option>
+                            <option *ngFor="let language of languages" 
+                                    [value]="language.value" [selected]="language.value == currentLanguage">
+                                    {{ language.description }} 
+                            </option>
                         </select>
                     </div>
                 </div>
             </div>
         </div>
-
         <div class="card-footer">
             <div class="row">
                 <div class="col-12">
-                   <button type="button" class="btn btn-outline-primary float-right" (click)="onApply ();"> {{ 'global.buttons.apply' | translate }} </button>
+                   <button type="button" class="btn btn-outline-primary float-right" (click)="onApply ();">
+                       {{ 'global.buttons.apply' | translate }}
+                    </button>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>

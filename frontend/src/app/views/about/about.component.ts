@@ -12,16 +12,12 @@ import { BaseTranslateComponent } from 'src/app/shared/base-translate/base-trans
 })
 export class AboutComponent extends BaseTranslateComponent implements OnInit {
 
-  // CONSTRUCTOR
-
   constructor(
     protected translateService: TranslateService,
     protected storageService: StorageService
     ) {
     super(translateService, storageService);
   }
-
-  // LIFECYCLE HOOKS
 
   ngOnInit(): void { }
 }

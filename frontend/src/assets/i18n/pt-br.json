@@ -198,5 +198,12 @@
         "language": "Idioma",
         "choose-language": "Escolha um idioma!",
         "choose-different-language": "Escolha um idioma diferente do atual!"
+    },
+    "about": {
+        "developed-by": "Desenvolvido por",
+        "contact": "Contato",
+        "credits": "Créditos",
+        "icons-made-by": "Ícones feito por",
+        "from": "direto do site"
     }
 }

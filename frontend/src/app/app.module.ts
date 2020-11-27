@@ -14,9 +14,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { BootstrapModule } from './shared/bootstrap/bootstrap.module';
 import { SharedModule } from './shared/shared.module';
 
-import { AppComponent } from './app.component';
 import { SchoolClassesModule } from './views/school-classes/school-classes.module';
 import { PageNotFoundModule } from './views/page-not-found/page-not-found.module';
+
+import { AppComponent } from './app.component';
+import { AboutModule } from './views/about/about.module';
+
 
 @NgModule({
   declarations: [
@@ -41,6 +44,7 @@ import { PageNotFoundModule } from './views/page-not-found/page-not-found.module
       }
     }),
     PageNotFoundModule,
+    AboutModule
   ],
   providers: [authenticationInterceptorProvider],
   bootstrap: [AppComponent],

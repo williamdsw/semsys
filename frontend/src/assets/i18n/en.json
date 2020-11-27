@@ -199,5 +199,12 @@
         "language": "Language",
         "choose-language": "Choose an language!",
         "choose-different-language": "Choose an different language from the current!"
+    },
+    "about": {
+        "developed-by": "Developed by",
+        "contact": "Contact",
+        "credits": "Credits",
+        "icons-made-by": "Icons made by",
+        "from": "from"
     }
 }

@@ -8,10 +8,6 @@ import { SettingsComponent } from './settings.component';
 
 @NgModule({
     declarations: [SettingsComponent],
-    imports: [
-        CommonModule,
-        SettingsRoutingModule,
-        SharedModule,
-    ]
+    imports: [CommonModule, SettingsRoutingModule, SharedModule]
 })
 export class SettingsModule {}
