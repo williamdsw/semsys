@@ -2,19 +2,13 @@ import { MeetingScheduleDTO } from './meeting-schedule.dto';
 
 export class ReportDTO {
 
-    // FIELDS
-
     private id: number;
     private title: string;
     private content: string;
     private emission: Date;
     private schedule: MeetingScheduleDTO;
 
-    // CONSTRUCTOR
-
     constructor() {}
-
-    // HELPER FUNCTIONS
 
     public getId(): number {
         return this.id;

@@ -1,17 +1,11 @@
 
 export class StateDTO {
 
-    // FIELDS
-
     private id: number;
     private name: string;
     private abbreviation: string;
 
-    // CONSTRUCTOR
-
     constructor() {}
-
-    // GETTERS / SETTERS
 
     public getId(): number {
         return this.id;

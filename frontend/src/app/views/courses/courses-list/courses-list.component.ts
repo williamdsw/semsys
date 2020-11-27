@@ -8,7 +8,7 @@ import { StorageService } from 'src/app/services/storage.service';
 import { CourseService } from 'src/app/services/domain/course.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
-import { CourseDTO } from 'src/app/models/domain/course.dto';
+import { CourseDTO } from 'src/app/models/domain/dto/course.dto';
 
 import { BaseTableComponent } from 'src/app/shared/list-table/base-table/base-table.component';
 

@@ -1,19 +1,12 @@
 
-export class SchoolClassNewDTO {
-
-    // FIELDS
+export class SchoolClassDTO {
 
     private id: number;
     private name: string;
     private start: Date;
     private end: Date;
-    private courseId: number;
-
-    // CONSTRUCTOR
 
     constructor() {}
-
-    // GETTERS / SETTERS
 
     public getId(): number {
         return this.id;
@@ -45,13 +38,5 @@ export class SchoolClassNewDTO {
 
     public setEnd(end: Date) {
         this.end = end;
-    }
-
-    public getCourseId(): number {
-        return this.courseId;
-    }
-
-    public setCourseId(courseId: number) {
-        this.courseId = courseId;
     }
 }

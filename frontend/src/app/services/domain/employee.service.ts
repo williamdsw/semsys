@@ -6,8 +6,8 @@ import { environment } from 'src/environments/environment';
 
 import { PersonService } from './person.service';
 
-import { EmployeeNewDTO } from 'src/app/models/domain/employee.new.dto';
-import { EmployeeDTO } from 'src/app/models/domain/employee.dto';
+import { EmployeeNewDTO } from 'src/app/models/domain/new-dto/employee.new.dto';
+import { EmployeeDTO } from 'src/app/models/domain/dto/employee.dto';
 
 @Injectable({
   providedIn: 'root'

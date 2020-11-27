@@ -7,8 +7,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { StorageService } from 'src/app/services/storage.service';
 import { SchoolClassService } from 'src/app/services/domain/school-class.service';
 
-import { SchoolClassDTO } from 'src/app/models/domain/school-class.dto';
-import { CourseDTO } from 'src/app/models/domain/course.dto';
+import { SchoolClassDTO } from 'src/app/models/domain/dto/school-class.dto';
+import { CourseDTO } from 'src/app/models/domain/dto/course.dto';
 
 import { BaseTranslateComponent } from 'src/app/shared/base-translate/base-translate.component';
 

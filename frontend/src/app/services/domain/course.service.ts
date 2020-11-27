@@ -5,8 +5,8 @@ import { environment } from 'src/environments/environment';
 
 import { CrudService } from 'src/app/services/crud.service';
 
-import { CourseDTO } from 'src/app/models/domain/course.dto';
-import { CourseNewDTO } from 'src/app/models/domain/course.new.dto';
+import { CourseDTO } from 'src/app/models/domain/dto/course.dto';
+import { CourseNewDTO } from 'src/app/models/domain/new-dto/course.new.dto';
 import { TimePeriod } from 'src/app/enums/time-period.enum';
 import { CourseType } from 'src/app/enums/course-type.enum';
 

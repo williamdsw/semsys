@@ -1,15 +1,9 @@
 
 export class EmailDTO {
 
-    // FIELDS
-
     private email: string;
 
-    // CONSTRUCTOR
-
     constructor() {}
-
-    // GETTERS / SETTERS
 
     public getEmail(): string {
         return this.email;

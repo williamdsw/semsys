@@ -1,5 +1,12 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, CanLoad, Router, Route } from '@angular/router';
+import {
+  CanActivate,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+  CanLoad,
+  Router,
+  Route
+} from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthenticationService } from '../services/authentication.service';
 
@@ -10,7 +17,7 @@ export class LoggedOutGuard implements CanActivate, CanLoad {
 
   // CONSTRUCTOR
 
-  constructor (
+  constructor(
     private authenticationService: AuthenticationService,
     private router: Router
   ){}
@@ -35,5 +42,5 @@ export class LoggedOutGuard implements CanActivate, CanLoad {
     this.router.navigate (['/home']);
     return false;
   }
-  
+
 }

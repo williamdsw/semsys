@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { SchoolClassNewDTO } from 'src/app/models/domain/school-class.new.dto';
+import { SchoolClassNewDTO } from 'src/app/models/domain/new-dto/school-class.new.dto';
 import { BaseFormComponent } from 'src/app/shared/base-form/base-form.component';
 import { Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
@@ -7,7 +7,7 @@ import { StorageService } from 'src/app/services/storage.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { SchoolClassService } from 'src/app/services/domain/school-class.service';
 import { FormBuilder, Validators } from '@angular/forms';
-import { CourseDTO } from 'src/app/models/domain/course.dto';
+import { CourseDTO } from 'src/app/models/domain/dto/course.dto';
 import { BsCustomDatesViewComponent } from 'ngx-bootstrap/datepicker/themes/bs/bs-custom-dates-view.component';
 
 @Component({

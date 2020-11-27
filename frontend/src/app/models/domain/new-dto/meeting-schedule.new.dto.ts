@@ -1,18 +1,12 @@
 
 export class MeetingScheduleNewDTO {
 
-    // FIELDS
-
     private id: number;
     private datetime: Date;
     private employeeId: number;
     private studentId: number;
 
-    // CONSTRUCTOR
-
     constructor() {}
-
-    // GETTERS / SETTERS
 
     public getId(): number {
         return this.id;

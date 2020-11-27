@@ -4,8 +4,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 import { PersonService } from './person.service';
-import { StudentNewDTO } from 'src/app/models/domain/student.new.dto';
-import { StudentDTO } from 'src/app/models/domain/student.dto';
+import { StudentNewDTO } from 'src/app/models/domain/new-dto/student.new.dto';
+import { StudentDTO } from 'src/app/models/domain/dto/student.dto';
 
 @Injectable({
   providedIn: 'root'

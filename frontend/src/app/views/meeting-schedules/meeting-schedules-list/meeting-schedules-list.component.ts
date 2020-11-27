@@ -8,9 +8,9 @@ import { StorageService } from 'src/app/services/storage.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ModalService } from 'src/app/services/modal.service';
 
-import { MeetingScheduleDTO } from 'src/app/models/domain/meeting-schedule.dto';
-import { EmployeeDTO } from 'src/app/models/domain/employee.dto';
-import { StudentDTO } from 'src/app/models/domain/student.dto';
+import { MeetingScheduleDTO } from 'src/app/models/domain/dto/meeting-schedule.dto';
+import { EmployeeDTO } from 'src/app/models/domain/dto/employee.dto';
+import { StudentDTO } from 'src/app/models/domain/dto/student.dto';
 
 import { MeetingStatus } from 'src/app/enums/meeting-status.enum';
 

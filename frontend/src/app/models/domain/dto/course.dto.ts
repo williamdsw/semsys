@@ -1,18 +1,12 @@
 
 export class CourseDTO {
 
-    // FIELDS
-
     private id: number;
     private name: string;
     private period: string;
     private type: string;
 
-    // CONSTRUCTOR
-
     constructor() {}
-
-    // GETTERS / SETTERS
 
     public getId(): number {
         return this.id;

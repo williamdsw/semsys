@@ -12,7 +12,7 @@ import { CityService } from 'src/app/services/domain/city.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { PersonService } from 'src/app/services/domain/person.service';
 
-import { EmployeeNewDTO } from 'src/app/models/domain/employee.new.dto';
+import { EmployeeNewDTO } from 'src/app/models/domain/new-dto/employee.new.dto';
 
 import { PersonsFormComponent } from '../../persons/persons-form.component';
 

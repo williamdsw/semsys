@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { CrudService } from 'src/app/services/crud.service';
-import { SchoolClassDTO } from 'src/app/models/domain/school-class.dto';
+import { SchoolClassDTO } from 'src/app/models/domain/dto/school-class.dto';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { SchoolClassNewDTO } from 'src/app/models/domain/school-class.new.dto';
+import { SchoolClassNewDTO } from 'src/app/models/domain/new-dto/school-class.new.dto';
 
 @Injectable({
   providedIn: 'root'

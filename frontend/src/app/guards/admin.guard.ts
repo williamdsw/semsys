@@ -1,6 +1,14 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, CanLoad, Router, Route } from '@angular/router';
+import {
+  CanActivate,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+  CanLoad,
+  Router,
+  Route
+} from '@angular/router';
 import { Observable } from 'rxjs';
+
 import { AuthenticationService } from '../services/authentication.service';
 
 @Injectable({
@@ -10,7 +18,7 @@ export class AdminGuard implements CanActivate, CanLoad {
 
   // CONSTRUCTOR
 
-  constructor (
+  constructor(
     private authenticationService: AuthenticationService,
     private router: Router
   ){}

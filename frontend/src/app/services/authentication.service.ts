@@ -8,9 +8,9 @@ import { environment } from 'src/environments/environment';
 
 import { StorageService } from './storage.service';
 
-import { CredentialsDTO } from '../models/domain/credentials.dto';
+import { CredentialsDTO } from '../models/domain/dto/credentials.dto';
 import { LocalUser } from '../models/local-user';
-import { EmailDTO } from '../models/domain/email.dto';
+import { EmailDTO } from '../models/domain/dto/email.dto';
 
 @Injectable({
   providedIn: 'root'

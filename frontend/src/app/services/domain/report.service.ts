@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 
 import { CrudService } from 'src/app/services/crud.service';
 
-import { ReportDTO } from 'src/app/models/domain/report.dto';
+import { ReportDTO } from 'src/app/models/domain/dto/report.dto';
 
 @Injectable({
   providedIn: 'root'

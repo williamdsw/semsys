@@ -1,20 +1,14 @@
 
 export class PersonDTO {
 
-    // FIELDS
-
     private id: number;
     private name: string;
     private email: string;
     private type: string;
     private profiles: string[] = [];
     private imageUrl?: string;
-    
-    // CONSTRUCTOR
 
     constructor() {}
-
-    // GETTERS SETTERS
 
     public getId(): number {
         return this.id;

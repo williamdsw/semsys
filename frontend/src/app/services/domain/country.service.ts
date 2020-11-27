@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 
-import { CountryDTO } from '../../models/domain/country.dto';
+import { CountryDTO } from '../../models/domain/dto/country.dto';
 
 import { CrudService } from '../crud.service';
 

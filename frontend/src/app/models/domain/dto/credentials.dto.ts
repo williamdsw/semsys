@@ -1,16 +1,10 @@
 
 export class CredentialsDTO {
 
-    // FIELDS
-
     private socialSecurityNumber: string;
     private password: string;
 
-    // CONSTRUCTOR
-
     constructor() {}
-
-    // GETTERS / SETTERS
 
     public getSocialSecurityNumber(): string {
         return this.socialSecurityNumber;

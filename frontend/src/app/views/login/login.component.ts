@@ -10,9 +10,9 @@ import { ModalService } from 'src/app/services/modal.service';
 import { PersonService } from 'src/app/services/domain/person.service';
 import { StorageService } from 'src/app/services/storage.service';
 
-import { CredentialsDTO } from 'src/app/models/domain/credentials.dto';
+import { CredentialsDTO } from 'src/app/models/domain/dto/credentials.dto';
 import { LocalUser } from 'src/app/models/local-user';
-import { PersonDTO } from 'src/app/models/domain/person.dto';
+import { PersonDTO } from 'src/app/models/domain/dto/person.dto';
 import { StandardError } from 'src/app/models/standard-error';
 
 import { BaseFormComponent } from 'src/app/shared/base-form/base-form.component';

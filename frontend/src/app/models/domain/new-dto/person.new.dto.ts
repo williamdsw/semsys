@@ -1,8 +1,6 @@
 
 export abstract class PersonNewDTO {
 
-    // FIELDS
-
     protected id: number;
     protected name: string;
     protected email: string;
@@ -10,22 +8,14 @@ export abstract class PersonNewDTO {
     protected password: string;
     protected phoneNumbers: string[] = [];
 
-    // ADDRESS FIELDS
-
     protected street: string;
     protected number: string;
     protected complement: string;
     protected zipCode: string;
 
-    // CITY FIELDS
-
     protected cityId: number;
 
-    // CONSTRUCTOR
-
     constructor() {}
-
-    // GETTERS / SETTERS
 
     public getId(): number {
         return this.id;
@@ -87,8 +77,8 @@ export abstract class PersonNewDTO {
         return this.number;
     }
 
-    public setNumber(number: string) {
-        this.number = number;
+    public setNumber(value: string) {
+        this.number = value;
     }
 
     public getComplement(): string {

@@ -1,19 +1,13 @@
 
 export class LocalUser {
 
-    // FIELDS
-
     private _socialSecurityNumber: string;
     private _token: string;
     private _id: number;
     private _type: string;
     private _profiles: string[] = [];
 
-    // CONSTRUCTOR
-
     constructor() {}
-
-    // GETTERS / SETTERS
 
     public getSocialSecurityNumber(): string {
         return this._socialSecurityNumber;
@@ -51,7 +45,8 @@ export class LocalUser {
         return this._profiles;
     }
 
-    public setProfiles(_profiles: string[]) {
-        this._profiles = _profiles;
+    public setProfiles(value: string[]) {
+        this._profiles = value;
     }
+
 }

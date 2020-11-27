@@ -5,8 +5,8 @@ import { environment } from 'src/environments/environment';
 
 import { CrudService } from 'src/app/services/crud.service';
 
-import { MeetingScheduleDTO } from 'src/app/models/domain/meeting-schedule.dto';
-import { MeetingScheduleNewDTO } from 'src/app/models/domain/meeting-schedule.new.dto';
+import { MeetingScheduleDTO } from 'src/app/models/domain/dto/meeting-schedule.dto';
+import { MeetingScheduleNewDTO } from 'src/app/models/domain/new-dto/meeting-schedule.new.dto';
 
 @Injectable({
   providedIn: 'root'

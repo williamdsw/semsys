@@ -8,7 +8,7 @@ import { StorageService } from 'src/app/services/storage.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
-import { EmailDTO } from 'src/app/models/domain/email.dto';
+import { EmailDTO } from 'src/app/models/domain/dto/email.dto';
 import { BaseFormComponent } from 'src/app/shared/base-form/base-form.component';
 
 @Component({

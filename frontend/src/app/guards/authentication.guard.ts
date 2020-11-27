@@ -1,9 +1,15 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, CanLoad, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+import {
+  CanActivate,
+  CanLoad,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+  Router,
+  Route
+} from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { AuthenticationService } from '../services/authentication.service';
-import { Route } from '@angular/compiler/src/core';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +18,7 @@ export class AuthenticationGuard implements CanActivate, CanLoad {
 
   // CONSTRUCTOR
 
-  constructor (
+  constructor(
     private authenticationService: AuthenticationService,
     private router: Router
   ){}
@@ -37,5 +43,5 @@ export class AuthenticationGuard implements CanActivate, CanLoad {
     this.router.navigate (['/login']);
     return false;
   }
-  
+
 }

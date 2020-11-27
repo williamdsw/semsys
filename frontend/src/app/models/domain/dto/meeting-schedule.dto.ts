@@ -3,19 +3,13 @@ import { StudentDTO } from './student.dto';
 
 export class MeetingScheduleDTO {
 
-    // FIELDS
-
     private id: number;
     private datetime: Date;
     private employee: EmployeeDTO;
     private student: StudentDTO;
     private meetingStatus: string;
 
-    // CONSTRUCTOR
-
     constructor() {}
-
-    // GETTERS / SETTERS
 
     public getId(): number {
         return this.id;

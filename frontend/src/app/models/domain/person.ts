@@ -1,29 +1,27 @@
 
 export interface Person {
 
-    // FIELDS
-
-    id: number,
-    name: string,
-    email: string,
-    socialSecurityNumber: string,
+    id: number;
+    name: string;
+    email: string;
+    socialSecurityNumber: string;
     birthdate?: Date;
 
-    phoneNumbers: string[],
+    phoneNumbers: string[];
 
     address: {
-        id: number,
-        street: string,
-        number: string,
-        complement?: string,
-        zipCode: string,
+        id: number;
+        street: string;
+        number: string;
+        complement?: string;
+        zipCode: string;
         city: {
-            name: string,
+            name: string;
             state: {
-                name: string
+                name: string;
             }
         },
-    },
+    };
 
-    imageUrl?: string
+    imageUrl?: string;
 }

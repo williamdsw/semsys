@@ -15,10 +15,10 @@ import { CityService } from 'src/app/services/domain/city.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { PersonService } from 'src/app/services/domain/person.service';
 
-import { CountryDTO } from 'src/app/models/domain/country.dto';
-import { StateDTO } from 'src/app/models/domain/state.dto';
-import { CityDTO } from 'src/app/models/domain/city.dto';
-import { PersonDTO } from 'src/app/models/domain/person.dto';
+import { CountryDTO } from 'src/app/models/domain/dto/country.dto';
+import { StateDTO } from 'src/app/models/domain/dto/state.dto';
+import { CityDTO } from 'src/app/models/domain/dto/city.dto';
+import { PersonDTO } from 'src/app/models/domain/dto/person.dto';
 
 import { FormValidators } from 'src/app/shared/utils/form-validators';
 

@@ -1,17 +1,10 @@
 
-export class CountryDTO {
-
-    // FIELDS
+export class CityDTO {
 
     private id: number;
     private name: string;
-    private abbreviation: string;
-
-    // CONSTRUCTOR
 
     constructor() {}
-
-    // GETTERS / SETTERS
 
     public getId(): number {
         return this.id;
@@ -27,13 +20,5 @@ export class CountryDTO {
 
     public setName(name: string) {
         this.name = name;
-    }
-
-    public getAbbreviation(): string {
-        return this.abbreviation;
-    }
-
-    public setAbbreviation(abbreviation: string) {
-        this.abbreviation = abbreviation;
     }
 }

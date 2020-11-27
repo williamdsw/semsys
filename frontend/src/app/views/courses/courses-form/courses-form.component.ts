@@ -7,7 +7,7 @@ import { Subject } from 'rxjs';
 import { CourseService } from 'src/app/services/domain/course.service';
 import { StorageService } from 'src/app/services/storage.service';
 
-import { CourseNewDTO } from 'src/app/models/domain/course.new.dto';
+import { CourseNewDTO } from 'src/app/models/domain/new-dto/course.new.dto';
 
 import { BaseFormComponent } from 'src/app/shared/base-form/base-form.component';
 

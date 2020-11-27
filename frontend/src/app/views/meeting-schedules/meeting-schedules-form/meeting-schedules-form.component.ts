@@ -9,9 +9,9 @@ import { StudentService } from 'src/app/services/domain/student.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { MeetingScheduleService } from 'src/app/services/domain/meeting-schedule.service';
 
-import { MeetingScheduleNewDTO } from 'src/app/models/domain/meeting-schedule.new.dto';
-import { EmployeeDTO } from 'src/app/models/domain/employee.dto';
-import { StudentDTO } from 'src/app/models/domain/student.dto';
+import { MeetingScheduleNewDTO } from 'src/app/models/domain/new-dto/meeting-schedule.new.dto';
+import { EmployeeDTO } from 'src/app/models/domain/dto/employee.dto';
+import { StudentDTO } from 'src/app/models/domain/dto/student.dto';
 import { LocalUser } from 'src/app/models/local-user';
 
 import { BaseFormComponent } from 'src/app/shared/base-form/base-form.component';

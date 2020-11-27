@@ -10,7 +10,7 @@ import { ImageUtilService } from 'src/app/services/image-util.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { StorageService } from 'src/app/services/storage.service';
 
-import { PersonDTO } from 'src/app/models/domain/person.dto';
+import { PersonDTO } from 'src/app/models/domain/dto/person.dto';
 
 import { BaseCardListComponent } from 'src/app/shared/list-table/base-card-list/base-card-list.component';
 

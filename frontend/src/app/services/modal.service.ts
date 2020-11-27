@@ -3,8 +3,8 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 import { AlertTypes } from '../enums/alert-types.enum';
 
-import { MeetingScheduleDTO } from '../models/domain/meeting-schedule.dto';
-import { CourseDTO } from '../models/domain/course.dto';
+import { MeetingScheduleDTO } from '../models/domain/dto/meeting-schedule.dto';
+import { CourseDTO } from '../models/domain/dto/course.dto';
 
 import { AlertModalComponent } from '../shared/modals/alert-modal/alert-modal.component';
 import { ConfirmModalComponent } from '../shared/modals/confirm-modal/confirm-modal.component';

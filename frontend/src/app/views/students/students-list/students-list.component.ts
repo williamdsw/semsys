@@ -11,7 +11,7 @@ import { StudentService } from 'src/app/services/domain/student.service';
 import { ImageUtilService } from 'src/app/services/image-util.service';
 import { ModalService } from 'src/app/services/modal.service';
 
-import { StudentDTO } from 'src/app/models/domain/student.dto';
+import { StudentDTO } from 'src/app/models/domain/dto/student.dto';
 
 import { BaseCardListComponent } from 'src/app/shared/list-table/base-card-list/base-card-list.component';
 

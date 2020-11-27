@@ -16,9 +16,9 @@ import { ZipCodeService } from 'src/app/services/zip-code.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { PersonService } from 'src/app/services/domain/person.service';
 
-import { StudentNewDTO } from 'src/app/models/domain/student.new.dto';
-import { CourseDTO } from 'src/app/models/domain/course.dto';
-import { SchoolClassDTO } from 'src/app/models/domain/school-class.dto';
+import { StudentNewDTO } from 'src/app/models/domain/new-dto/student.new.dto';
+import { CourseDTO } from 'src/app/models/domain/dto/course.dto';
+import { SchoolClassDTO } from 'src/app/models/domain/dto/school-class.dto';
 
 import { PersonsFormComponent } from '../persons/persons-form.component';
 
