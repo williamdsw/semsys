@@ -1,8 +1,8 @@
 
 <!-- login page -->
-<div *ngIf="isLoginPage; else myTemplate">
+<main *ngIf="isLoginPage; else myTemplate">
     <router-outlet></router-outlet>
-</div>
+</main>
 
 <!-- toolbar -->
 <ng-template #myTemplate>
@@ -12,7 +12,10 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <a class="navbar-brand" [routerLink]="['/home']" routerLinkActive="active" (click)="isOnMobile () ? isCollapsed = !isCollapsed : false;"> S E M S Y S </a>
+        <a class="navbar-brand" [routerLink]="['/home']" routerLinkActive="active" 
+           (click)="isOnMobile () ? isCollapsed = !isCollapsed : false;"> 
+            S E M S Y S 
+        </a>
 
         <!-- links -->
         <div id="homeNavbar" class="collapse navbar-collapse" [collapse]="isCollapsed" [isAnimated]="true">
@@ -21,7 +24,7 @@
                     <a class="nav-link" *ngIf="link.checkProfile" 
                        [routerLink]="[link.routerLink]" routerLinkActive="active" 
                        (click)="isOnMobile () ? isCollapsed = !isCollapsed : false;"> 
-                       {{ link.text | translate }}
+                        {{ link.text | translate }}
                     </a>
                 </li>
             </ul>
@@ -36,10 +39,12 @@
         </div>
 
         <!-- logout -->
-        <button type="button" class="btn btn-outline-danger my-2 my-sm-0" (click)="onLogout ();"> {{ 'global.menu-links.logout' | translate }} </button>
+        <button type="button" class="btn btn-outline-danger my-2 my-sm-0" (click)="onLogout ();"> 
+            {{ 'global.menu-links.logout' | translate }} 
+        </button>
     </nav>
 
-    <div class="container">
+    <main class="container">
         <router-outlet></router-outlet>
-    </div>
+    </main>
 </ng-template>

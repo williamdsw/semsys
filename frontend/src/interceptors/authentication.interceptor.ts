@@ -1,5 +1,11 @@
-import { Injectable } from "@angular/core";
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import {
+    HttpInterceptor,
+    HttpRequest,
+    HttpHandler,
+    HttpEvent,
+    HTTP_INTERCEPTORS
+} from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
@@ -18,17 +24,17 @@ export class AuthenticationInterceptor implements HttpInterceptor {
     // OVERRIDED FUNCTIONS
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        let localUser = Object.assign (new LocalUser (), this.storageService.getLocalUser ());
-        const BASE_URL_LENGTH = environment.API.length;
-        const REQUEST_TO_API = (request.url.substring (0, BASE_URL_LENGTH) == environment.API);
+        const localUser = Object.assign (new LocalUser (), this.storageService.getLocalUser ());
+        const baseUrlLength = environment.API.length;
+        const requestToApi = (request.url.substring (0, baseUrlLength) === environment.API);
 
-        if (localUser && REQUEST_TO_API) {
-            const BEARER = `Bearer ${localUser.getToken ()}`;
-            const AUTH_REQUEST = request.clone ({
-                headers: request.headers.set ('Authorization', BEARER)
+        if (localUser && requestToApi) {
+            const bearer = `Bearer ${localUser.getToken ()}`;
+            const authRequest = request.clone ({
+                headers: request.headers.set ('Authorization', bearer)
             });
 
-            return next.handle (AUTH_REQUEST);
+            return next.handle (authRequest);
         }
         else {
             return next.handle (request);
@@ -36,7 +42,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
     }
 }
 
-export const AUTHENTICATOR_INTERCEPTOR_PROVIDER = {
+export const authenticationInterceptorProvider = {
     provide: HTTP_INTERCEPTORS,
     useClass: AuthenticationInterceptor,
     multi: true

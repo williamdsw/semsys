@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
-
 import { TranslateService } from '@ngx-translate/core';
+
 import { StorageService } from './services/storage.service';
 import { AuthenticationService } from './services/authentication.service';
 
@@ -27,7 +27,9 @@ export class AppComponent extends BaseTranslateComponent implements OnInit, OnDe
 
   public isLoginPage = false;
   public isCollapsed = true;
-  private publicUrls: string[] = ['/login', '/sign-up', '/forgot-password'];
+  private publicUrls: string[] = [
+    '/login', '/sign-up', '/forgot-password'
+  ];
   private subscription$: Subscription;
 
   // CONSTRUCTOR
@@ -47,8 +49,8 @@ export class AppComponent extends BaseTranslateComponent implements OnInit, OnDe
         split = (eventUrl.includes('/login') ? eventUrl.split(';') : split);
         eventUrl = (split.length >= 2 ? split[0] : eventUrl);
 
-        for (const URL of this.publicUrls) {
-          if (URL.includes(eventUrl)) {
+        for (const url of this.publicUrls) {
+          if (url.includes(eventUrl)) {
             this.isLoginPage = true;
             break;
           }
@@ -76,7 +78,7 @@ export class AppComponent extends BaseTranslateComponent implements OnInit, OnDe
     this.router.navigate(['/login']);
   }
 
-  private buildButtonLinks() {
+  private buildButtonLinks(): any[] {
     return [
       {
         routerLink: '/persons',
@@ -112,7 +114,7 @@ export class AppComponent extends BaseTranslateComponent implements OnInit, OnDe
   }
 
   public isOnMobile() {
-    const WIDTH = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-    return (WIDTH < 768);
+    const width = (window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth);
+    return (width < 768);
   }
 }

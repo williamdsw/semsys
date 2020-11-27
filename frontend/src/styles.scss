@@ -3,8 +3,7 @@
 @import '~bootstrap/dist/css/bootstrap.css';
 @import '~ngx-bootstrap/datepicker/bs-datepicker.css';
 
-/* ------------------------------------------------ */
-/* VARIABLES */
+/* || variables */
 
 $base-green: #abf089;
 $base-green-dark: #007a1b;
@@ -12,8 +11,7 @@ $base-green-alpha: rgba(0, 189, 41, 0.1);
 $base-white: #fff;
 $base-white-alpha: rgba(255, 255, 255, 0.3);
 
-/* ------------------------------------------------ */
-/* BOOTSTRAP */
+/* || bootstrap */
 
 .form-control {
     border: 1px solid $base-green-alpha;
@@ -50,8 +48,7 @@ $base-white-alpha: rgba(255, 255, 255, 0.3);
     }
 }
 
-/* ------------------------------------------------ */
-/* GLOBAL */
+/* global */
 
 html, body { height: 100%; margin: 0; padding: 0; }
 body { font-family: Roboto, "Helvetica Neue", sans-serif; }
@@ -79,8 +76,7 @@ button {
     flex: 1 1 auto;
 }
 
-/* ------------------------------------------------ */
-/* DEFAULT FORM */
+/* forms */
 
 .box-wrapper {
     width: 30rem;

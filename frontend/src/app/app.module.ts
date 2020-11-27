@@ -7,7 +7,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-import { AUTHENTICATOR_INTERCEPTOR_PROVIDER } from 'src/interceptors/authentication.interceptor';
+import { authenticationInterceptorProvider } from 'src/interceptors/authentication.interceptor';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -16,7 +16,6 @@ import { SharedModule } from './shared/shared.module';
 
 import { AppComponent } from './app.component';
 import { SchoolClassesModule } from './views/school-classes/school-classes.module';
-import { BaseTranslateModule } from './shared/base-translate/base-translate.module';
 import { PageNotFoundModule } from './views/page-not-found/page-not-found.module';
 
 @NgModule({
@@ -43,7 +42,7 @@ import { PageNotFoundModule } from './views/page-not-found/page-not-found.module
     }),
     PageNotFoundModule,
   ],
-  providers: [AUTHENTICATOR_INTERCEPTOR_PROVIDER],
+  providers: [authenticationInterceptorProvider],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
