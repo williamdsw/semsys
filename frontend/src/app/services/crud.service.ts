@@ -1,32 +1,28 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { tap, take } from "rxjs/operators";
+import { take } from 'rxjs/operators';
 
 export class CrudService<T> {
 
-  // CONSTRUCTOR
-
   constructor(protected httpClient: HttpClient) { }
 
-  // HELPER FUNCTIONS
-
-  protected listAll(apiUrl: string, params?: HttpParams) {
+  protected listAll(apiUrl: string, params?: HttpParams): Observable<T[]> {
     return this.httpClient.get<T[]>(apiUrl, { params }).pipe (take (1));
   }
 
-  protected findUnique(apiUrl: string, params?: HttpParams) {
+  protected findUnique(apiUrl: string, params?: HttpParams): Observable<T> {
     return this.httpClient.get<T>(apiUrl, { params }).pipe (take (1));
   }
 
-  protected insert(apiUrl: string, record: T) {
+  protected insert(apiUrl: string, record: T): Observable<any> {
     return this.httpClient.post (apiUrl, record).pipe (take (1));
   }
 
-  protected update(apiUrl: string, record: T) {
+  protected update(apiUrl: string, record: T): Observable<any> {
     return this.httpClient.put (apiUrl, record).pipe (take (1));
   }
 
-  protected delete(apiUrl: string) {
+  protected delete(apiUrl: string): Observable<any> {
     return this.httpClient.delete (apiUrl).pipe (take (1));
   }
 

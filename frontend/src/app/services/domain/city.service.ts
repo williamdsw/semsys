@@ -13,15 +13,12 @@ import { CityDTO } from '../../models/domain/dto/city.dto';
 })
 export class CityService extends CrudService<CityDTO> {
 
-  // CONSTRUCTOR
-
   constructor(protected httpClient: HttpClient) {
     super(httpClient);
   }
 
-  // HELPER FUNCTIONS
-
-  public listCities (countryId: number, stateId: number) {
-    return this.listAll (`${environment.API}/v1/public/countries/${countryId}/states/${stateId}/cities`);
+  public listCities(countryId: number, stateId: number): Observable<CityDTO[]> {
+    const url = `${environment.API}/v1/public/countries/${countryId}/states/${stateId}/cities`;
+    return this.listAll (url);
   }
 }

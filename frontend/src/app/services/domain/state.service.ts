@@ -13,15 +13,11 @@ import { StateDTO } from '../../models/domain/dto/state.dto';
 })
 export class StateService extends CrudService<StateDTO> {
 
-  // CONSTRUCTOR
-
   constructor(protected httpClient: HttpClient) {
     super(httpClient);
   }
 
-  // HELPER FUNCTIONS
-
-  public listStates (countryId: number) {
+  public listStates(countryId: number): Observable<StateDTO[]> {
     return this.listAll (`${environment.API}/v1/public/countries/${countryId}/states`);
   }
 }

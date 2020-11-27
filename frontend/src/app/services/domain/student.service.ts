@@ -4,36 +4,44 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 import { PersonService } from './person.service';
+
 import { StudentNewDTO } from 'src/app/models/domain/new-dto/student.new.dto';
 import { StudentDTO } from 'src/app/models/domain/dto/student.dto';
+import { Observable } from 'rxjs';
+import { PersonDTO } from 'src/app/models/domain/dto/person.dto';
+import { EmployeeDTO } from 'src/app/models/domain/dto/employee.dto';
+import { PersonNewDTO } from 'src/app/models/domain/new-dto/person.new.dto';
+import { EmployeeNewDTO } from 'src/app/models/domain/new-dto/employee.new.dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StudentService extends PersonService {
 
-  // CONSTRUCTOR
-
   constructor(protected httpClient: HttpClient) {
     super(httpClient);
+    this.protectedUrl = `${environment.API}/v1/protected/students`;
   }
 
-  // HELPER FUNCTIONS
-
   public findAllStudents() {
-    return this.listAll (`${environment.API}/v1/protected/students`);
+    return this.listAll (this.protectedUrl);
   }
 
   public findAllByName(params: HttpParams) {
-    return this.listAll (`${environment.API}/v1/protected/students/name`, params);
+    return this.listAll (`${this.protectedUrl}/name`, params);
+  }
+
+  public findByKeyAndValueWhereUrlIs(url, key, value):
+      Observable<(PersonDTO | EmployeeDTO | StudentDTO | PersonNewDTO | EmployeeNewDTO | StudentNewDTO)> {
+    return this.findByKeyAndValueWhereUrlIs(url, key, value);
   }
 
   public findByEmail(email: string) {
-    return this.findPersonByEmail (`${environment.API}/v1/protected/students/email`, email);
+    return this.findPersonByEmail (`${this.protectedUrl}/email`, email);
   }
 
   public findBySSN(socialSecurityNumber: string) {
-    return this.findPersonBySSN (`${environment.API}/v1/protected/students/ssn`, socialSecurityNumber);
+    return this.findPersonBySSN (`${this.protectedUrl}/ssn`, socialSecurityNumber);
   }
 
   public insertStudent(student: StudentNewDTO) {
@@ -41,6 +49,6 @@ export class StudentService extends PersonService {
   }
 
   public updateStudent(student: StudentDTO) {
-    return this.updatePerson (`${environment.API}/v1/protected/students/${student.getId ()}`, student);
+    return this.updatePerson (`${this.protectedUrl}/${student.getId ()}`, student);
   }
 }

@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 
-import { JwtHelperService } from "@avatsaev/angular-jwt";
+import { JwtHelperService } from '@avatsaev/angular-jwt';
 
 import { environment } from 'src/environments/environment';
 
 import { StorageService } from './storage.service';
 
-import { CredentialsDTO } from '../models/domain/dto/credentials.dto';
 import { LocalUser } from '../models/local-user';
+import { CredentialsDTO } from '../models/domain/dto/credentials.dto';
 import { EmailDTO } from '../models/domain/dto/email.dto';
 
 @Injectable({
@@ -17,47 +18,34 @@ import { EmailDTO } from '../models/domain/dto/email.dto';
 })
 export class AuthenticationService {
 
-  // FIELDS
-
   private jwtHelper: JwtHelperService = new JwtHelperService ();
 
-  // CONSTRUCTOR
+  constructor(private httpClient: HttpClient, private storageService: StorageService) { }
 
-  constructor(
-    private httpClient: HttpClient, 
-    private storageService: StorageService) { }
-
-  // HELPER FUNCTIONS
-
-  public authenticate(credentials: CredentialsDTO) {
-    const URL = `${environment.API}/login`;
-    return this.httpClient.post (URL, credentials, {
-      observe: 'response',
-      responseType: 'text',
-    }).pipe (take (1));
+  private doPostWithTakeOne(url: string, object: any): Observable<HttpResponse<string>> {
+    return this.httpClient.post(url, object, { observe: 'response', responseType: 'text' }).pipe(take(1));
   }
 
-  public forgotPassword(email: EmailDTO) {
-    return this.httpClient.post(`${environment.API}/v1/public/auth/forgot-password`, email, {
-      observe: 'response',
-      responseType: 'text'
-    }).pipe (take (1));
+  public authenticate(credentials: CredentialsDTO): Observable<HttpResponse<string>> {
+    const url = `${environment.API}/login`;
+    return this.doPostWithTakeOne(url, credentials);
   }
 
-  public refreshToken() {
-    const URL = `${environment.API}/v1/protected/auth/refresh-token`;
-    return this.httpClient.post (URL, {}, {
-      observe: 'response', responseType: 'text'
-    }).pipe (take (1));
+  public forgotPassword(email: EmailDTO): Observable<HttpResponse<string>> {
+    const url = `${environment.API}/v1/public/auth/forgot-password`;
+    return this.doPostWithTakeOne(url, email);
   }
 
-  public successfulLogin (authorizationBearer: string) : void {
-    let newToken = authorizationBearer.substring ("Bearer ".length);
+  public refreshToken(): Observable<HttpResponse<string>> {
+    const url = `${environment.API}/v1/protected/auth/refresh-token`;
+    return this.doPostWithTakeOne(url, {});
+  }
 
-    let localUser = new LocalUser ();
+  public successfulLogin(bearer: string): void {
+    const newToken = bearer.substring ('Bearer '.length);
+    const localUser = new LocalUser ();
     localUser.setSocialSecurityNumber (this.jwtHelper.decodeToken (newToken).sub);
     localUser.setToken (newToken);
-
     this.storageService.setLocalUser (localUser);
   }
 
@@ -71,7 +59,7 @@ export class AuthenticationService {
 
   public containsProfile(profile: string): boolean {
     if (this.isAuthenticated ()) {
-      let localUser = new LocalUser ();
+      const localUser = new LocalUser ();
       Object.assign (localUser, this.storageService.getLocalUser ());
       return localUser.getProfiles ().includes (profile);
     }

@@ -13,15 +13,11 @@ import { CrudService } from '../crud.service';
 })
 export class CountryService extends CrudService<CountryDTO> {
 
-  // CONSTRUCTOR 
-
   constructor(protected httpClient: HttpClient) {
     super(httpClient);
   }
 
-  // HELPER FUNCTIONS
-
-  public listCountries () {
+  public listCountries(): Observable<CountryDTO[]> {
     return this.listAll (`${environment.API}/v1/public/countries`);
   }
 }

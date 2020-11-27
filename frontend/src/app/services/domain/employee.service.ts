@@ -1,48 +1,60 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { take } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 
 import { PersonService } from './person.service';
 
-import { EmployeeNewDTO } from 'src/app/models/domain/new-dto/employee.new.dto';
 import { EmployeeDTO } from 'src/app/models/domain/dto/employee.dto';
+import { PersonDTO } from 'src/app/models/domain/dto/person.dto';
+import { StudentDTO } from 'src/app/models/domain/dto/student.dto';
+
+import { EmployeeNewDTO } from 'src/app/models/domain/new-dto/employee.new.dto';
+import { PersonNewDTO } from 'src/app/models/domain/new-dto/person.new.dto';
+import { StudentNewDTO } from 'src/app/models/domain/new-dto/student.new.dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService extends PersonService {
 
-  // CONSTRUCTOR
-
   constructor(protected httpClient: HttpClient) {
     super(httpClient);
+    this.protectedUrl = `${environment.API}/v1/protected/employees`;
+    this.adminUrl = `${environment.API}/v1/protected/employees`;
   }
 
-  // HELPER FUNCTIONS
-
-  public findAllEmployees() {
-    return this.listAll (`${environment.API}/v1/protected/employees`);
+  public findAllEmployees():
+      Observable<(PersonDTO | EmployeeDTO | StudentDTO | PersonNewDTO | EmployeeNewDTO | StudentNewDTO)[]> {
+    return this.listAll (this.protectedUrl);
   }
 
-  public findAllByName(params: HttpParams) {
-    return this.listAll (`${environment.API}/v1/protected/employees/name`, params)
+  public findAllByName(params: HttpParams):
+      Observable<(PersonDTO | EmployeeDTO | StudentDTO | PersonNewDTO | EmployeeNewDTO | StudentNewDTO)[]> {
+    return this.listAll(`${this.adminUrl}/name`, params);
   }
 
-  public findByEmail(email: string) {
-    return this.findPersonByEmail (`${environment.API}/v1/admin/employees/email`, email);
+  public findByKeyAndValueWhereUrlIs(url, key, value):
+      Observable<(PersonDTO | EmployeeDTO | StudentDTO | PersonNewDTO | EmployeeNewDTO | StudentNewDTO)> {
+    return this.findByKeyAndValueWhereUrlIs(url, key, value);
   }
 
-  public findBySSN(socialSecurityNumber: string) {
-    return this.findPersonBySSN (`${environment.API}/v1/admin/employees/ssn`, socialSecurityNumber);
+  public findByEmail(email: string):
+      Observable<(PersonDTO | EmployeeDTO | StudentDTO | PersonNewDTO | EmployeeNewDTO | StudentNewDTO)> {
+    return this.findPersonByEmail (`${this.adminUrl}/email`, email);
   }
 
-  public insertEmployee(employee: EmployeeNewDTO) {
-    return this.insertPerson (`${environment.API}/v1/admin/employees`, employee);
+  public findBySSN(socialSecurityNumber: string):
+      Observable<(PersonDTO | EmployeeDTO | StudentDTO | PersonNewDTO | EmployeeNewDTO | StudentNewDTO)> {
+    return this.findPersonBySSN (`${this.adminUrl}/ssn`, socialSecurityNumber);
   }
 
-  public updateEmployee(employee: EmployeeDTO) {
-    return this.updatePerson (`${environment.API}/v1/protected/employees/${employee.getId ()}`, employee);
+  public insertEmployee(employee: EmployeeNewDTO): Observable<object> {
+    return this.insertPerson (`${this.adminUrl}`, employee);
+  }
+
+  public updateEmployee(employee: EmployeeDTO): Observable<object> {
+    return this.updatePerson (`${this.protectedUrl}/${employee.getId ()}`, employee);
   }
 }

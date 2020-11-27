@@ -1,24 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ZipCodeService {
 
-  // CONSTRUCTOR
-
   constructor(private httpClient: HttpClient) { }
 
-  // HELPER FUNCTIONS
-
-  searchZipCode(zipCode: string) {
+  public searchZipCode(zipCode: string): Observable<object> {
 
     if (zipCode !== '') {
-      const REGEX = /^[0-9]{5}(?:-[0-9]{4})?$/;
-      console.log (REGEX.test (zipCode));
-      if (REGEX.test (zipCode)) {
+      const regex = /^[0-9]{5}(?:-[0-9]{4})?$/;
+      if (regex.test (zipCode)) {
         return this.httpClient.get (`//ziptasticapi.com/${zipCode}`);
       }
     }

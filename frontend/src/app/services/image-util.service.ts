@@ -5,13 +5,13 @@ import { Injectable } from '@angular/core';
 })
 export class ImageUtilService {
 
-  // CONSTRUCTOR
-
   constructor() { }
 
-  // HELPER FUNCTIONS
+  public buildFileName(fileName: string): string {
+    if (!fileName || fileName === '') {
+      return null;
+    }
 
-  public buildFileName (fileName: string) : string {
     fileName = fileName.toLowerCase ();
     fileName = fileName.split (' ').join ('-');
     fileName = fileName.split ('_').join ('-');

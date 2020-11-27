@@ -81,11 +81,13 @@ export class CoursesListComponent extends BaseTableComponent<CourseDTO> implemen
 
     switch (filter) {
       case 'period': {
-        return this.pipeFindAll (this.courseService.findByPeriod (value));
+        const url = this.courseService.protectedUrl + '/period';
+        return this.pipeFindAll(this.courseService.findByKeyAndValueWhereUrlIs('value', value, url));
       }
 
       case 'name': {
-        return this.pipeFindAll (this.courseService.findByName (value));
+        const url = this.courseService.protectedUrl + '/name';
+        return this.pipeFindAll(this.courseService.findByKeyAndValueWhereUrlIs('name', value, url));
       }
 
       case 'all': default: {
