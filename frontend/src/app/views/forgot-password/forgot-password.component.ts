@@ -9,6 +9,7 @@ import { ModalService } from 'src/app/services/modal.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
 import { EmailDTO } from 'src/app/models/domain/dto/email.dto';
+
 import { BaseFormComponent } from 'src/app/shared/base-form/base-form.component';
 
 @Component({
@@ -16,8 +17,6 @@ import { BaseFormComponent } from 'src/app/shared/base-form/base-form.component'
   templateUrl: './forgot-password.component.html'
 })
 export class ForgotPasswordComponent extends BaseFormComponent<EmailDTO> implements OnInit, OnDestroy {
-
-  // CONSTRUCTOR
 
   constructor(
     protected translateService: TranslateService,
@@ -34,10 +33,7 @@ export class ForgotPasswordComponent extends BaseFormComponent<EmailDTO> impleme
     this.subscription$ = new Subscription();
   }
 
-  // LIFECYCLE HOOKS
-
   ngOnInit(): void {
-
     this.form = this.formBuilder.group({
       email: [null, [Validators.required, Validators.email]]
     });
@@ -47,32 +43,26 @@ export class ForgotPasswordComponent extends BaseFormComponent<EmailDTO> impleme
     this.subscription$.unsubscribe();
   }
 
-  // OVERRIDED FUNCTIONS
-
-  protected submit() {
+  protected submit(): void {
     this.model = Object.assign(this.model, this.form.value) as EmailDTO;
-    const WAIT_MODAL = this.modalService.showWaitModal ();
+    const waitModal = this.modalService.showWaitModal();
 
-    this.subscription$ = this.authenticationService.forgotPassword(this.model).subscribe(
-      res => {
-        this.modalService.hideModal (WAIT_MODAL);
-        this.modalService.showAlertSuccess ('modal.titles.success', 'modal.titles.check-your-email');
-        this.router.navigate (['login']);
-      },
-      err => {
-        this.modalService.hideModal (WAIT_MODAL);
-        this.modalService.showAlertDanger ('modal.titles.attention', 'modal.messages.post-error');
-      }
-    );
+    setTimeout(() => {
+      this.subscription$ = this.authenticationService.forgotPassword(this.model).subscribe(
+        () => {
+          this.modalService.hideModal (waitModal);
+          this.modalService.showAlertSuccess ('modal.titles.success', 'modal.titles.check-your-email');
+          this.router.navigate (['login']);
+        },
+        () => {
+          this.modalService.hideModal (waitModal);
+          this.modalService.showAlertDanger ('modal.titles.attention', 'modal.messages.post-error');
+        }
+      );
+    }, 500);
   }
 
-  protected showValidationModal(form: any) {
+  protected showValidationModal(form: any): void {
     this.modalService.showAlertDanger('modal.titles.attention', 'modal.messages.enter-valid-email');
-  }
-
-  // HELPER FUNCTIONS
-
-  public onCancel(): void {
-    this.router.navigate(['login']);
   }
 }

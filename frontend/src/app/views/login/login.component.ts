@@ -100,10 +100,6 @@ export class LoginComponent extends BaseFormComponent<CredentialsDTO> implements
 
   protected showValidationModal(): void {}
 
-  public onSignUp(): void {
-    this.router.navigate(['sign-up']);
-  }
-
   private findLoggedUserInfo(localUser: LocalUser, waitModal: BsModalRef): void {
     const url = `${environment.API}/v1/public/persons/ssn`;
     this.subscription$ = this.personService.findPersonBySSN(url, localUser.getSocialSecurityNumber())
