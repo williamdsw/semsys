@@ -30,8 +30,6 @@ import { BaseFormComponent } from 'src/app/shared/base-form/base-form.component'
 })
 export abstract class PersonsFormComponent<T> extends BaseFormComponent<T> implements OnInit, OnDestroy {
 
-    // FIELDS
-
     protected currentCountryId = 0;
     protected currentStateAbbreviation = '';
     protected currentCityName = '';
@@ -45,8 +43,6 @@ export abstract class PersonsFormComponent<T> extends BaseFormComponent<T> imple
     private previousEmail = '';
     protected socialSecurityNumberExists = false;
     protected emailExists = false;
-
-    // CONSTRUCTOR
 
     constructor(
         protected translateService: TranslateService,
@@ -64,36 +60,36 @@ export abstract class PersonsFormComponent<T> extends BaseFormComponent<T> imple
         this.showModal = true;
     }
 
-    // LIFECYCLE HOOKS
-
     ngOnInit(): void {
 
         // default values
         this.countries$ = this.loadCountries ();
         this.form = this.buildForm ();
-        this.form.valueChanges.subscribe (response => { Object.assign (this.model, response); });
+        this.form.valueChanges.subscribe (response => Object.assign (this.model, response));
 
         this.form.get ('countryId').valueChanges.subscribe (
-            countryId => {
+            (countryId) => {
                 if (countryId !== null && countryId !== '') {
                     this.loadStates (countryId);
-                } else {
+                }
+                else {
                     this.states = [];
                     this.cities = [];
                 }
             },
-            error => this.states = []
+            () => this.states = []
         );
 
         this.form.get ('stateId').valueChanges.subscribe (
-            stateId => {
+            (stateId) => {
                 if (this.currentCountryId !== null && this.currentCountryId !== 0 && stateId !== null && stateId !== '') {
                     this.loadCities (stateId);
-                } else {
+                }
+                else {
                     this.cities = [];
                 }
             },
-            error => this.cities = []
+            () => this.cities = []
         );
 
         this.form.get ('zipCode').statusChanges.pipe (
@@ -108,29 +104,25 @@ export abstract class PersonsFormComponent<T> extends BaseFormComponent<T> imple
         this.subscription$.unsubscribe ();
     }
 
-    // OVERRIDED FUNCTIONS
+    protected showValidationModal(currentForm: FormGroup): void {
 
-    protected showValidationModal(currentForm: FormGroup) {
+        const fields: string[] = [];
+        Object.keys (currentForm.controls).forEach (field => fields.push (field));
 
-        const FIELDS: string[] = [];
-        Object.keys (currentForm.controls).forEach (field => { FIELDS.push (field); });
-
-        FIELDS.map ((name, index) => {
+        fields.map ((name, index) => {
           if (name.endsWith ('Id')) {
             name = name.replace ('Id', '');
           }
 
           name = name.split ('').map (char => char === char.toUpperCase () ? ` ${char}` : char).join('');
           name = (name.substring (0, 1).toUpperCase () + name.substring (1, name.length));
-          FIELDS[index] = name;
+          fields[index] = name;
         });
 
-        this.modalService.showValidations (FIELDS);
-      }
+        this.modalService.showValidations (fields);
+    }
 
-    // HELPER FUNCTIONS
-
-    private loadCountries() {
+    private loadCountries(): Observable<CountryDTO[]> {
         return this.countryService.listCountries ().pipe (
             map (countries => {
                 return countries.map (country => {
@@ -143,7 +135,7 @@ export abstract class PersonsFormComponent<T> extends BaseFormComponent<T> imple
         );
     }
 
-    private loadStates(countryId: string) {
+    private loadStates(countryId: string): void {
         this.currentCountryId = parseInt (countryId, 10);
         this.subscription$ = this.stateService.listStates (parseInt (countryId, 10)).subscribe (
             (loadedStates: StateDTO[]) => {
@@ -164,13 +156,13 @@ export abstract class PersonsFormComponent<T> extends BaseFormComponent<T> imple
                     }
                 }, 100);
             },
-            error => this.states = []
+            () => this.states = []
         );
     }
 
-    private loadCities(stateId: string) {
-        this.subscription$ = this.cityService.listCities (this.currentCountryId, parseInt (stateId, 10)).subscribe (
-            (loadedCities: CityDTO[]) => {
+    private loadCities(stateId: string): void {
+        this.subscription$ = this.cityService.listCities(this.currentCountryId, parseInt(stateId, 10))
+            .subscribe((loadedCities: CityDTO[]) => {
                 this.cities = loadedCities.map (city => {
                     const DTO = new CityDTO ();
                     Object.assign (DTO, city);
@@ -190,11 +182,11 @@ export abstract class PersonsFormComponent<T> extends BaseFormComponent<T> imple
                     }
                 }, 100);
             },
-            error => this.cities = []
+            () => this.cities = []
         );
     }
 
-    private buildForm() {
+    private buildForm(): FormGroup {
         return this.formBuilder.group({
             id: [null],
             name: [null, [Validators.required, Validators.minLength (5), Validators.maxLength (120)]],
@@ -217,30 +209,30 @@ export abstract class PersonsFormComponent<T> extends BaseFormComponent<T> imple
         });
     }
 
-    private loadAddressData(data: any) {
+    private loadAddressData(data: any): void {
 
         if (!('error' in data)) {
-
-            const CURRENT_COUNTRY = this.countries.filter (country => country.getAbbreviation ().includes (data.country))[0];
-            if (CURRENT_COUNTRY != null) {
-                this.currentCountryId = CURRENT_COUNTRY.getId ();
+            const currentCountry = this.countries.filter (country => country.getAbbreviation ().includes (data.country))[0];
+            if (currentCountry != null) {
+                this.currentCountryId = currentCountry.getId ();
                 this.currentStateAbbreviation = data.state;
                 this.currentCityName = data.city;
-                this.form.patchValue ({ countryId: CURRENT_COUNTRY.getId () });
+                this.form.patchValue ({ countryId: currentCountry.getId () });
             }
-        } else {
+        }
+        else {
             this.modalService.showAlertDanger ('modal.titles.attention', 'modal.messages.zipcode-not-found');
         }
     }
 
-    private searchSocialSecurityNumber(socialSecurityNumber: string) {
+    private searchSocialSecurityNumber(socialSecurityNumber: string): void {
         if (this.form.get('socialSecurityNumber').valid) {
             if (this.previousSocialSecurityNumber !== socialSecurityNumber) {
                 const URL = `${environment.API}/v1/public/persons/ssn`;
-                this.subscription$ = this.personService.findPersonBySSN(URL, socialSecurityNumber).subscribe(
-                    response => {
-                        const DTO = response as PersonDTO;
-                        if (DTO != null) {
+                this.subscription$ = this.personService.findPersonBySSN(URL, socialSecurityNumber)
+                    .subscribe(response => {
+                        const dto = response as PersonDTO;
+                        if (dto != null) {
                             this.socialSecurityNumberExists = true;
                             this.modalService.showAlertDanger ('modal.titles.error', 'modal.messages.ssn-found');
                         }
@@ -255,7 +247,7 @@ export abstract class PersonsFormComponent<T> extends BaseFormComponent<T> imple
         }
     }
 
-    private searchEmail(email: string) {
+    private searchEmail(email: string): void {
         if (this.form.get('email').valid) {
             if (this.previousEmail !== email) {
                 const URL = `${environment.API}/v1/public/persons/email`;

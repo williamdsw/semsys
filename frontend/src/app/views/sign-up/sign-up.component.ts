@@ -36,8 +36,8 @@ export class SignUpComponent extends PersonsFormComponent<StudentNewDTO> impleme
 
   // Date related
 
-  public birthdateMinDate: Date = new Date ();
-  public birthdateMaxDate: Date = new Date ();
+  public birthdateMinDate = new Date ();
+  public birthdateMaxDate = new Date ();
   public bsDateConfig = { isAnimated: true };
 
   // CONSTRUCTOR
@@ -63,14 +63,11 @@ export class SignUpComponent extends PersonsFormComponent<StudentNewDTO> impleme
           cityService, personService);
 
     // default values
-
     this.model = new StudentNewDTO();
     this.showModal = true;
     this.birthdateMinDate.setFullYear (this.birthdateMinDate.getFullYear () - 60);
     this.birthdateMaxDate.setFullYear (this.birthdateMaxDate.getFullYear () - 15, 11, 30);
   }
-
-  // LIFECYCLE HOOKS
 
   ngOnInit(): void {
 
@@ -102,9 +99,10 @@ export class SignUpComponent extends PersonsFormComponent<StudentNewDTO> impleme
                 return DTO;
               });
             },
-            error => this.schoolClasses = []
+            () => this.schoolClasses = []
           );
-        } else {
+        }
+        else {
           this.schoolClasses = [];
         }
       }
@@ -115,9 +113,7 @@ export class SignUpComponent extends PersonsFormComponent<StudentNewDTO> impleme
     super.ngOnDestroy ();
   }
 
-  // OVERRIDED FUNCTIONS
-
-  protected submit() {
+  protected submit(): void {
 
     if (this.socialSecurityNumberExists) {
       this.modalService.showAlertDanger ('modal.titles.error', 'modal.messages.ssn-found');
@@ -129,44 +125,40 @@ export class SignUpComponent extends PersonsFormComponent<StudentNewDTO> impleme
       return;
     }
 
-    const WAIT_MODAL = this.modalService.showWaitModal ();
-
     this.model = Object.assign (this.model, this.form.value) as StudentNewDTO;
-    const PHONE_NUMBERS: string[] = [];
-    PHONE_NUMBERS.push (this.form.get ('phoneNumbers.phoneNumber0').value);
-    const PHONE_NUMBER_1 = this.form.get ('phoneNumbers.phoneNumber1');
-    const PHONE_NUMBER_2 = this.form.get ('phoneNumbers.phoneNumber2');
+    const phoneNumbers: string[] = [];
+    phoneNumbers.push (this.form.get ('phoneNumbers.phoneNumber0').value);
+    const phoneNumber1 = this.form.get ('phoneNumbers.phoneNumber1');
+    const phoneNumber2 = this.form.get ('phoneNumbers.phoneNumber2');
 
-    if (PHONE_NUMBER_1.value !== null && PHONE_NUMBER_1.valid) {
-      PHONE_NUMBERS.push (PHONE_NUMBER_1.value);
+    if (phoneNumber1.value !== null && phoneNumber1.valid) {
+      phoneNumbers.push (phoneNumber1.value);
     }
 
-    if (PHONE_NUMBER_2.value !== null && PHONE_NUMBER_2.valid) {
-      PHONE_NUMBERS.push (PHONE_NUMBER_2.value);
+    if (phoneNumber2.value !== null && phoneNumber2.valid) {
+      phoneNumbers.push (phoneNumber2.value);
     }
 
-    this.model.setPhoneNumbers (PHONE_NUMBERS);
-    this.subscription$ = this.studentService.insertStudent (this.model).subscribe (
-      success => {
-        this.modalService.hideModal (WAIT_MODAL);
-        this.modalService.showAlertSuccess ('modal.titles.success', 'modal.messages.post-success');
-        this.router.navigate (['/login', { socialSecurityNumber: this.model.getSocialSecurityNumber () }]);
-      },
-      error => {
-        console.log (error);
-        this.modalService.hideModal (WAIT_MODAL);
-        this.modalService.showAlertDanger ('modal.titles.error', 'modal.messages.post-error');
-      }
-    );
+    this.model.setPhoneNumbers(phoneNumbers);
+
+    const waitModal = this.modalService.showWaitModal();
+
+    setTimeout(() => {
+      this.subscription$ = this.studentService.insertStudent (this.model).subscribe (
+        () => {
+          this.modalService.hideModal (waitModal);
+          this.modalService.showAlertSuccess ('modal.titles.success', 'modal.messages.post-success');
+          this.router.navigate (['/login', { socialSecurityNumber: this.model.getSocialSecurityNumber () }]);
+        },
+        () => {
+          this.modalService.hideModal (waitModal);
+          this.modalService.showAlertDanger ('modal.titles.error', 'modal.messages.post-error');
+        }
+      );
+    }, 500);
   }
 
-  protected showValidationModal(currentForm: FormGroup) {
+  protected showValidationModal(currentForm: FormGroup): void {
     super.showValidationModal (currentForm);
-  }
-
-  // HELPER FUNCTIONS
-
-  public onCancel(): void {
-    this.router.navigate(['login']);
   }
 }

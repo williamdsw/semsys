@@ -66,7 +66,16 @@
         "other": {
             "you": "You",
             "my": "My",
-            "all": "All"
+            "all": "All",
+            "needed": "Needed",
+            "to": "to",
+            "from": "from",
+            "this": "This",
+            "is-required": "is required",
+            "is-optional": "is optional",
+            "optional": "Optional",
+            "but-allows-up-to": "but allows up to",
+            "zip-code-load": "Use to load address data"
         },
         "validations-messages": {
             "required": "This field is required",
@@ -74,7 +83,8 @@
             "max-length": "Max length is",
             "email": "Email is invalid!",
             "equals-to": "are not equals!",
-            "characters": "characters"
+            "characters": "characters",
+            "must-match-password-field": "Must match password field"
         }
     },
     "modal": {

@@ -25,7 +25,7 @@
             "zip-code": "CEP"
         },
         "buttons": {
-            "sign-up": "Inscreva-se aqui.",
+            "sign-up": "Inscrever-se",
             "login": "Entrar",
             "cancel": "Cancelar",
             "close": "Fechar",
@@ -66,7 +66,16 @@
         "other": {
             "you": "Você",
             "my": "Meus/Minhas",
-            "all": "Todos(as)"
+            "all": "Todos(as)",
+            "needed": "Necessário",
+            "to": "até",
+            "from": "de",
+            "this": "Esse",
+            "is-required": "é obrigatório",
+            "is-optional": "é opcional",
+            "optional": "Opcional",
+            "but-allows-up-to": "mas permite até",
+            "zip-code-load": "Utilize para encontrar o endereço"
         },
         "validations-messages": {
             "required": "Este campo é obrigatório",
@@ -74,7 +83,8 @@
             "max-length": "Número máximo é de",
             "email": "Email é inválido!",
             "equals-to": "não são iguais!",
-            "characters": "caracteres"
+            "characters": "caracteres",
+            "must-match-password-field": "Deve ser igual ao campo de senha"
         }
     },
     "modal": {

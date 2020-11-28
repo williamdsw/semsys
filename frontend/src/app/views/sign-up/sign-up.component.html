@@ -1,132 +1,167 @@
+
 <!-- sign up -->
-<div class="container">
-    <div class="box-wrapper mx-auto my-3 my-md-5">
+<article class="container">
+    <div class="box-wrapper w-100 mx-auto my-md-5 my-3 shadow-lg">
         <div class="card">
-
-            <div class="card-header">
-                <h4 class="text-center"> {{ 'global.buttons.sign-up-students' | translate }} </h4>
-            </div>
-
             <div class="card-body">
+                <header>
+                    <h2 class="text-center"> 
+                        {{ 'global.buttons.sign-up' | translate }} 
+                    </h2>
+                </header>
+
+                <hr>
+
                 <form class="needs-validation" novalidate [formGroup]="form" (ngSubmit)="onSubmit ();">
 
-                <!-- tabs -->
-                    <div>
-                        <tabset [justified]="true">
-                            <tab [heading]="'global.buttons.login' | translate">
+                    <!-- login data -->
+                    <div class="row my-3">
+                        <div class="col-12">
+                            <fieldset class="pl-3 py-2">
+                                <header>
+                                    <h4> Login </h4>
+                                </header>
 
-                                <div class="form-row">
+                                <div class="row">
 
                                     <!-- social security number -->
-                                    <div class="col-md-4 mb-3 form-group">
-                                        <label for="ssnInput" class="required-label d-none d-md-block"> {{ 'global.social-security-number' | translate }} * </label>
-                                        <input type="text" id="ssnInput" class="form-control" 
-                                               minlength="11" maxlength="11" [placeholder]="'global.social-security-number' | translate"
-                                               #ssnInput
-                                               formControlName="socialSecurityNumber" [ngClass]="buildValidationClass ('socialSecurityNumber')" 
-                                               [mask]="inputMasks.socialSecurityNumber" [dropSpecialCharacters]="false"
-                                               (blur)="onSocialSecurityNumberFocusOut (ssnInput.value);" />
-                                        <small class="text-muted mt-2"> 11 characters long. </small>
-
-                                        <!-- validation -->
-                                        <app-error-message [control]="form.get ('socialSecurityNumber')" [label]="'global.social-security-number' | translate"></app-error-message>
+                                    <div class="col-md-4 my-md-0 my-2">
+                                        <input type="text" class="form-control" minlength="11" maxlength="11" 
+                                               [placeholder]="' * ' + ('global.social-security-number' | translate)"
+                                                formControlName="socialSecurityNumber" [ngClass]="buildValidationClass ('socialSecurityNumber')" 
+                                                [mask]="inputMasks.socialSecurityNumber" [dropSpecialCharacters]="false"
+                                                #ssnInput (blur)="onSocialSecurityNumberFocusOut (ssnInput.value);" />
+    
+                                        <small class="text-muted">
+                                            {{ 'global.other.needed' | translate }} {{ ssnInput.maxLength }}
+                                            {{ 'global.validations-messages.characters' | translate }}
+                                        </small>
+    
+                                        <app-error-message [control]="form.get ('socialSecurityNumber')" [label]="'global.social-security-number' | translate">
+                                        </app-error-message>
                                     </div>
-
+    
                                     <!-- password -->
-                                    <div class="col-md-4 mb-3 form-group">
-                                        <label for="passwordInput" class="required-label d-none d-md-block"> {{ 'global.password' | translate }} * </label>
-                                        <input type="password" id="passwordInput" class="form-control" 
-                                               minlength="10" maxlength="20" [placeholder]="'global.password' | translate"
+                                    <div class="col-md-4 my-md-0 my-2">
+                                        <input type="password" class="form-control" minlength="10" maxlength="20" 
+                                               [placeholder]="' * ' + ('global.password' | translate)" #passwordInput
                                                formControlName="password" [ngClass]="buildValidationClass ('password')" />
-                                        <small class="text-muted mt-2"> 10 - 20 characters long. </small>
-
+    
+                                        <small class="text-muted">
+                                            {{ 'global.other.needed' | translate }} {{ 'global.other.from' | translate }} 
+                                            {{ passwordInput.minLength }}
+                                            {{ 'global.other.to' | translate }} {{ passwordInput.maxLength }}
+                                            {{ 'global.validations-messages.characters' | translate }}
+                                        </small>
+    
                                         <!-- validation -->
-                                        <app-error-message [control]="form.get ('password')" [label]="'global.password' | translate"></app-error-message>
+                                        <app-error-message [control]="form.get ('password')" [label]="'global.password' | translate">
+                                        </app-error-message>
                                     </div>
-
+    
                                     <!-- confirm password -->
                                     <div class="col-md-4 mb-3 form-group">
-                                        <label for="confirmPasswordInput" class="required-label d-none d-md-block"> {{ 'global.confirm-password' | translate }} * </label>
-                                        <input type="password" id="confirmPasswordInput" class="form-control"
-                                               minlength="10" maxlength="20" [placeholder]="'global.confirm-password' | translate"
-                                               formControlName="confirmPassword" [ngClass]="buildValidationClass ('confirmPassword')" />
-                                        <small class="text-muted mt-2"> Must match password field. </small>
-
+                                        <input type="password" class="form-control"
+                                                minlength="10" maxlength="20" 
+                                                [placeholder]="' * ' + ('global.confirm-password' | translate)"
+                                                formControlName="confirmPassword" [ngClass]="buildValidationClass ('confirmPassword')" />
+    
+                                        <small class="text-muted">
+                                            {{ 'global.validations-messages.must-match-password-field' | translate }} 
+                                        </small>
+    
                                         <!-- validation -->
-                                        <app-error-message [control]="form.get ('confirmPassword')" [label]="'global.passwords' | translate"></app-error-message>
+                                        <app-error-message [control]="form.get ('confirmPassword')" [label]="'global.passwords' | translate">
+                                        </app-error-message>
                                     </div>
                                 </div>
-                            </tab>
+                            </fieldset>
+                        </div>
+                    </div>
 
-                            <tab [heading]="'global.personal.personal' | translate">
-                                <div class="form-row">
+                    <!-- personal data -->
+                    <div class="row my-3">
+                        <div class="col-12">
+                            <fieldset class="pl-3 py-2">
+                                <header>
+                                    <h4> {{ 'global.personal.personal' | translate }} </h4>
+                                </header>
+                                
+                                <div class="row my-3">
 
                                     <!-- name -->
-                                    <div class="col-md-5 form-group">
-                                        <label for="nameInput" class="required-label d-none d-md-block"> {{ 'global.personal.name' | translate }} * </label>
-                                        <input type="text" id="nameInput" class="form-control"
-                                               minlength="5" maxlength="120" [placeholder]="'global.personal.name' | translate"
+                                    <div class="col-md-5 my-md-0 my-2">
+                                        <input type="text" id="nameInput" class="form-control" minlength="5" maxlength="120" 
+                                               [placeholder]="' * ' + ('global.personal.name' | translate)" #nameInput
                                                formControlName="name" [ngClass]="buildValidationClass ('name')" />
-                                        <small class="text-muted"> 5 - 120 caracters long </small>
 
-                                        <!-- validation -->
-                                        <app-error-message [control]="form.get ('name')" [label]="'global.personal.name' | translate"></app-error-message>
+                                        <small class="text-muted">
+                                            {{ 'global.other.needed' | translate }} {{ 'global.other.from' | translate }} 
+                                            {{ nameInput.minLength }}
+                                            {{ 'global.other.to' | translate }} {{ nameInput.maxLength }}
+                                            {{ 'global.validations-messages.characters' | translate }}
+                                        </small>
+
+                                        <app-error-message [control]="form.get ('name')" [label]="'global.personal.name' | translate">
+                                        </app-error-message>
                                     </div>
 
                                     <!-- email -->
-                                    <div class="col-md-4 form-group">
-                                        <label for="emailInput" class="required-label d-none d-md-block"> {{ 'global.personal.email' | translate }} * </label>
-                                        <input type="email" id="emailInput" class="form-control" 
-                                               maxlength="30" [placeholder]="'global.personal.email' | translate"
-                                               #emailInput
+                                    <div class="col-md-4 my-md-0 my-2">
+                                        <input type="email" id="emailInput" class="form-control" minlength="5" maxlength="30" 
+                                               [placeholder]="' * ' + ('global.personal.email' | translate)" #emailInput
                                                formControlName="email" [ngClass]="buildValidationClass ('email')"
                                                (blur)="onEmailFocusOut (emailInput.value)" />
-                                        <small class="text-muted"> 5 - 30 caracters long </small>
 
-                                        <!-- validation -->
-                                        <app-error-message [control]="form.get ('email')" [label]="'global.personal.email' | translate"></app-error-message>
+                                            <small class="text-muted">
+                                                {{ 'global.other.needed' | translate }} {{ 'global.other.from' | translate }} 
+                                                {{ emailInput.minLength }}
+                                                {{ 'global.other.to' | translate }} {{ emailInput.maxLength }}
+                                                {{ 'global.validations-messages.characters' | translate }}
+                                            </small>
+
+                                        <app-error-message [control]="form.get ('email')" [label]="'global.personal.email' | translate">
+                                        </app-error-message>
                                     </div>
 
                                     <!-- birthdate -->
-                                    <div class="col-md-3 form-group">
-                                        <label for="birthdateInput" class="required-label d-none d-md-block"> {{ 'global.personal.birthdate' | translate }} * </label>
-                                        <input type="text" id="birthdateInput" class="form-control" 
-                                               minlength="10" maxlength="10" [placeholder]="'global.personal.birthdate' | translate"
+                                    <div class="col-md-3 my-md-0 my-2">
+                                        <input type="text" id="birthdateInput" class="form-control" minlength="10" maxlength="10" 
+                                               [placeholder]="' * ' + ('global.personal.birthdate' | translate)"
                                                formControlName="birthdate" [ngClass]="buildValidationClass ('birthdate')"
-                                               bsDatepicker [bsConfig]="bsDateConfig" [minDate]="birthdateMinDate" [maxDate]="birthdateMaxDate">
+                                               bsDatepicker [bsConfig]="bsDateConfig" 
+                                               [minDate]="birthdateMinDate" [maxDate]="birthdateMaxDate">
 
                                         <!-- validation -->
-                                        <app-error-message [control]="form.get ('birthdate')" [label]="'global.personal.birthdate' | translate"></app-error-message>
+                                        <app-error-message [control]="form.get ('birthdate')" [label]="'global.personal.birthdate' | translate">
+                                        </app-error-message>
                                     </div>
-
                                 </div>
 
-                                <div class="form-row">
+                                <div class="row my-3">
 
                                     <!-- course -->
-                                    <div class="col-md-6 form-group">
-                                        <label for="courseSelect" class="required-label d-none d-md-block"> {{ 'sign-up.your-course' | translate }} * </label>
-                                        <select id="courseSelect" class="form-control"
-                                                formControlName="courseId" [ngClass]="buildValidationClass ('courseId')">
-
-                                            <option [value]="null"> {{ 'sign-up.your-course' | translate }} * </option>
+                                    <div class="col-md-6 my-md-0 my-2">
+                                        <select class="form-control" formControlName="courseId" [ngClass]="buildValidationClass ('courseId')">
+                                            <option [value]="null">
+                                                * {{ 'sign-up.your-course' | translate }} 
+                                            </option>
                                             <option *ngFor="let course of courses$ | async" [value]="course.getId ()">
                                                 {{ course.getName () }} - {{ course.getPeriod () }} -
                                                 {{ course.getType () }}
                                             </option>
                                         </select>
 
-                                        <!-- validation -->
-                                        <app-error-message [control]="form.get ('courseId')" [label]="'sign-up.your-course' | translate"></app-error-message>
+                                        <app-error-message [control]="form.get ('courseId')" [label]="'sign-up.your-course' | translate">
+                                        </app-error-message>
                                     </div>
 
                                     <!-- school class -->
-                                    <div class="col-md-6 form-group">
-                                        <label for="schoolClassSelect" class="required-label d-none d-md-block"> {{ 'sign-up.your-class' | translate }} * </label>
-                                        <select id="schoolClassSelect" class="form-control"
-                                                formControlName="schoolClassId" [ngClass]="buildValidationClass ('schoolClassId')">
-
-                                            <option [value]="null"> {{ 'sign-up.your-class' | translate }} * </option>
+                                    <div class="col-md-6 my-md-0 my-2">
+                                        <select class="form-control" formControlName="schoolClassId" [ngClass]="buildValidationClass ('schoolClassId')">
+                                            <option [value]="null">
+                                                * {{ 'sign-up.your-class' | translate }} 
+                                            </option>
                                             <option *ngFor="let schoolClass of schoolClasses" [value]="schoolClass.getId ()">
                                                 {{ schoolClass.getName () }} - {{ schoolClass.getStart () }} /
                                                 {{ schoolClass.getEnd () }}
@@ -137,150 +172,190 @@
                                         <app-error-message [control]="form.get ('schoolClassId')" [label]="'sign-up.your-class' | translate"></app-error-message>
                                     </div>
                                 </div>
-
-                                <!-- phone numbers -->
-                                <label class="required-label d-none d-md-block"> {{ 'global.personal.phone-numbers' | translate }} * </label>
-
-                                <div class="form-row" formGroupName="phoneNumbers">
-                                    <div class="col-md-4 form-group">
-                                        <input type="tel" class="form-control" 
-                                               minlength="12" maxlength="12" [placeholder]="'global.personal.phone-number' | translate"
+                                <div class="row my-3" formGroupName="phoneNumbers">
+                                    <div class="col-md-4 my-md-0 my-2">
+                                        <input type="tel" class="form-control" minlength="12" maxlength="12" 
+                                               [placeholder]="' * ' + ('global.personal.phone-number' | translate)"
                                                formControlName="phoneNumber0" [ngClass]="buildValidationClass ('phoneNumbers.phoneNumber0')" 
                                                [mask]="inputMasks.phoneNumber" [dropSpecialCharacters]="false">
-                                        <small class="text-muted mt-2"> This phone number is required </small>
-                                        <app-error-message [control]="form.get ('phoneNumbers.phoneNumber0')" [label]="'global.personal.phone-number' | translate"></app-error-message>
+
+                                        <small class="text-muted">
+                                            {{ 'global.other.this' | translate }} 
+                                            {{ ('global.personal.phone-number' | translate).toLowerCase() }}
+                                            {{ 'global.other.is-required' | translate }}
+                                        </small>
+
+                                        <app-error-message [control]="form.get ('phoneNumbers.phoneNumber0')" [label]="'global.personal.phone-number' | translate">
+                                        </app-error-message>
                                     </div>
-                                    <div class="col-md-4 form-group">
-                                        <input type="tel" class="form-control" 
-                                               minlength="12" maxlength="12" [placeholder]="'global.personal.phone-number' | translate"
+                                    <div class="col-md-4 my-md-0 my-2">
+                                        <input type="tel" class="form-control" minlength="12" maxlength="12" 
+                                               [placeholder]="'global.personal.phone-number' | translate"
                                                formControlName="phoneNumber1" 
                                                [mask]="inputMasks.phoneNumber" [dropSpecialCharacters]="false">
-                                        <small class="text-muted mt-2"> This phone number is optional </small>
-                                        <app-error-message [control]="form.get ('phoneNumbers.phoneNumber1')" [label]="'global.personal.phone-number' | translate"></app-error-message>
+
+                                        <small class="text-muted">
+                                            {{ 'global.other.this' | translate }} 
+                                            {{ ('global.personal.phone-number' | translate).toLowerCase() }}
+                                            {{ 'global.other.is-optional' | translate }}
+                                        </small>
+
+                                        <app-error-message [control]="form.get ('phoneNumbers.phoneNumber1')" [label]="'global.personal.phone-number' | translate">
+                                        </app-error-message>
                                     </div>
-                                    <div class="col-md-4 form-group">
-                                        <input type="tel" class="form-control" 
-                                               minlength="12" maxlength="12" [placeholder]="'global.personal.phone-number' | translate"
+                                    <div class="col-md-4 my-md-0 my-2">
+                                        <input type="tel" class="form-control" minlength="12" maxlength="12" 
+                                               [placeholder]="'global.personal.phone-number' | translate"
                                                formControlName="phoneNumber2" 
                                                [mask]="inputMasks.phoneNumber" [dropSpecialCharacters]="false">
-                                        <small class="text-muted mt-2"> This phone number is optional </small>
-                                        <app-error-message [control]="form.get ('phoneNumbers.phoneNumber2')" [label]="'global.personal.phone-number' | translate"></app-error-message>
+
+                                        <small class="text-muted">
+                                            {{ 'global.other.this' | translate }} 
+                                            {{ ('global.personal.phone-number' | translate).toLowerCase() }}
+                                            {{ 'global.other.is-optional' | translate }}
+                                        </small>
+
+                                        <app-error-message [control]="form.get ('phoneNumbers.phoneNumber2')" [label]="'global.personal.phone-number' | translate">
+                                        </app-error-message>
                                     </div>
                                 </div>
-                            </tab>
+                            </fieldset>
+                        </div>
+                    </div>
 
-                            <tab [heading]="'global.address.address' | translate">
+                    <!-- address data -->
+                    <div class="row my-3">
+                        <div class="col-12">
+                            <fieldset class="pl-3 py-2">
+                                <header>
+                                    <h4> {{ 'global.address.address' | translate }} </h4>
+                                </header>
 
-                                <div class="form-row">
+                                <div class="row my-3">
 
                                     <!-- country -->
-                                    <div class="col-md-4 form-group">
-                                        <label for="countrySelect" class="required-label d-none d-md-block"> {{ 'global.address.country' | translate }} * </label>
-                                        <select id="countrySelect" class="form-control" 
-                                                formControlName="countryId"
-                                                [ngClass]="buildValidationClass ('countryId')">
-
-                                            <option [value]="null"> {{ 'global.address.country' | translate }} * </option>
-                                            <option *ngFor="let country of countries$ | async;" [value]="country.getId ()"> {{ country.getAbbreviation ()}} -
-                                                {{ country.getName () }} 
+                                    <div class="col-md-4 my-md-0 my-2">
+                                        <select class="form-control" formControlName="countryId" [ngClass]="buildValidationClass ('countryId')">
+                                            <option [value]="null">
+                                                * {{ 'global.address.country' | translate }}
+                                            </option>
+                                            <option *ngFor="let country of countries$ | async;" [value]="country.getId ()">
+                                                {{ country.getAbbreviation ()}} - {{ country.getName () }} 
                                             </option>
                                         </select>
 
-                                        <!-- validation -->
-                                        <app-error-message [control]="form.get ('countryId')" [label]="'global.address.country' | translate"></app-error-message>
+                                        <app-error-message [control]="form.get ('countryId')" [label]="'global.address.country' | translate">
+                                        </app-error-message>
                                     </div>
 
                                     <!-- state -->
-                                    <div class="col-md-4 form-group">
-                                        <label for="stateSelect" class="required-label d-none d-md-block"> {{ 'global.address.state' | translate }} * </label>
-                                        <select id="stateSelect" class="form-control"
-                                                formControlName="stateId" 
-                                                [ngClass]="buildValidationClass ('stateId')">
-
-                                            <option [value]="null"> {{ 'global.address.state' | translate }} * </option>
+                                    <div class="col-md-4 my-md-0 my-2">
+                                        <select class="form-control" formControlName="stateId" [ngClass]="buildValidationClass ('stateId')">
+                                            <option [value]="null">
+                                                * {{ 'global.address.state' | translate }}
+                                            </option>
                                             <option *ngFor="let state of states;" [value]="state.getId ()">
                                                 {{ state.getAbbreviation () }} - {{ state.getName () }} 
                                             </option>
                                         </select>
 
-                                        <!-- validation -->
-                                        <app-error-message [control]="form.get ('stateId')" [label]="'global.address.state' | translate"></app-error-message>
+                                        <app-error-message [control]="form.get ('stateId')" [label]="'global.address.state' | translate">
+                                        </app-error-message>
                                     </div>
 
                                     <!-- city -->
-                                    <div class="col-md-4 form-group">
-                                        <label for="citySelect" class="required-label d-none d-md-block"> {{ 'global.address.city' | translate }} * </label>
-                                        <select id="citySelect" class="form-control" 
-                                                formControlName="cityId" 
-                                                [ngClass]="buildValidationClass ('cityId')">
-
-                                            <option [value]="null"> {{ 'global.address.city' | translate }} * </option>
+                                    <div class="col-md-4 my-md-0 my-2">
+                                        <select class="form-control" formControlName="cityId" [ngClass]="buildValidationClass ('cityId')">
+                                            <option [value]="null">
+                                                * {{ 'global.address.city' | translate }}
+                                            </option>
                                             <option *ngFor="let city of cities;" [value]="city.getId ()">
                                                 {{ city.getName () }} 
                                             </option>
                                         </select>
 
-                                        <!-- validation -->
-                                        <app-error-message [control]="form.get ('cityId')" [label]="'global.address.city' | translate"></app-error-message>
+                                        <app-error-message [control]="form.get ('cityId')" [label]="'global.address.city' | translate">
+                                        </app-error-message>
                                     </div>
                                 </div>
+                                <div class="row my-3">
 
-                                <div class="form-row">
+                                    <!-- zip code -->
+                                    <div class="col-md-2 my-md-0 my-2">
+                                        <input type="text" class="form-control" minlength="5" maxlength="10" 
+                                        [placeholder]="' * ' + ('global.address.zip-code' | translate)"
+                                        formControlName="zipCode" [ngClass]="buildValidationClass ('zipCode')"
+                                        [mask]="inputMasks.zipCode" [dropSpecialCharacters]="false">
 
-                                    <!-- street -->
-                                    <div class="col-md-4 form-group">
-                                        <label for="streetInput" class="required-label d-none d-md-block"> {{ 'global.address.street' | translate }} * </label>
-                                        <input type="text" id="streetInput" class="form-control" 
-                                               minlength="5" maxlength="120" [placeholder]="'global.address.street' | translate"
-                                               formControlName="street" [ngClass]="buildValidationClass ('street')">
-                                        <small class="text-muted"> 5 - 120 caracters long </small>
+                                        <small class="text-muted">
+                                            {{ 'global.other.zip-code-load' | translate }}
+                                        </small>
 
                                         <!-- validation -->
-                                        <app-error-message [control]="form.get ('street')" [label]="'global.address.street' | translate"></app-error-message>
+                                        <app-error-message [control]="form.get ('zipCode')" [label]="'global.address.zip-code' | translate">
+                                        </app-error-message>
+                                    </div>
+
+                                    <!-- street -->
+                                    <div class="col-md-4 my-md-0 my-2">
+                                        <input type="text" class="form-control" minlength="5" maxlength="120" 
+                                               [placeholder]="' * ' + ('global.address.street' | translate)" #streetInput
+                                               formControlName="street" [ngClass]="buildValidationClass ('street')">
+
+                                        <small class="text-muted">
+                                            {{ 'global.other.needed' | translate }} {{ 'global.other.from' | translate }} 
+                                            {{ streetInput.minLength }}
+                                            {{ 'global.other.to' | translate }} {{ streetInput.maxLength }}
+                                            {{ 'global.validations-messages.characters' | translate }}
+                                        </small>
+
+                                        <!-- validation -->
+                                        <app-error-message [control]="form.get ('street')" [label]="'global.address.street' | translate">
+                                        </app-error-message>
                                     </div>
 
                                     <!-- complement -->
-                                    <div class="col-md-4 form-group">
-                                        <label for="complementInput" class="required-label d-none d-md-block"> {{ 'global.address.complement' | translate }} </label>
-                                        <input type="text" id="complementInput" class="form-control" 
-                                               maxlength="120" [placeholder]="'global.address.complement' | translate"
-                                               formControlName="complement">
-                                        <small class="text-muted"> Optional, but allows up to 120 characters </small>
+                                    <div class="col-md-4 my-md-0 my-2">
+                                        <input type="text" class="form-control" maxlength="120" #complementInput
+                                               [placeholder]="'global.address.complement' | translate" formControlName="complement">
+
+                                        <small class="text-muted">
+                                            {{ 'global.other.optional' | translate }},
+                                            {{ 'global.other.but-allows-up-to' | translate }}
+                                            {{ complementInput.maxLength }}
+                                            {{ 'global.validations-messages.characters' | translate }}
+                                        </small>
                                     </div>
 
                                     <!-- number -->
-                                    <div class="col-md-2 form-group">
-                                        <label for="numberInput" class="required-label d-none d-md-block"> {{ 'global.address.number' | translate }} * </label>
-                                        <input type="text" id="numberInput" class="form-control" 
-                                               minlength="1" maxlength="5" [placeholder]="'global.address.number' | translate"
+                                    <div class="col-md-2 my-md-0 my-2">
+                                        <input type="text" class="form-control" minlength="1" maxlength="5" 
+                                               [placeholder]="' * ' + ('global.address.number' | translate)" #numberInput
                                                formControlName="number" [ngClass]="buildValidationClass ('number')"
                                                [mask]="inputMasks.number">
-                                        <small class="text-muted"> 1-5 caracters long </small>
 
-                                        <!-- validation -->
-                                        <app-error-message [control]="form.get ('number')" [label]="'global.address.number' | translate"></app-error-message>
-                                    </div>
+                                        <small class="text-muted">
+                                            {{ 'global.other.needed' | translate }} {{ 'global.other.from' | translate }} 
+                                            {{ numberInput.minLength }}
+                                            {{ 'global.other.to' | translate }} {{ numberInput.maxLength }}
+                                            {{ 'global.validations-messages.characters' | translate }}
+                                        </small>
 
-                                    <!-- zip code -->
-                                    <div class="col-md-2 form-group">
-                                        <label for="zipCodeInput" class="required-label d-none d-md-block"> {{ 'global.address.zip-code' | translate }} * </label>
-                                        <input type="text" id="zipCodeInput" class="form-control" 
-                                               minlength="5" maxlength="10" [placeholder]="'global.address.zip-code' | translate"
-                                               formControlName="zipCode" [ngClass]="buildValidationClass ('zipCode')"
-                                               [mask]="inputMasks.zipCode" [dropSpecialCharacters]="false">
-                                        <small class="text-muted"> Use to load address data </small>
-
-                                        <!-- validation -->
-                                        <app-error-message [control]="form.get ('zipCode')" [label]="'global.address.zip-code' | translate"></app-error-message>
+                                        <app-error-message [control]="form.get ('number')" [label]="'global.address.number' | translate">
+                                        </app-error-message>
                                     </div>
                                 </div>
-                            </tab>
-                        </tabset>
+                            </fieldset>
+                        </div>
+                    </div>
 
-                        <div class="row">
-                            <div class="col-12">
-                                <label class="required-label"> (*) {{ 'global.required-fields' | translate }} </label>
-                            </div>
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <label class="required-label"> 
+                                (*) {{ 'global.required-fields' | translate }} 
+                            </label>
                         </div>
                     </div>
 
@@ -292,13 +367,17 @@
             <div class="card-footer">
                 <div class="row">
                     <div class="col-6">
-                        <button type="button" class="btn btn-primary float-left" (click)="onCancel ();"> {{ 'global.buttons.cancel' | translate }} </button>
+                        <a [routerLink]="['/login']">
+                            {{ 'global.buttons.cancel' | translate }} 
+                        </a>
                     </div>
                     <div class="col-6">
-                        <button type="button" class="btn btn-success float-right" (click)="buttonSubmit.click ()"> {{ 'global.buttons.submit' | translate }} </button>
+                        <button type="button" class="btn btn-success float-right" (click)="buttonSubmit.click ()"> 
+                            {{ 'global.buttons.submit' | translate }} 
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</article>

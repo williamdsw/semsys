@@ -88,13 +88,15 @@ button {
 .box-wrapper {
     width: 30rem;
     height: fit-content;
+
+    fieldset {
+        //background: linear-gradient(to bottom, red, blue);
+        border-left: 0.5rem solid $base-green-dark;
+
+    }
 }
 
 @media only screen and (max-width: 425px) {
-    .box-wrapper {
-        width: 100%;
-        max-width: 100%;
-    }
 
     .text-center {
         font-size: 1.25rem;
