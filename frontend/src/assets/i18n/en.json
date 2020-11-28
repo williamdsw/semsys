@@ -25,7 +25,7 @@
             "zip-code": "Zip Code"
         },
         "buttons": {
-            "sign-up-students": "Sign Up for Students",
+            "sign-up": "Sign Up",
             "login": "Login",
             "cancel": "Cancel",
             "close": "Close",
@@ -100,7 +100,8 @@
             "enter-valid-email": "Enter a valid email!",
             "unable-load": "Unable to load some resources!",
             "setting-applied": "Settings Applied!",
-            "please-wait": "Please Wait..."
+            "please-wait": "Please Wait...",
+            "wrong-data": "SSN or password invalid! Try again."
         }
     },
     "sign-up": {

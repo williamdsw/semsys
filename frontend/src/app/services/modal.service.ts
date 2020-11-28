@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
 
 import { AlertTypes } from '../enums/alert-types.enum';
 
@@ -94,7 +94,8 @@ export class ModalService {
   }
 
   public showWaitModal(): BsModalRef {
-    const modalRef = this.modalService.show (WaitModalComponent);
+    const config: ModalOptions = { ignoreBackdropClick: true, keyboard: false };
+    const modalRef = this.modalService.show (WaitModalComponent, config);
     return modalRef;
   }
 

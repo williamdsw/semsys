@@ -25,7 +25,7 @@
             "zip-code": "CEP"
         },
         "buttons": {
-            "sign-up-students": "É estudante? Inscreva-se aqui.",
+            "sign-up": "Inscreva-se aqui.",
             "login": "Entrar",
             "cancel": "Cancelar",
             "close": "Fechar",
@@ -99,7 +99,8 @@
             "forgot-password-success": "Sua nova senha gerada foi enviada para o seu email!",
             "enter-valid-email": "Informe um email válido!",
             "setting-applied": "Configurações aplicadas!",
-            "please-wait": "Por favor, aguarde..."
+            "please-wait": "Por favor, aguarde...",
+            "wrong-data": "Número da segurança social ou senha inválidos! Tente novamente."
         }
     },
     "sign-up": {

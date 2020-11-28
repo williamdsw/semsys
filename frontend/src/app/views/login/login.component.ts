@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 
 import { environment } from 'src/environments/environment';
 
@@ -13,6 +14,7 @@ import { StorageService } from 'src/app/services/storage.service';
 import { CredentialsDTO } from 'src/app/models/domain/dto/credentials.dto';
 import { LocalUser } from 'src/app/models/local-user';
 import { PersonDTO } from 'src/app/models/domain/dto/person.dto';
+
 import { StandardError } from 'src/app/models/standard-error';
 
 import { BaseFormComponent } from 'src/app/shared/base-form/base-form.component';
@@ -50,11 +52,11 @@ export class LoginComponent extends BaseFormComponent<CredentialsDTO> implements
 
     this.subscription$ = this.route.params.subscribe (
       (params: any) => {
-        const KEY = 'socialSecurityNumber';
-        const SOCIAL_SECURITY_NUMBER = params[KEY];
+        const key = 'socialSecurityNumber';
+        const socialSecurityNumber = params[key];
 
-        if (SOCIAL_SECURITY_NUMBER != null) {
-          this.form.patchValue ({ socialSecurityNumber: SOCIAL_SECURITY_NUMBER });
+        if (socialSecurityNumber != null) {
+          this.form.patchValue ({ socialSecurityNumber });
         }
       }
     );
@@ -69,59 +71,60 @@ export class LoginComponent extends BaseFormComponent<CredentialsDTO> implements
   protected submit(): void {
 
     this.model = Object.assign(this.model, this.form.value);
-    const WAIT_MODAL = this.modalService.showWaitModal ();
+    const waitModal = this.modalService.showWaitModal();
 
-    this.subscription$ = this.authenticationService.authenticate(this.model).subscribe(
-      response => {
-        const AUTHOTIZATION_BEARER = response.headers.get('Authorization');
-        this.authenticationService.successfulLogin(AUTHOTIZATION_BEARER);
+    setTimeout(() => {
+      this.subscription$ = this.authenticationService.authenticate(this.model).subscribe(
+        (response) => {
+          const bearer = response.headers.get('Authorization');
+          this.authenticationService.successfulLogin(bearer);
+          const localUser = new LocalUser();
+          Object.assign(localUser, this.storageService.getLocalUser());
+          this.findLoggedUserInfo(localUser, waitModal);
+        },
+        (error) => {
 
-        // Check user and SSN
-        const LOCAL_USER = new LocalUser();
-        Object.assign(LOCAL_USER, this.storageService.getLocalUser());
+          this.modalService.hideModal(waitModal);
 
-        const URL = `${environment.API}/v1/public/persons/ssn`;
-        this.subscription$ = this.personService.findPersonBySSN (URL, LOCAL_USER.getSocialSecurityNumber()).subscribe(
-          (childResponse) => {
-            this.modalService.hideModal (WAIT_MODAL);
-
-            const PERSON = new PersonDTO ();
-            Object.assign (PERSON, childResponse);
-
-            LOCAL_USER.setId (PERSON.getId ());
-            LOCAL_USER.setType (PERSON.getType ());
-            LOCAL_USER.setProfiles (PERSON.getProfiles ());
-
-            this.storageService.setLocalUser (LOCAL_USER);
-            this.router.navigate (['home']);
-          },
-          error => {
-            this.modalService.hideModal (WAIT_MODAL);
-            this.modalService.showAlertDanger ('modal.titles.error', 'modal.messages.ssn-not-found');
+          if (error.error.message) {
+            const standardError = JSON.parse(error.error) as StandardError;
+            this.modalService.showAlertDanger(standardError.error, standardError.message);
+            return;
           }
-        );
-      },
-      error => {
 
-        this.modalService.hideModal (WAIT_MODAL);
-
-        if (error.error.message) {
-          const STANDARD_ERROR: StandardError = JSON.parse (error.error) as StandardError;
-          this.modalService.showAlertDanger (STANDARD_ERROR.error, STANDARD_ERROR.message);
-          return;
+          this.modalService.showAlertDanger('modal.titles.attention', 'modal.messages.wrong-data');
         }
-
-        this.modalService.showAlertDanger ('modal.titles.error', 'global.messages.system-error');
-
-      }
-    );
+      );
+    }, 500);
   }
 
-  protected showValidationModal() {}
-
-  // HELPER FUNCTIONS
+  protected showValidationModal(): void {}
 
   public onSignUp(): void {
     this.router.navigate(['sign-up']);
+  }
+
+  private findLoggedUserInfo(localUser: LocalUser, waitModal: BsModalRef): void {
+    const url = `${environment.API}/v1/public/persons/ssn`;
+    this.subscription$ = this.personService.findPersonBySSN(url, localUser.getSocialSecurityNumber())
+      .subscribe((res) => {
+        this.modalService.hideModal(waitModal);
+
+        // Updating data
+        const person = new PersonDTO();
+        Object.assign(person, res);
+
+        localUser.setId(person.getId());
+        localUser.setType(person.getType());
+        localUser.setProfiles(person.getProfiles());
+
+        this.storageService.setLocalUser(localUser);
+        this.router.navigate(['home']);
+      },
+      () => {
+        this.modalService.hideModal(waitModal);
+        this.modalService.showAlertDanger('modal.titles.error', 'modal.messages.ssn-not-found');
+      }
+    );
   }
 }

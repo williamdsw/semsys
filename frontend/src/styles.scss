@@ -5,7 +5,7 @@
 
 /* || variables */
 
-$base-green: #abf089;
+$base-green: #6cf329;
 $base-green-dark: #007a1b;
 $base-green-alpha: rgba(0, 189, 41, 0.1);
 $base-white: #fff;
@@ -14,10 +14,16 @@ $base-white-alpha: rgba(255, 255, 255, 0.3);
 /* || bootstrap */
 
 .form-control {
-    border: 1px solid $base-green-alpha;
+    border: none;
+    border-bottom: 1px solid $base-green;
     border-radius: 0;
-    border-left: 5px solid $base-green;
-    font-style: italic;
+}
+
+.form-control:focus, 
+.form-control:active {
+    outline: none;
+    box-shadow: none;
+    border-bottom-style: dotted;
 }
 
 .table-responsive {
@@ -47,6 +53,7 @@ $base-white-alpha: rgba(255, 255, 255, 0.3);
         }
     }
 }
+
 
 /* global */
 
@@ -92,7 +99,12 @@ button {
     .text-center {
         font-size: 1.25rem;
     }
+
+    .w-75, .w-50, .w-25 {
+        width: 100% !important;
+    }
 }
+
 
 
 .box {
