@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
@@ -17,15 +17,11 @@ import { BaseFormComponent } from 'src/app/shared/base-form/base-form.component'
 })
 export class CoursesFormComponent extends BaseFormComponent<CourseNewDTO> implements OnInit, OnDestroy {
 
-  // FIELDS
-
-  public confirmResult: Subject<boolean>;
+  public confirmResult$: Subject<boolean>;
   public timePeriods: string[] = [];
   public courseTypes: string[] = [];
   public periodDescriptions: string[] = [];
   public courseTypeDescriptions: string[] = [];
-
-  // CONSTRUCTOR
 
   constructor(
     protected translateService: TranslateService,
@@ -38,14 +34,12 @@ export class CoursesFormComponent extends BaseFormComponent<CourseNewDTO> implem
 
     this.model = new CourseNewDTO();
     this.showModal = false;
-    this.confirmResult = new Subject();
+    this.confirmResult$ = new Subject();
     this.timePeriods = this.courseService.listTimePeriods ();
     this.courseTypes = this.courseService.listCourseTypes ();
     this.periodDescriptions = this.courseService.getPeriodDescriptions ();
     this.courseTypeDescriptions = this.courseService.getCourseTypeDescriptions ();
   }
-
-  // LIFECYCLE HOOKS
 
   ngOnInit(): void {
     this.form = this.buildForm();
@@ -55,30 +49,23 @@ export class CoursesFormComponent extends BaseFormComponent<CourseNewDTO> implem
     this.subscription$.unsubscribe();
   }
 
-  // OVERRIDED FUNCTIONS
-
-  protected showValidationModal(form: any) {}
-  protected submit() {
+  protected showValidationModal(form: any): void {}
+  protected submit(): void {
     this.model = Object.assign(this.model, this.form.value) as CourseNewDTO;
     this.subscription$ = this.courseService.insertCourse(this.model).subscribe(
-      response => {
-        if (response != null && response.hasOwnProperty('error')) {
+      (response) => {
+        if (response && response.hasOwnProperty('error')) {
           this.confirmAndClose(false);
           return;
         }
 
         this.confirmAndClose(true);
       },
-      error => {
-        console.log(error);
-        this.confirmAndClose(false);
-      }
+      () => this.confirmAndClose(false)
     );
   }
 
-  // HELPER FUNCTIONS
-
-  private buildForm() {
+  private buildForm(): FormGroup {
     this.form = this.formBuilder.group ({
       id: [null],
       name: [null, [Validators.required, Validators.minLength (5), Validators.maxLength (120)]],
@@ -89,11 +76,11 @@ export class CoursesFormComponent extends BaseFormComponent<CourseNewDTO> implem
     return this.form;
   }
 
-  private confirmAndClose(value?: boolean) {
+  private confirmAndClose(value?: boolean): void {
     this.modalRef.hide ();
 
     if (value != null) {
-      this.confirmResult.next (value);
+      this.confirmResult$.next (value);
     }
   }
 
@@ -101,11 +88,11 @@ export class CoursesFormComponent extends BaseFormComponent<CourseNewDTO> implem
     this.confirmAndClose (null);
   }
 
-  public getTranslatedPeriod(period: string) {
+  public getTranslatedPeriod(period: string): string {
     return this.courseService.getTranslatedPeriod (period);
   }
 
-  public getTranslatedCourseType(type: string) {
+  public getTranslatedCourseType(type: string): string {
     return this.courseService.getTranslatedCourseType (type);
   }
 }

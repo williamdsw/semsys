@@ -1,9 +1,14 @@
+
 <!-- courses form -->
-<div class="modal-content" role="dialog" aria-hidden="true">
+<section class="modal-content" role="dialog" aria-hidden="true">
 
     <!-- header -->
     <div class="modal-header">
-        <h5 class="modal-title"> {{ 'global.buttons.new-course' | translate  }} </h5>
+        <header>
+            <h2 class="modal-title"> 
+                {{ 'global.buttons.new-course' | translate  }} 
+            </h2>
+        </header>
         <button type="button" class="close" aria-label="Close" (click)="onClose();">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -14,48 +19,71 @@
         <form class="needs-validation" novalidate [formGroup]="form" (ngSubmit)="onSubmit ();">
             
             <!-- name -->
-            <div class="form-row">
-                <div class="col-md-12 form-group">
-                    <label for="inputCourseName" class="required-label"> {{ 'global.personal.name' | translate }} * </label>
-                    <input type="text" id="inputCourseName" class="form-control" minlength="5" maxlength="120"
+            <div class="row">
+                <div class="col-12 my-md-0 my-2">
+                    <input type="text" class="form-control" minlength="5" maxlength="120"
+                           [placeholder]="' * ' + ('global.personal.name' | translate)" #courseNameInput
                            formControlName="name" [ngClass]="buildValidationClass ('name')">
-                    <app-error-message [control]="form.get ('name')" [label]="'global.personal.name' | translate" ></app-error-message>
+
+                        <small class="text-muted">
+                        {{ 'global.other.needed' | translate }} {{ 'global.other.from' | translate }} 
+                        {{ courseNameInput.minLength }}
+                        {{ 'global.other.to' | translate }} {{ courseNameInput.maxLength }}
+                        {{ 'global.validations-messages.characters' | translate }}
+                        </small>
+                    
+                    <app-error-message [control]="form.get ('name')" [label]="'global.personal.name' | translate">
+                    </app-error-message>
                 </div>
             </div>
+            <div class="row">
 
-            <!-- period -->
-            <div class="form-row">
-                <div class="col-md-12 form-group">
-                    <label for="selectTimePeriod" class="required-label"> {{ 'course.period.period' | translate }} * </label>
-                    <select id="selectTimePeriod" class="form-control" formControlName="period" [ngClass]="buildValidationClass ('period')">
-                        <option [value]="null"> {{ 'course.type.choose-type' | translate }}  </option>
-                        <option *ngFor="let period of timePeriods" [value]="period"> {{ getTranslatedPeriod (period) | translate }} </option>
+                <!-- period -->
+                <div class="col-md-4 my-md-0 my-2">
+                    <select class="form-control" formControlName="period" [ngClass]="buildValidationClass ('period')">
+                        <option [value]="null"> 
+                            * {{ 'course.type.type' | translate }}  
+                        </option>
+                        <option *ngFor="let period of timePeriods" [value]="period"> 
+                            {{ getTranslatedPeriod (period) | translate }} 
+                        </option>
                     </select>
-                    <app-error-message [control]="form.get ('period')" [label]="'course.period.period' | translate" ></app-error-message>
-                </div>
-            </div>
 
-            <!-- type -->
-            <div class="form-row">
-                <div class="col-md-12 form-group">
-                    <label for="selectCourseType" class="required-label"> {{ 'course.type.type' | translate }} * </label>
-                    <select id="selectCourseType" class="form-control" formControlName="type" [ngClass]="buildValidationClass ('period')">
-                        <option [value]="null"> {{ 'course.period.choose-period' | translate }}  </option>
-                        <option *ngFor="let type of courseTypes" [value]="type"> {{ getTranslatedCourseType (type) | translate }} </option>
+                    <app-error-message [control]="form.get ('period')" [label]="'course.period.period' | translate">
+                    </app-error-message>
+                </div>
+
+                <!-- type -->
+                <div class="col-md-8 my-md-0 my-2">
+                    <select class="form-control" formControlName="type" [ngClass]="buildValidationClass ('period')">
+                        <option [value]="null">
+                            * {{ 'course.period.period' | translate }}
+                        </option>
+                        <option *ngFor="let type of courseTypes" [value]="type">
+                            {{ getTranslatedCourseType (type) | translate }}
+                        </option>
                     </select>
-                    <app-error-message [control]="form.get ('type')" [label]="'course.type.type' | translate" ></app-error-message>
+
+                    <app-error-message [control]="form.get ('type')" [label]="'course.type.type' | translate">
+                    </app-error-message>
                 </div>
             </div>
-
-            <label class="required-label"> (*) {{ 'global.required-fields' | translate }} </label>
-            <button type="submit" class="d-none" #buttonSubmit> Submit </button>
+            <div class="row">
+                <div class="col-12">
+                    <label class="required-label"> (*) {{ 'global.required-fields' | translate }} </label>
+                    <button type="submit" class="d-none" #buttonSubmit> Submit </button>
+                </div>
+            </div>
         </form>
     </div>
 
     <!-- footer -->
     <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="onClose ();"> {{ 'global.buttons.cancel' | translate }} </button>
-        <button type="button" class="btn btn-success float-right" (click)="buttonSubmit.click ()"> {{ 'global.buttons.submit' | translate }} </button>
+        <button type="button" class="btn btn-danger float-left" data-dismiss="modal" (click)="onClose ();"> 
+            {{ 'global.buttons.cancel' | translate }} 
+        </button>
+        <button type="button" class="btn btn-success float-right" (click)="buttonSubmit.click ()"> 
+            {{ 'global.buttons.submit' | translate }} 
+        </button>
     </div>
-
-</div>
+</section>

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
 
@@ -22,17 +22,13 @@ import { BaseFormComponent } from 'src/app/shared/base-form/base-form.component'
 })
 export class MeetingSchedulesFormComponent extends BaseFormComponent<MeetingScheduleNewDTO> implements OnInit, OnDestroy {
 
-  // FIELDS
-
   public employees: EmployeeDTO[] = [];
   public students: StudentDTO[] = [];
   public userType: string;
   public currentUserIndex: number;
-  private localUser: LocalUser = new LocalUser();
+  private localUser = new LocalUser();
   public confirmResult: Subject<boolean>;
-  public todayDate: Date = new Date ();
-
-  // CONSTRUCTOR
+  public todayDate = new Date ();
 
   constructor(
     protected translateService: TranslateService,
@@ -54,8 +50,6 @@ export class MeetingSchedulesFormComponent extends BaseFormComponent<MeetingSche
     this.userType = this.localUser.getType();
   }
 
-  // LIFECYCLE HOOKS
-
   ngOnInit(): void {
     this.loadStudents();
     this.loadEmployees();
@@ -66,30 +60,23 @@ export class MeetingSchedulesFormComponent extends BaseFormComponent<MeetingSche
     this.subscription$.unsubscribe();
   }
 
-  // OVERRIDED FUNCTIONS
-
-  protected showValidationModal(form: any) {}
-  protected submit() {
+  protected showValidationModal(form: any): void {}
+  protected submit(): void {
     this.model = Object.assign (this.model, this.form.value) as MeetingScheduleNewDTO;
     this.subscription$ = this.meetingScheduleService.insertMeetingSchedule (this.model).subscribe (
-      response => {
-        if (response.hasOwnProperty ('error')) {
+      (response) => {
+        if (response && response.hasOwnProperty ('error')) {
           this.confirmAndClose (false);
           return;
         }
 
         this.confirmAndClose (true);
       },
-      error => {
-        console.log (error);
-        this.confirmAndClose (false);
-      }
+      () => this.confirmAndClose (false)
     );
   }
 
-  // HELPER FUNCTIONS
-
-  private loadEmployees() {
+  private loadEmployees(): void {
     this.subscription$ = this.employeeService.findAllEmployees().subscribe(
       (emps: EmployeeDTO[]) => {
         emps.map(employee => {
@@ -99,14 +86,14 @@ export class MeetingSchedulesFormComponent extends BaseFormComponent<MeetingSche
         });
 
         if (this.userType === 'Employee') {
-          this.currentUserIndex = this.employees.findIndex (employee => employee.getId () === this.localUser.getId ());
+          this.currentUserIndex = this.employees.findIndex (e => e.getId () === this.localUser.getId ());
         }
       },
-      error => this.employees = []
+      () => this.employees = []
     );
   }
 
-  private loadStudents() {
+  private loadStudents(): void {
     this.subscription$ = this.studentService.findAllStudents().subscribe(
       (studs: StudentDTO[]) => {
         studs.map(student => {
@@ -119,11 +106,11 @@ export class MeetingSchedulesFormComponent extends BaseFormComponent<MeetingSche
           this.currentUserIndex = this.students.findIndex (student => student.getId () === this.localUser.getId ());
         }
       },
-      error => this.students = []
+      () => this.students = []
     );
   }
 
-  private buildForm() {
+  private buildForm(): FormGroup {
     this.form = this.formBuilder.group({
       id: [null],
       datetime: [this.todayDate.toISOString ().slice (0, 16), [Validators.required]],
@@ -133,14 +120,15 @@ export class MeetingSchedulesFormComponent extends BaseFormComponent<MeetingSche
 
     if (this.userType === 'Employee') {
       this.form.patchValue({ employeeId: this.localUser.getId() });
-    } else if (this.userType === 'Student') {
+    }
+    else if (this.userType === 'Student') {
       this.form.patchValue({ studentId: this.localUser.getId() });
     }
 
     return this.form;
   }
 
-  private confirmAndClose(value?: boolean) {
+  private confirmAndClose(value?: boolean): void {
     this.modalRef.hide ();
 
     if (value != null) {

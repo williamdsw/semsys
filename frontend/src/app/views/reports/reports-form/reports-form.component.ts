@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 
 import { BsModalRef } from 'ngx-bootstrap/modal';
@@ -21,8 +21,6 @@ import { BaseFormComponent } from 'src/app/shared/base-form/base-form.component'
 })
 export class ReportsFormComponent extends BaseFormComponent<ReportDTO> implements OnInit, OnDestroy {
 
-  // FIELDS
-
   public employee: EmployeeDTO = new EmployeeDTO();
   public student: StudentDTO = new StudentDTO();
   public confirmResult: Subject<boolean>;
@@ -39,8 +37,6 @@ export class ReportsFormComponent extends BaseFormComponent<ReportDTO> implement
     });
   }
 
-  // CONSTRUCTOR
-
   constructor(
     protected translateService: TranslateService,
     protected storageService: StorageService,
@@ -55,8 +51,6 @@ export class ReportsFormComponent extends BaseFormComponent<ReportDTO> implement
     this.confirmResult = new Subject();
   }
 
-  // LIFECYCLE HOOKS
-
   ngOnInit(): void {
     this.form = this.buildForm ();
   }
@@ -65,23 +59,16 @@ export class ReportsFormComponent extends BaseFormComponent<ReportDTO> implement
     this.subscription$.unsubscribe ();
   }
 
-  // OVERRIDED FUNCTIONS
-
-  protected showValidationModal(form: any) {}
-  protected submit() {
+  protected showValidationModal(form: any): void {}
+  protected submit(): void {
     this.model = Object.assign (this.model, this.form.value) as ReportDTO;
     this.subscription$ = this.reportService.insertReport (this.model).subscribe (
-      response => this.confirmAndClose (true),
-      error => {
-        console.log (error);
-        this.confirmAndClose (false);
-      }
+      () => this.confirmAndClose (true),
+      () => this.confirmAndClose (false)
     );
   }
 
-  // HELPER FUNCTIONS FUNCTIONS
-
-  private buildForm() {
+  private buildForm(): FormGroup {
     return this.formBuilder.group ({
       id: [null],
       title: [null, [Validators.required, Validators.minLength (5), Validators.maxLength (30)]],
@@ -94,12 +81,15 @@ export class ReportsFormComponent extends BaseFormComponent<ReportDTO> implement
     });
   }
 
-  private confirmAndClose(value: boolean) {
-    this.modalRef.hide ();
-    this.confirmResult.next (value);
+  private confirmAndClose(value: boolean): void {
+    this.modalRef.hide();
+
+    if (value !== null) {
+      this.confirmResult.next (value);
+    }
   }
 
   public onClose(): void {
-    this.confirmAndClose (false);
+    this.confirmAndClose (null);
   }
 }

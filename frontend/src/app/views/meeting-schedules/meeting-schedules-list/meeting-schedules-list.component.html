@@ -59,7 +59,7 @@
                     <tbody>
                         <tr *ngFor="let schedule of schedules;">
                             <td scope="row">
-                                <div *ngIf="!isHidden">
+                                <div *ngIf="containsProfile ('ADMIN') && !isHidden;">
                                     <input type="radio" name="id" class="custom-radio" (click)="toggleButtons (schedule)">
                                 </div>
                             </td>

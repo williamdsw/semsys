@@ -101,7 +101,7 @@ export class ModalService {
 
   public showNewCourse(): Subject<boolean> {
     const modalRef = this.modalService.show (CoursesFormComponent);
-    return (modalRef.content as CoursesFormComponent).confirmResult;
+    return (modalRef.content as CoursesFormComponent).confirmResult$;
   }
 
   public showNewSchoolClass(course: CourseDTO): Subject<boolean> {

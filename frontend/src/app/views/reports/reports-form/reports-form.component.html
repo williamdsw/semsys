@@ -1,61 +1,91 @@
-<!-- meeting schedule form -->
-<div class="modal-content" role="dialog" aria-hidden="true">
+
+<!-- new report -->
+<section class="modal-content" role="dialog" aria-hidden="true">
 
     <!-- header -->
     <div class="modal-header">
-        <h5 class="modal-title"> {{ 'global.buttons.new-report' | translate }} </h5>
+        <header>
+            <h2 class="modal-title"> 
+                {{ 'global.buttons.new-report' | translate }} 
+            </h2>
+        </header>
+        
         <button type="button" class="close" aria-label="Close" (click)="onClose ();">
             <span aria-hidden="true">&times;</span>
-          </button>
+        </button>
     </div>
 
     <!-- body -->
     <div class="modal-body">
         <form class="needs-validation" novalidate [formGroup]="form" (ngSubmit)="onSubmit ()">
             <div>
-                <!-- employee -->
                 <div class="row">
-                    <div class="col-md-12">
-                        <span><b> {{ 'report.issuer' | translate }} : </b> {{ employee.getName ()}} </span>
-                    </div>
-                </div>
-
-                <!-- student -->
-                <div class="row">
-                    <div class="col-md-12">
-                        <span><b> {{ 'report.about' | translate }} : </b> {{ student.getName ()}} </span>
+                    <div class="col-12">
+                        <p class="text-center">
+                            {{ employee.getName ()}}
+                            {{ ('report.about' | translate).toLowerCase() }}
+                            {{ student.getName ()}}
+                        </p>
                     </div>
                 </div>
 
                 <!-- title -->
-                <div class="form-row">
-                    <div class="col-md-12 form-group">
-                        <label for="titleInput" class="required-label"> {{ 'report.title' | translate }} * </label>
-                        <input type="text" id="titleInput" class="form-control" minlength="5" maxlength="30" formControlName="title" [ngClass]="buildValidationClass ('title')">
-                        <small class="text-muted mt-2"> 1 - 30 characters long </small>
-                        <app-error-message [control]="form.get ('title')" [label]="'report.title' | translate"></app-error-message>
+                <div class="row">
+                    <div class="col-12">
+                        <input type="text" class="form-control" minlength="5" maxlength="30" 
+                               formControlName="title" #titleInput
+                               [placeholder]="'*' + ('report.title' | translate)"
+                               [ngClass]="buildValidationClass ('title')">
+
+                        <small class="text-muted">
+                            {{ 'global.other.needed' | translate }} {{ 'global.other.from' | translate }} 
+                            {{ titleInput.minLength }}
+                            {{ 'global.other.to' | translate }} {{ titleInput.maxLength }}
+                            {{ 'global.validations-messages.characters' | translate }}
+                        </small>
+
+                        <app-error-message [control]="form.get ('title')" [label]="'report.title' | translate">
+                        </app-error-message>
                     </div>
                 </div>
 
                 <!-- content -->
-                <div class="form-row">
-                    <div class="col-md-12 form-group">
-                        <label for="contentTextArea" class="required-label"> {{ 'report.content' | translate }} * </label>
-                        <textarea id="contentTextArea" class="form-control" cols="30" rows="3" minlength="10" maxlength="1000" formControlName="content" [ngClass]="buildValidationClass ('content')"></textarea>
-                        <small class="text-muted mt-2"> 10 - 1000 characters long </small>
-                        <app-error-message [control]="form.get ('content')" [label]="'report.content' | translate"></app-error-message>
+                <div class="row">
+                    <div class="col-12">
+                        <textarea id="contentTextArea" class="form-control" cols="30" rows="3" 
+                                  minlength="10" maxlength="1000" 
+                                  [placeholder]="'*' + ('report.content' | translate)"
+                                  formControlName="content" #contentTextArea
+                                  [ngClass]="buildValidationClass ('content')"></textarea>
+                        
+                        <small class="text-muted">
+                            {{ 'global.other.needed' | translate }} {{ 'global.other.from' | translate }} 
+                            {{ contentTextArea.minLength }}
+                            {{ 'global.other.to' | translate }} {{ contentTextArea.maxLength }}
+                            {{ 'global.validations-messages.characters' | translate }}
+                        </small>
+
+                        <app-error-message [control]="form.get ('content')" [label]="'report.content' | translate">
+                        </app-error-message>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label class="required-label"> (*) {{ 'global.required-fields' | translate }} </label>
+                        <button type="submit" class="d-none" #buttonSubmit> Submit </button>
                     </div>
                 </div>
             </div>
-
-            <label class="required-label"> (*) {{ 'global.required-fields' | translate }} </label>
-            <button type="submit" class="d-none" #buttonSubmit> Submit </button>
         </form>
     </div>
 
     <!-- footer -->
     <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="onClose ();"> {{ 'global.buttons.close' | translate }} </button>
-        <button type="button" class="btn btn-success float-right" (click)="buttonSubmit.click ()"> {{ 'global.buttons.submit' | translate }} </button>
+        <button type="button" class="btn btn-danger float-left" data-dismiss="modal" (click)="onClose ();"> 
+            {{ 'global.buttons.close' | translate }} 
+        </button>
+        <button type="button" class="btn btn-success float-right" (click)="buttonSubmit.click ()">
+            {{ 'global.buttons.submit' | translate }} 
+        </button>
     </div>
-</div>
+</section>
