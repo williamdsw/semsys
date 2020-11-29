@@ -1,5 +1,6 @@
 package com.williamdsw.semsys.services.aws;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -11,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.util.IOUtils;
 import com.williamdsw.semsys.aws.AwsConstants;
 import com.williamdsw.semsys.services.exceptions.FileException;
 
@@ -40,12 +42,15 @@ public class S3Service {
 
 	public URI uploadFile(String fileName, InputStream inputStream, String contentType) {
 		try {
+			byte[] bytes = IOUtils.toByteArray(inputStream);
+			ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
 			ObjectMetadata metadata = new ObjectMetadata();
 			metadata.setContentType(contentType);
-			client.putObject(bucketName, fileName, inputStream, metadata);
+			metadata.setContentLength(bytes.length);
+			client.putObject(bucketName, fileName, byteArrayInputStream, metadata);
 			return client.getUrl(bucketName, fileName).toURI();
 		} 
-		catch (URISyntaxException ex) {
+		catch (URISyntaxException | IOException ex) {
 			throw new FileException("Parsing URL to URI has failed");
 		}
 	}

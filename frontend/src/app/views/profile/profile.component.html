@@ -1,84 +1,66 @@
-<!-- profiles -->
-<div class="box-wrapper mx-auto my-3 my-md-5">
-    <div class="card">
 
-        <!-- name -->
-        <div class="card-header">
-            <h3 class="text-center"> {{ !isLoading && !hasError ? person.name : 'global.menu-links.profile' | translate }} </h3>
+
+
+
+<!-- profiles -->
+<div class="box-wrapper mx-auto my-md-5 my-3">
+    <div class="card">
+        <div class="row no-gutters" *ngIf="!isLoading && !hasError; else spanLoading">
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="hover-effect border-right" (click)="userImageLabel.click();">
+                            <input type="file" id="userImageInput" class="d-none" accept="image/png, image/jpeg" (change)="onChange ($event);">
+                            <label for="userImageInput" class="d-none" #userImageLabel></label>
+
+                            <!-- overlay -->
+                            <img class="card-img top img-fluid" [src]="person?.imageUrl" alt="User Profile" #userImage>
+                            <div class="overlay">
+                                <p class="text-white h2 my-5">
+                                    {{ 'profile.buttons.change-image' | translate }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <button type="button" class="btn btn-success w-100" (click)="onUploadImage ();" [disabled]="!userImageFile"> 
+                            {{ 'profile.buttons.upload-image' | translate }} 
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <header>
+                        <h5> 
+                            {{ !isLoading && !hasError ? person.name : 'global.menu-links.profile' | translate }}
+                        </h5>
+                    </header>
+
+                    <hr>
+
+                    <p class="card-text"> {{ person.email }} </p>
+                </div>
+            </div>
         </div>
 
-        <div class="card-body">
-            <div class="row" *ngIf="!isLoading && !hasError; else spanLoading">
-
-                <!-- user image -->
-                <div class="col-md-4">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="user-image mx-auto d-block">
-                                <img class="card-img top rounded img-fluid" [src]="person?.imageUrl" alt="User Profile">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 mt-3">
-                            <div class="user-image mx-auto d-block custom-file">
-                                <input type="file" id="userImageInput" class="custom-file-input" accept="image/png, image/jpeg" (change)="onChange ($event);">
-                                <label for="userImageInput" id="userImageLabel" class="custom-file-label"> {{ 'profile.buttons.select-file' | translate }} </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 mt-3">
-                            <div class="user-image mx-auto d-block">
-                                <button type="button" class="btn btn-primary btn-block" (click)="onUploadImage ();" [disabled]="!userImageFile"> {{ (person?.imageUrl ? 'profile.buttons.change-image' : 'profile.buttons.upload-image') | translate }} </button>
-                            </div>
-                        </div>
-                    </div>
+        <div class="row">
+            <ng-template #spanLoading>
+                <div class="bg-light p-3 text-center">
+                    <span *ngIf="!hasError; else spanError;"> 
+                        {{ 'global.messages.loading' | translate }} ... 
+                    </span>
                 </div>
-
-                <!-- main info -->
-                <div class="col-md-8">
-                    <div class="row">
-                        <div class="col-12 mt-3 mt-md-0">
-                            <p class="user-information"> <b> {{ 'global.personal.email' | translate }} : </b> {{ person.email }} </p>
-                            <p class="user-information"> <b> {{ 'global.social-security-number' | translate }} : </b> {{ person.socialSecurityNumber }} </p>
-                        </div>
-                    </div>
-
-                    <!-- other info -->
-                    <div class="row">
-                        <div class="col-12">
-                            <accordion [isAnimated]="true">
-                                <accordion-group class="my-2" [heading]="'profile.other-info' | translate" [isOpen]="true">
-                                    <p class="user-information" *ngIf="userType === 'Student'"> <b> {{ 'global.personal.birthdate' | translate }}: </b> {{ person?.birthdate | date }} </p>
-                                    <p class="user-information"> <b> {{ 'global.personal.phone-numbers' | translate }} : </b> {{ person.phoneNumbers }} </p>
-                                    <p class="user-information"> <b> {{ 'global.address.address' | translate }} : </b> </p>
-                                    <div class="row">
-                                        <div class="col-md-6"> {{ person.address?.street }}, {{ person.address?.number }} </div>
-                                        <div class="col-md-6"> {{ person.address?.zipCode }}, {{ person.address?.city.name }}, {{ person.address?.city.state.name }} </div>
-                                    </div>
-                                    <div class="row" *ngIf="person.address?.complement">
-                                        <div class="col-12"> {{ person.address?.complement }} </div>
-                                    </div>
-                                </accordion-group>
-                            </accordion>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <ng-template #spanLoading>
-                    <div class="bg-light p-3 text-center">
-                        <span *ngIf="!hasError; else spanError;"> {{ 'global.messages.loading' | translate }} ... </span>
-                    </div>
-                </ng-template>
-            
-                <ng-template #spanError>
-                    <span> {{ 'global.messages.system-error' | translate }} </span>
-                    <button type="button" class="btn btn-info mx-1" (click)="loadData ()"> {{ 'global.buttons.reload' | translate }} </button>
-                </ng-template>
-            </div>
+            </ng-template>
+        
+            <ng-template #spanError>
+                <span> {{ 'global.messages.system-error' | translate }} </span>
+                <button type="button" class="btn btn-info mx-1" (click)="loadData ()"> 
+                    {{ 'global.buttons.reload' | translate }} 
+                </button>
+            </ng-template>
         </div>
     </div>
 </div>

@@ -111,7 +111,8 @@
             "unable-load": "Unable to load some resources!",
             "setting-applied": "Settings Applied!",
             "please-wait": "Please Wait...",
-            "wrong-data": "SSN or password invalid! Try again."
+            "wrong-data": "SSN or password invalid! Try again.",
+            "operation-succeed": "Operation succeed!"
         }
     },
     "sign-up": {

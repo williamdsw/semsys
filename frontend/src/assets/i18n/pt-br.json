@@ -110,7 +110,8 @@
             "enter-valid-email": "Informe um email válido!",
             "setting-applied": "Configurações aplicadas!",
             "please-wait": "Por favor, aguarde...",
-            "wrong-data": "Número da segurança social ou senha inválidos! Tente novamente."
+            "wrong-data": "Número da segurança social ou senha inválidos! Tente novamente.",
+            "operation-succeed": "Operação bem-sucedida!"
         }
     },
     "sign-up": {

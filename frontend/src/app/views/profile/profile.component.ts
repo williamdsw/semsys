@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, ViewChildren, QueryList } from '@angular/core';
 import { Subscription, EMPTY } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -24,15 +24,18 @@ export class ProfileComponent extends BaseTranslateComponent implements OnInit, 
   // FIELDS
 
   private subscription$: Subscription;
-  private localUser: LocalUser = new LocalUser();
+  private localUser = new LocalUser();
   public userType: string;
-  public person: Person = {} as Person;
+  public person = {} as Person;
   public userImageFile: File;
-  private userImageLabel: HTMLElement;
   public isLoading: boolean;
   public hasError: boolean;
+  public blob: string;
 
-  // CONSTRUCTOR
+  @ViewChildren('userImage')
+  public userImageRef: QueryList<ElementRef<HTMLImageElement>>;
+
+  private userImage: HTMLImageElement;
 
   constructor(
     protected translateService: TranslateService,
@@ -51,8 +54,6 @@ export class ProfileComponent extends BaseTranslateComponent implements OnInit, 
     this.hasError = false;
   }
 
-  // LIFECYCLE HOOKS
-
   ngOnInit(): void {
     this.loadData();
   }
@@ -60,8 +61,6 @@ export class ProfileComponent extends BaseTranslateComponent implements OnInit, 
   ngOnDestroy(): void {
     this.subscription$.unsubscribe ();
   }
-
-  // HELPER FUNCTIONS
 
   public loadData(): void {
     this.isLoading = true;
@@ -73,17 +72,14 @@ export class ProfileComponent extends BaseTranslateComponent implements OnInit, 
         this.hasError = false;
         Object.assign (this.person, resultPerson);
 
-        this.userImageLabel = document.getElementById ('userImageLabel');
-
         // bucket url
-        const IMAGE_URL = `${environment.BUCKET_BASE_URL}/${this.imageUtilService.buildFileName(this.person.name)}.jpg`;
-        this.person.imageUrl = IMAGE_URL;
-        const IMG = document.createElement('img');
-        IMG.src = IMAGE_URL;
-        IMG.onerror = () => {
-          this.person.imageUrl = environment.DEFAULT_AVATAR_IMG;
-        };
-    }), catchError (error => {
+        const imageUrl = `${environment.BUCKET_BASE_URL}/${this.imageUtilService.buildFileName(this.person.name)}.jpg`;
+        this.person.imageUrl = imageUrl;
+        const img = document.createElement('img');
+        img.src = imageUrl;
+        img.onerror = () => this.person.imageUrl = environment.DEFAULT_AVATAR_IMG;
+      }),
+    catchError(() => {
       this.isLoading = false;
       this.hasError = true;
       this.modalService.showAlertDanger('modal.titles.error!', 'global.messages.system-error');
@@ -94,29 +90,38 @@ export class ProfileComponent extends BaseTranslateComponent implements OnInit, 
   public onChange(event): void {
     if (event.srcElement.files.length === 1) {
       this.userImageFile = event.srcElement.files[0] as File;
-      this.userImageLabel.innerHTML = this.userImageFile.name;
+      this.blob = URL.createObjectURL(this.userImageFile);
+      this.userImage = (this.userImageRef.first as ElementRef<HTMLImageElement>).nativeElement;
+      this.userImage.src = this.blob;
     }
   }
 
   public onUploadImage(): void {
     if (this.userImageFile) {
-      this.subscription$ = this.personService.updateUserImage (this.userImageFile).subscribe (
-        response => {
-          console.log (response);
-          const LOCATION = response.headers.get ('Location');
+      const waitModal = this.modalService.showWaitModal();
 
-          setTimeout(() => {
-            const CURRENT_TIME = new Date ().getTime ();
-            this.person.imageUrl = `${LOCATION}?${CURRENT_TIME}`;
-            this.userImageFile = null;
-            this.userImageLabel.innerHTML = 'Select File';
-          }, 100);
-         },
-        error => {
-          console.log (error);
-          this.modalService.showAlertDanger('modal.titles.error!', 'global.messages.system-error');
-        }
-      );
+      setTimeout(() => {
+        this.subscription$ = this.personService.updateUserImage(this.userImageFile).subscribe(
+          (response) => {
+            const location = response.headers.get('Location');
+
+            setTimeout(() => {
+              const currentTime = new Date().getTime();
+              this.person.imageUrl = `${location}?${currentTime}`;
+              URL.revokeObjectURL(this.blob);
+              this.userImageFile = null;
+
+              this.modalService.hideModal(waitModal);
+              this.modalService.showAlertSuccess('modal.titles.success', 'modal.messages.operation-succeed');
+
+            }, 100);
+          },
+          () => {
+            this.modalService.hideModal(waitModal);
+            this.modalService.showAlertDanger('modal.titles.error!', 'global.messages.system-error');
+          }
+        );
+      }, 500);
     }
   }
 }
