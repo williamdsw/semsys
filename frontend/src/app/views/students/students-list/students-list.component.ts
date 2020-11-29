@@ -77,7 +77,7 @@ export class StudentsListComponent extends BaseCardListComponent<StudentDTO> imp
       catchError (() => {
         this.hasError = true;
         this.error$.next (true);
-        this.handleError (this.modalTitlesAndBodies.error.title, this.modalTitlesAndBodies.loading.body);
+        this.handleError (this.modalTexts.error.title, this.modalTexts.loading.body);
         return EMPTY;
       })
 

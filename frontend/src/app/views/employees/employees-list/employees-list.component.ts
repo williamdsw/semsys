@@ -79,7 +79,7 @@ export class EmployeesListComponent extends BaseCardListComponent<EmployeeDTO> i
         this.hasError = true;
         this.recordsCount = 0;
         this.error$.next (true);
-        this.handleError (this.modalTitlesAndBodies.error.title, this.modalTitlesAndBodies.loading.body);
+        this.handleError (this.modalTexts.error.title, this.modalTexts.loading.body);
         return EMPTY;
       })
 

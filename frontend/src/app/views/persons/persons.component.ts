@@ -46,7 +46,7 @@ export class PersonsComponent extends BaseCardListComponent<PersonDTO> implement
   public onDelete(person: PersonDTO): void {
     this.selectedModel = person;
 
-    const result$ = this.modalService.showConfirm (this.modalTitlesAndBodies.confirm.title, this.modalTitlesAndBodies.confirm.body);
+    const result$ = this.modalService.showConfirm (this.modalTexts.confirm.title, this.modalTexts.confirm.body);
     result$.asObservable ().pipe (
       take (1),
       switchMap (result => {
@@ -55,9 +55,9 @@ export class PersonsComponent extends BaseCardListComponent<PersonDTO> implement
     ).subscribe (
       () => {
         this.loadData ();
-        this.modalService.showAlertSuccess(this.modalTitlesAndBodies.success.title, this.modalTitlesAndBodies.success.body);
+        this.modalService.showAlertSuccess(this.modalTexts.success.title, this.modalTexts.success.body);
       },
-      () => this.modalService.showAlertDanger (this.modalTitlesAndBodies.error.title, this.modalTitlesAndBodies.error.body)
+      () => this.modalService.showAlertDanger (this.modalTexts.error.title, this.modalTexts.error.body)
     );
   }
 
@@ -87,7 +87,7 @@ export class PersonsComponent extends BaseCardListComponent<PersonDTO> implement
       catchError (() => {
         this.error$.next (true);
         this.hasError = true;
-        this.handleError (this.modalTitlesAndBodies.error.title, this.modalTitlesAndBodies.loading.body);
+        this.handleError (this.modalTexts.error.title, this.modalTexts.loading.body);
         return EMPTY;
       })
     ) as Observable<PersonDTO[]>;

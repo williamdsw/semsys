@@ -4,12 +4,6 @@
 
     <!-- header -->
     <div class="modal-header">
-        <header>
-            <h5 class="modal-title"> 
-                {{ 'report.report-details' | translate }} 
-            </h5>
-        </header>
-        
         <button type="button" class="close" aria-label="Close" (click)="modalRef.hide ()">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -20,16 +14,13 @@
         <div class="row">
             <div class="col-12 text-center">
                 <header>
-                    <h5> {{ title }} </h5>
+                    <h2> {{ title }} </h2>
                 </header>
                 <hr>
             </div>
             <div class="col-12">
-                <span class="font-weight-bold"> {{ 'report.written-by' | translate }} : </span> 
                 {{ employeeName }}
-            </div>
-            <div class="col-12">
-                <span class="font-weight-bold"> {{ 'report.about' | translate }} : </span> 
+                <span class="font-weight-bold"> {{ ('report.about' | translate).toLowerCase() }} </span> 
                 {{ studentName }}
                 <hr>
             </div>
@@ -37,9 +28,8 @@
                 <p> {{ content }} </p>
                 <hr>
             </div>
-
             <div class="col-12">
-                <p class="font-italic">
+                <p class="font-italic float-right">
                     {{ 'report.issued-in' | translate }} {{ emission | date }}
                 </p>
             </div>

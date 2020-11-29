@@ -12,17 +12,15 @@ import { ReportDTO } from 'src/app/models/domain/dto/report.dto';
 import { EmployeeDTO } from 'src/app/models/domain/dto/employee.dto';
 import { StudentDTO } from 'src/app/models/domain/dto/student.dto';
 import { MeetingScheduleDTO } from 'src/app/models/domain/dto/meeting-schedule.dto';
+import { ReportDetails } from 'src/app/models/report-detail';
 
 import { BaseTableComponent } from 'src/app/shared/list-table/base-table/base-table.component';
-import { ReportDetails } from 'src/app/models/report-detail';
 
 @Component({
   selector: 'app-reports-list',
   templateUrl: './reports-list.component.html',
 })
 export class ReportsListComponent extends BaseTableComponent<ReportDTO> implements OnInit {
-
-  // CONSTRUCTOR
 
   constructor(
     protected translateService: TranslateService,
@@ -35,18 +33,16 @@ export class ReportsListComponent extends BaseTableComponent<ReportDTO> implemen
 
     // default values
     this.globalHeader = 'global.menu-links.my-reports';
-    this.tableHeaders = ['#', 'report.emission', 'report.written-by', 'report.about', 'report.information'];
+    this.tableHeaders = [
+      '#', 'report.emission', 'report.written-by', 'report.about', 'report.information'
+    ];
 
     Object.assign (this._localUser, storageService.getLocalUser ());
   }
 
-  // LIFECYCLE HOOKS
-
   ngOnInit(): void {
     this.records$ = this.loadData ();
   }
-
-  // OVERRIDED FUNCTIONS
 
   public onUpdate(): void {}
   public onDelete(): void {}
@@ -55,20 +51,20 @@ export class ReportsListComponent extends BaseTableComponent<ReportDTO> implemen
     this.records$ = this.loadData();
   }
 
-  protected loadData() {
+  protected loadData(): Observable<any> {
 
     if (this._localUser.getType () === 'Employee') {
       return this.pipeFindAll (this.reportService.findAllByEmployee (this._localUser.getId ()));
-    } else if (this._localUser.getType () === 'Student') {
+    }
+    else if (this._localUser.getType() === 'Student') {
       return this.pipeFindAll (this.reportService.findAllByStudent (this._localUser.getId ()));
     }
   }
 
-  protected pipeFindAll(observable: Observable<any>) {
+  protected pipeFindAll(observable: Observable<any>): Observable<any> {
     return observable.pipe (
       map (reports => {
         return reports.map(report => {
-
           this.hasError = false;
 
           let dto = new ReportDTO ();
@@ -89,26 +85,18 @@ export class ReportsListComponent extends BaseTableComponent<ReportDTO> implemen
         });
       }),
 
-      catchError(error => {
-        console.log (error);
+      catchError(() => {
         this.hasError = true;
         this.error$.next (true);
-        this.handleError (this.loadingErrorTitle, this.loadingErrorMessage);
+        this.handleError (this.modalTexts.error.title, this.modalTexts.loading.body);
         return EMPTY;
       })
     );
   }
 
-  // HELPER FUNCTIONS
-
   public showDetailModal(report: ReportDTO): void {
     const employeeName = report.getSchedule ().getEmployee ().getName ();
     const studentName = report.getSchedule().getStudent().getName();
-    const reportDetails: ReportDetails = {
-      employeeName, studentName, title: report.getTitle(),
-      content: report.getContent(), emission: report.getEmission()
-    };
-    
     this.modalService.showReportDetails (employeeName, studentName, report.getTitle (), report.getContent (), report.getEmission ());
   }
 

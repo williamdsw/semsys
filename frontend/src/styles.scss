@@ -137,21 +137,19 @@ button {
 /* ------------------------------------------------ */
 /* DEFAULT TABLE | DEFAULT CARD TABLE */
 
-div.table-box, .card-box {
+.table-box, 
+.card-box {
     max-width: 930px;
     padding: 1rem;
 }
 
-div.table-box h2 {
-    display: block;
-    text-align: center;
-}
-
-div.table-box input, div.table-box select {
+.table-box input:not([type='radio'])
+.table-box select {
     width: 100%;
 }
 
-div.table-box, .card-box {
+.table-box, 
+.card-box {
     background-color: $base-white-alpha;
     border-top: 1rem solid $base-green-dark;
 }

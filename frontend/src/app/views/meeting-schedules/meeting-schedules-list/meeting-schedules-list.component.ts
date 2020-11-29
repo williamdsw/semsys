@@ -22,8 +22,6 @@ import { BaseTableComponent } from 'src/app/shared/list-table/base-table/base-ta
 })
 export class MeetingSchedulesListComponent extends BaseTableComponent<MeetingScheduleDTO> implements OnInit {
 
-  // FIELDS
-
   public isHidden = true;
   private currentStatus: string;
   private localCancelScheduleButton: ElementRef;
@@ -44,8 +42,6 @@ export class MeetingSchedulesListComponent extends BaseTableComponent<MeetingSch
     'meeting-schedules.status.canceled'
   ];
 
-  // CONSTRUCTOR
-
   constructor(
     protected translateService: TranslateService,
     protected modalService: ModalService,
@@ -57,24 +53,20 @@ export class MeetingSchedulesListComponent extends BaseTableComponent<MeetingSch
 
     // default values
     this.globalHeader = 'global.menu-links.schedules';
-    this.confirmBody = 'meeting-schedules.messages.cancel-confirmation';
-    this.successMessage = 'meeting-schedules.messages.cancel-success';
-    this.errorMessage = 'meeting-schedules.messages.cancel-error';
+    this.modalTexts.confirm.body = 'meeting-schedules.messages.cancel-confirmation';
+    this.modalTexts.success.body = 'meeting-schedules.messages.cancel-success';
+    this.modalTexts.error.body = 'meeting-schedules.messages.cancel-error';
     this.tableHeaders = [
-      'Id', 'meeting-schedules.datetime', 'meeting-schedules.employee',
+      '#', 'meeting-schedules.datetime', 'meeting-schedules.employee',
       'meeting-schedules.student', 'meeting-schedules.status.status'
     ];
 
     Object.assign(this._localUser, storageService.getLocalUser());
   }
 
-  // LIFECYCLE HOOKS
-
   ngOnInit(): void {
     this.onReload ();
   }
-
-  // OVERRIDED FUNCTIONS
 
   public onDelete(): void {}
   public onReload(): void {
@@ -85,52 +77,50 @@ export class MeetingSchedulesListComponent extends BaseTableComponent<MeetingSch
 
   public onUpdate(): void {
 
-    const RESULT$ = this.modalService.showConfirm (this.confirmTitle, this.confirmBody);
-    RESULT$.asObservable ().pipe (
-      take (1),
-      switchMap (result => {
-
+    const result$ = this.modalService.showConfirm (this.modalTexts.confirm.title, this.modalTexts.confirm.body);
+    result$.asObservable().pipe(
+      take(1),
+      switchMap(result => {
         if (result) {
-          this.selectedModel.setMeetingStatus ('Canceled');
-          return this.meetingScheduleService.updateStatus (this.selectedModel);
+          this.selectedModel.setMeetingStatus('Canceled');
+          return this.meetingScheduleService.updateStatus(this.selectedModel);
         }
 
         return EMPTY;
       })
-    ).subscribe (
-      success => {
-        console.log (this.currentStatus);
-        this.records$ = this.loadData (this.currentStatus);
-        this.modalService.showAlertSuccess (this.successTitle, this.successMessage);
+    ).subscribe(
+      () => {
+        this.records$ = this.loadData(this.currentStatus);
+        this.modalService.showAlertSuccess(this.modalTexts.success.title, this.modalTexts.success.body);
       },
-      error => this.modalService.showAlertDanger ( this.errorTitle, this.errorMessage)
+      () => this.modalService.showAlertDanger(this.modalTexts.error.title, this.modalTexts.error.body)
     );
    }
 
-  protected loadData(status?: string) {
-
+  protected loadData(status?: string): Observable<MeetingScheduleDTO[]> {
     this.currentStatus = status;
 
-    if (status && status !== 'All') {
-      return this.pipeFindAll (this.meetingScheduleService.findAllByStatus (status));
-    } else if (status && status === 'All') {
-      return this.pipeFindAll (this.meetingScheduleService.findAll ());
+    if (status) {
+      if (status !== 'All') {
+        return this.pipeFindAll (this.meetingScheduleService.findAllByStatus (status));
+      }
+      else {
+        return this.pipeFindAll (this.meetingScheduleService.findAll ());
+      }
     }
 
     if (this._localUser.getType () === 'Employee') {
       return this.pipeFindAll (this.meetingScheduleService.findAllByEmployee(this._localUser.getId()));
-    } else if (this._localUser.getType () === 'Student') {
+    }
+    else if (this._localUser.getType() === 'Student') {
       return this.pipeFindAll (this.meetingScheduleService.findAllByStudent(this._localUser.getId()));
     }
   }
 
-  // HELPER FUNCTIONS
-
-  protected pipeFindAll(observable: Observable<any>) {
+  protected pipeFindAll(observable: Observable<any>): Observable<MeetingScheduleDTO[]> {
     return observable.pipe (
       map(schedules => {
         return schedules.map((schedule) => {
-
           this.hasError = false;
 
           let dto = new MeetingScheduleDTO();
@@ -148,109 +138,97 @@ export class MeetingSchedulesListComponent extends BaseTableComponent<MeetingSch
         });
       }),
 
-      catchError (error => {
-        console.log (error);
+      catchError (() => {
         this.hasError = true;
         this.error$.next (true);
-        this.handleError (this.loadingErrorTitle, this.loadingErrorMessage);
+        this.handleError (this.modalTexts.error.title, this.modalTexts.loading.body);
         return EMPTY;
       })
     ) as Observable<MeetingScheduleDTO[]>;
   }
 
-  public setBagdeClass(status: string) {
+  public setBagdeClass(status: string): string {
     switch (status) {
-      case 'Finished': {
-        return 'badge badge-success';
-      }
-
-      case 'Canceled': {
-        return 'badge badge-danger';
-      }
-
-      case 'Scheduled': default: {
-        return 'badge badge-primary';
-      }
+      case 'Finished': return 'badge badge-success';
+      case 'Canceled': return 'badge badge-danger';
+      case 'Scheduled': default: return 'badge badge-primary';
     }
   }
 
-  public toggleButtons(schedule: MeetingScheduleDTO) {
+  public toggleButtons(schedule: MeetingScheduleDTO): void {
     this.selectedModel = schedule;
 
-    const KEY = 'disabled';
-    this.localCancelScheduleButton.nativeElement[KEY] = (schedule.getMeetingStatus () !== 'Scheduled');
-    this.localNewReportButton.nativeElement[KEY] = (schedule.getMeetingStatus () !== 'Scheduled');
+    const key = 'disabled';
+    this.localCancelScheduleButton.nativeElement[key] = (schedule.getMeetingStatus () !== 'Scheduled');
+    this.localNewReportButton.nativeElement[key] = (schedule.getMeetingStatus () !== 'Scheduled');
   }
 
   public listMeetingStatus(): string[] {
-
-    const LIST_STATUS: string[] = ['All'];
-
-    for (const STATUS in MeetingStatus) {
-      if (MeetingStatus.hasOwnProperty (STATUS)) {
-        LIST_STATUS.push (MeetingStatus[STATUS]);
+    const listStatus: string[] = ['All'];
+    for (const status in MeetingStatus) {
+      if (MeetingStatus.hasOwnProperty (status)) {
+        listStatus.push (MeetingStatus[status]);
       }
     }
 
-    return LIST_STATUS;
+    return listStatus;
   }
 
-  public toggleVisibility(type: string, status?: string) {
+  public toggleVisibility(type: string, status?: string): void {
     this.isHidden = (type === 'all');
 
     if (type === 'all' && status !== '') {
       this.records$ = this.loadData (status);
-    } else if (type === 'my') {
+    }
+    else if (type === 'my') {
       this.records$ = this.loadData ();
     }
   }
 
-  public filterStatus(status: string) {
+  public filterStatus(status: string): void{
       this.records$ = this.loadData (status);
   }
 
-  public showNewMeetingScheduleModal() {
-    const RESULT$ = this.modalService.showNewMeetingSchedule ();
-    RESULT$.asObservable ().pipe (take (1)).subscribe (
+  public showNewMeetingScheduleModal(): void {
+    const result$ = this.modalService.showNewMeetingSchedule ();
+    result$.asObservable ().pipe (take (1)).subscribe (
       (success: boolean) => {
-        console.log (success);
         if (success) {
-          this.modalService.showAlertSuccess ('modal.titles.success', 'meeting-schedules.messages.scheduled-success');
+          this.modalService.showAlertSuccess(this.modalTexts.success.title, 'meeting-schedules.messages.scheduled-success');
           this.records$ = this.loadData ();
-        } else {
-          this.modalService.showAlertDanger ('modal.titles.error', 'meeting-schedules.messages.scheduled-error');
+        }
+        else {
+          this.modalService.showAlertDanger(this.modalTexts.error.title, 'meeting-schedules.messages.scheduled-error');
         }
       },
-      error => {
-        this.modalService.showAlertDanger ('modal.titles.error', 'meeting-schedules.messages.scheduled-error');
-      }
+      () =>
+        this.modalService.showAlertDanger(this.modalTexts.success.title, 'meeting-schedules.messages.scheduled-error')
     );
   }
 
-  public showNewReportModal() {
-    const RESULT$ = this.modalService.showNewReport (this.selectedModel);
-    RESULT$.asObservable ().pipe (take (1)).subscribe (
+  public showNewReportModal(): void {
+    const result$ = this.modalService.showNewReport (this.selectedModel);
+    result$.asObservable ().pipe (take (1)).subscribe (
       (success: boolean) => {
         if (success) {
-          this.modalService.showAlertSuccess ('modal.titles.success', 'report.messages.report-success');
+          this.modalService.showAlertSuccess (this.modalTexts.success.title, 'report.messages.report-success');
           this.records$ = this.loadData ();
         } else {
-          this.modalService.showAlertDanger ('modal.titles.error!', 'report.messages.report-error');
+          this.modalService.showAlertDanger (this.modalTexts.error.title, 'report.messages.report-error');
         }
       },
-      error => {
-        this.modalService.showAlertDanger ('modal.titles.error!', 'report.messages.report-error');
-      }
+      () =>
+        this.modalService.showAlertDanger (this.modalTexts.error.title, 'report.messages.report-error')
     );
   }
 
-  public containsProfile(profile: string) {
+  public containsProfile(profile: string): boolean {
     return this.authenticationService.containsProfile (profile);
   }
 
-  public getTranslatedStatus(status: string) {
-    const KEY = `meeting-schedules.status.${status.toLowerCase ()}`;
-    const INDEX = this.statusDescriptions.indexOf (KEY);
-    return this.statusDescriptions[INDEX];
+  public getTranslatedStatus(status: string): string {
+    const key = `meeting-schedules.status.${status.toLowerCase ()}`;
+    const index = this.statusDescriptions.indexOf (key);
+    return this.statusDescriptions[index];
   }
 }

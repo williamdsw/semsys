@@ -20,13 +20,12 @@ export abstract class BaseListComponent<T = any> extends BaseTranslateComponent 
   public error$ = new Subject<boolean>();
   public queryField = new FormControl();
   public hasError = false;
+  public recordsCount = 0;
   protected params = new HttpParams();
-
   protected selectedModel: T;
-  protected recordsCount = 0;
 
   // modal related
-  protected modalTitlesAndBodies = {
+  protected modalTexts = {
     confirm: { title: 'modal.titles.confirmation', body: 'modal.messages.confirmation' },
     success: { title: 'modal.titles.success', body: 'modal.messages.delete-success' },
     error: { title: 'modal.titles.error', body: 'modal.messages.delete-error' },
