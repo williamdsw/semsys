@@ -27,49 +27,49 @@
                                     <!-- social security number -->
                                     <div class="col-md-4 my-md-0 my-2">
                                         <input type="text" class="form-control" minlength="11" maxlength="11" 
-                                               [placeholder]="' * ' + ('global.social-security-number' | translate)"
+                                                [placeholder]="' * ' + ('global.social-security-number' | translate)"
                                                 formControlName="socialSecurityNumber" [ngClass]="buildValidationClass ('socialSecurityNumber')" 
                                                 [mask]="inputMasks.socialSecurityNumber" [dropSpecialCharacters]="false"
                                                 #ssnInput (blur)="onSocialSecurityNumberFocusOut (ssnInput.value);" />
-    
+
                                         <small class="text-muted">
                                             {{ 'global.other.needed' | translate }} {{ ssnInput.maxLength }}
                                             {{ 'global.validations-messages.characters' | translate }}
                                         </small>
-    
+
                                         <app-error-message [control]="form.get ('socialSecurityNumber')" [label]="'global.social-security-number' | translate">
                                         </app-error-message>
                                     </div>
-    
+
                                     <!-- password -->
                                     <div class="col-md-4 my-md-0 my-2">
                                         <input type="password" class="form-control" minlength="10" maxlength="20" 
-                                               [placeholder]="' * ' + ('global.password' | translate)" #passwordInput
-                                               formControlName="password" [ngClass]="buildValidationClass ('password')" />
-    
+                                                [placeholder]="' * ' + ('global.password' | translate)" #passwordInput
+                                                formControlName="password" [ngClass]="buildValidationClass ('password')" />
+
                                         <small class="text-muted">
                                             {{ 'global.other.needed' | translate }} {{ 'global.other.from' | translate }} 
                                             {{ passwordInput.minLength }}
                                             {{ 'global.other.to' | translate }} {{ passwordInput.maxLength }}
                                             {{ 'global.validations-messages.characters' | translate }}
                                         </small>
-    
+
                                         <!-- validation -->
                                         <app-error-message [control]="form.get ('password')" [label]="'global.password' | translate">
                                         </app-error-message>
                                     </div>
-    
+
                                     <!-- confirm password -->
                                     <div class="col-md-4 mb-3 form-group">
                                         <input type="password" class="form-control"
                                                 minlength="10" maxlength="20" 
                                                 [placeholder]="' * ' + ('global.confirm-password' | translate)"
                                                 formControlName="confirmPassword" [ngClass]="buildValidationClass ('confirmPassword')" />
-    
+
                                         <small class="text-muted">
                                             {{ 'global.validations-messages.must-match-password-field' | translate }} 
                                         </small>
-    
+
                                         <!-- validation -->
                                         <app-error-message [control]="form.get ('confirmPassword')" [label]="'global.passwords' | translate">
                                         </app-error-message>
@@ -92,8 +92,8 @@
                                     <!-- name -->
                                     <div class="col-md-5 my-md-0 my-2">
                                         <input type="text" id="nameInput" class="form-control" minlength="5" maxlength="120" 
-                                               [placeholder]="' * ' + ('global.personal.name' | translate)" #nameInput
-                                               formControlName="name" [ngClass]="buildValidationClass ('name')" />
+                                                [placeholder]="' * ' + ('global.personal.name' | translate)" #nameInput
+                                                formControlName="name" [ngClass]="buildValidationClass ('name')" />
 
                                         <small class="text-muted">
                                             {{ 'global.other.needed' | translate }} {{ 'global.other.from' | translate }} 
@@ -109,9 +109,9 @@
                                     <!-- email -->
                                     <div class="col-md-4 my-md-0 my-2">
                                         <input type="email" id="emailInput" class="form-control" minlength="5" maxlength="30" 
-                                               [placeholder]="' * ' + ('global.personal.email' | translate)" #emailInput
-                                               formControlName="email" [ngClass]="buildValidationClass ('email')"
-                                               (blur)="onEmailFocusOut (emailInput.value)" />
+                                                [placeholder]="' * ' + ('global.personal.email' | translate)" #emailInput
+                                                formControlName="email" [ngClass]="buildValidationClass ('email')"
+                                                (blur)="onEmailFocusOut (emailInput.value)" />
 
                                             <small class="text-muted">
                                                 {{ 'global.other.needed' | translate }} {{ 'global.other.from' | translate }} 
@@ -127,17 +127,16 @@
                                     <!-- birthdate -->
                                     <div class="col-md-3 my-md-0 my-2">
                                         <input type="text" id="birthdateInput" class="form-control" minlength="10" maxlength="10" 
-                                               [placeholder]="' * ' + ('global.personal.birthdate' | translate)"
-                                               formControlName="birthdate" [ngClass]="buildValidationClass ('birthdate')"
-                                               bsDatepicker [bsConfig]="bsDateConfig" 
-                                               [minDate]="birthdateMinDate" [maxDate]="birthdateMaxDate">
+                                                [placeholder]="' * ' + ('global.personal.birthdate' | translate)"
+                                                formControlName="birthdate" [ngClass]="buildValidationClass ('birthdate')"
+                                                bsDatepicker [bsConfig]="bsDateConfig" 
+                                                [minDate]="birthdateMinDate" [maxDate]="birthdateMaxDate">
 
                                         <!-- validation -->
                                         <app-error-message [control]="form.get ('birthdate')" [label]="'global.personal.birthdate' | translate">
                                         </app-error-message>
                                     </div>
                                 </div>
-
                                 <div class="row my-3">
 
                                     <!-- course -->
@@ -175,9 +174,9 @@
                                 <div class="row my-3" formGroupName="phoneNumbers">
                                     <div class="col-md-4 my-md-0 my-2">
                                         <input type="tel" class="form-control" minlength="12" maxlength="12" 
-                                               [placeholder]="' * ' + ('global.personal.phone-number' | translate)"
-                                               formControlName="phoneNumber0" [ngClass]="buildValidationClass ('phoneNumbers.phoneNumber0')" 
-                                               [mask]="inputMasks.phoneNumber" [dropSpecialCharacters]="false">
+                                                [placeholder]="' * ' + ('global.personal.phone-number' | translate)"
+                                                formControlName="phoneNumber0" [ngClass]="buildValidationClass ('phoneNumbers.phoneNumber0')" 
+                                                [mask]="inputMasks.phoneNumber" [dropSpecialCharacters]="false">
 
                                         <small class="text-muted">
                                             {{ 'global.other.this' | translate }} 
@@ -190,9 +189,9 @@
                                     </div>
                                     <div class="col-md-4 my-md-0 my-2">
                                         <input type="tel" class="form-control" minlength="12" maxlength="12" 
-                                               [placeholder]="'global.personal.phone-number' | translate"
-                                               formControlName="phoneNumber1" 
-                                               [mask]="inputMasks.phoneNumber" [dropSpecialCharacters]="false">
+                                                [placeholder]="'global.personal.phone-number' | translate"
+                                                formControlName="phoneNumber1" 
+                                                [mask]="inputMasks.phoneNumber" [dropSpecialCharacters]="false">
 
                                         <small class="text-muted">
                                             {{ 'global.other.this' | translate }} 
@@ -205,9 +204,9 @@
                                     </div>
                                     <div class="col-md-4 my-md-0 my-2">
                                         <input type="tel" class="form-control" minlength="12" maxlength="12" 
-                                               [placeholder]="'global.personal.phone-number' | translate"
-                                               formControlName="phoneNumber2" 
-                                               [mask]="inputMasks.phoneNumber" [dropSpecialCharacters]="false">
+                                                [placeholder]="'global.personal.phone-number' | translate"
+                                                formControlName="phoneNumber2" 
+                                                [mask]="inputMasks.phoneNumber" [dropSpecialCharacters]="false">
 
                                         <small class="text-muted">
                                             {{ 'global.other.this' | translate }} 
@@ -299,8 +298,8 @@
                                     <!-- street -->
                                     <div class="col-md-4 my-md-0 my-2">
                                         <input type="text" class="form-control" minlength="5" maxlength="120" 
-                                               [placeholder]="' * ' + ('global.address.street' | translate)" #streetInput
-                                               formControlName="street" [ngClass]="buildValidationClass ('street')">
+                                                [placeholder]="' * ' + ('global.address.street' | translate)" #streetInput
+                                                formControlName="street" [ngClass]="buildValidationClass ('street')">
 
                                         <small class="text-muted">
                                             {{ 'global.other.needed' | translate }} {{ 'global.other.from' | translate }} 
@@ -317,7 +316,7 @@
                                     <!-- complement -->
                                     <div class="col-md-4 my-md-0 my-2">
                                         <input type="text" class="form-control" maxlength="120" #complementInput
-                                               [placeholder]="'global.address.complement' | translate" formControlName="complement">
+                                                [placeholder]="'global.address.complement' | translate" formControlName="complement">
 
                                         <small class="text-muted">
                                             {{ 'global.other.optional' | translate }},
@@ -330,9 +329,9 @@
                                     <!-- number -->
                                     <div class="col-md-2 my-md-0 my-2">
                                         <input type="text" class="form-control" minlength="1" maxlength="5" 
-                                               [placeholder]="' * ' + ('global.address.number' | translate)" #numberInput
-                                               formControlName="number" [ngClass]="buildValidationClass ('number')"
-                                               [mask]="inputMasks.number">
+                                                [placeholder]="' * ' + ('global.address.number' | translate)" #numberInput
+                                                formControlName="number" [ngClass]="buildValidationClass ('number')"
+                                                [mask]="inputMasks.number">
 
                                         <small class="text-muted">
                                             {{ 'global.other.needed' | translate }} {{ 'global.other.from' | translate }} 

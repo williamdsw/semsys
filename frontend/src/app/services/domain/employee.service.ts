@@ -22,7 +22,7 @@ export class EmployeeService extends PersonService {
   constructor(protected httpClient: HttpClient) {
     super(httpClient);
     this.protectedUrl = `${environment.API}/v1/protected/employees`;
-    this.adminUrl = `${environment.API}/v1/protected/employees`;
+    this.adminUrl = `${environment.API}/v1/admin/employees`;
   }
 
   public findAllEmployees():
@@ -32,7 +32,7 @@ export class EmployeeService extends PersonService {
 
   public findAllByName(params: HttpParams):
       Observable<(PersonDTO | EmployeeDTO | StudentDTO | PersonNewDTO | EmployeeNewDTO | StudentNewDTO)[]> {
-    return this.listAll(`${this.adminUrl}/name`, params);
+    return this.listAll(`${this.protectedUrl}/name`, params);
   }
 
   public findByKeyAndValueWhereUrlIs(url, key, value):

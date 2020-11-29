@@ -64,7 +64,9 @@
                     <tbody>
                         <tr *ngFor="let course of courses; let currentIndex = index;">
                             <td scope="row">
-                                <input type="radio" name="id" class="custom-radio" (click)="toggleButtons (course)">
+                                <div *ngIf="containsProfile('ADMIN')">
+                                    <input type="radio" name="id" class="custom-radio" (click)="toggleButtons (course)">
+                                </div>
                             </td>
                             <td scope="row"> {{ course.getName () }} </td>
                             <td scope="row"> 
