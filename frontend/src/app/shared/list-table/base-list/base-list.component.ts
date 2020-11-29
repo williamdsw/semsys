@@ -23,8 +23,16 @@ export abstract class BaseListComponent<T = any> extends BaseTranslateComponent 
   protected params = new HttpParams();
 
   protected selectedModel: T;
+  protected recordsCount = 0;
 
   // modal related
+  protected modalTitlesAndBodies = {
+    confirm: { title: 'modal.titles.confirmation', body: 'modal.messages.confirmation' },
+    success: { title: 'modal.titles.success', body: 'modal.messages.delete-success' },
+    error: { title: 'modal.titles.error', body: 'modal.messages.delete-error' },
+    loading: { body: 'global.messages.system-error' }
+  };
+
   protected confirmTitle = 'modal.titles.confirmation';
   protected confirmBody = 'modal.messages.confirmation';
   protected successTitle = 'modal.titles.success';

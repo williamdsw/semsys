@@ -137,12 +137,12 @@ button {
 /* ------------------------------------------------ */
 /* DEFAULT TABLE | DEFAULT CARD TABLE */
 
-div.table-box, div.card-box {
+div.table-box, .card-box {
     max-width: 930px;
     padding: 1rem;
 }
 
-div.table-box h2, div.card-box h2 {
+div.table-box h2 {
     display: block;
     text-align: center;
 }
@@ -151,7 +151,7 @@ div.table-box input, div.table-box select {
     width: 100%;
 }
 
-div.table-box, div.card-box {
+div.table-box, .card-box {
     background-color: $base-white-alpha;
     border-top: 1rem solid $base-green-dark;
 }
@@ -159,8 +159,8 @@ div.table-box, div.card-box {
 .card-container {
     width: 100%;
     max-width: 100%;
-    max-height: 26rem;
-    overflow-x: scroll;
+    max-height: none !important;
+    // overflow-x: scroll;
 }
 
 @media only screen and (max-width: 425px) {
@@ -170,16 +170,16 @@ div.table-box, div.card-box {
     }
 }
 
-div.card-box div.card-list-item {
+.card-box div.card-list-item {
     width: 100%;
 }
 
-div.card-box div.card-header.card-name {
+.card-box div.card-header.card-name {
     font-weight: bold;
 }
 
-div.card-box div.card-header.card-name,
-div.card-box p.card-text {
+.card-box div.card-header.card-name,
+.card-box p.card-text {
     max-width: 100%;
     white-space: nowrap;
     overflow: hidden;
@@ -187,12 +187,12 @@ div.card-box p.card-text {
     text-align: center;
 }
 
-div.card-box div.card-body p.card-text {
+.card-box div.card-body p.card-text {
     text-align: center;
     font-style: italic;
 }
 
-div.card-box img.avatar {
+.card-box img.avatar {
     display: block;
     border-radius: 100%;
     border: 1px dashed rgba(0, 0, 0, 0.2);

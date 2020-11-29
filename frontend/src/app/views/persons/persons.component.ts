@@ -20,8 +20,6 @@ import { BaseCardListComponent } from 'src/app/shared/list-table/base-card-list/
 })
 export class PersonsComponent extends BaseCardListComponent<PersonDTO> implements OnInit {
 
-  // CONSTRUCTOR
-
   constructor(
     protected translateService: TranslateService,
     protected storageService: StorageService,
@@ -35,13 +33,9 @@ export class PersonsComponent extends BaseCardListComponent<PersonDTO> implement
     this.globalHeader = 'global.menu-links.persons';
   }
 
-  // LIFECYCLE HOOKS
-
   ngOnInit(): void {
     this.loadData();
   }
-
-  // OVERRIDED FUNCTIONS
 
   public onUpdate(): void {}
   public onSearch(): void {
@@ -52,18 +46,18 @@ export class PersonsComponent extends BaseCardListComponent<PersonDTO> implement
   public onDelete(person: PersonDTO): void {
     this.selectedModel = person;
 
-    const RESULT$ = this.modalService.showConfirm (this.confirmTitle, this.confirmBody);
-    RESULT$.asObservable ().pipe (
+    const result$ = this.modalService.showConfirm (this.modalTitlesAndBodies.confirm.title, this.modalTitlesAndBodies.confirm.body);
+    result$.asObservable ().pipe (
       take (1),
       switchMap (result => {
         return (result ? this.personService.deletePerson (person.getId ()) : EMPTY);
       })
     ).subscribe (
-      success => {
+      () => {
         this.loadData ();
-        this.modalService.showAlertSuccess (this.successTitle, this.successMessage);
+        this.modalService.showAlertSuccess(this.modalTitlesAndBodies.success.title, this.modalTitlesAndBodies.success.body);
       },
-      error => this.modalService.showAlertDanger (this.errorTitle, this.errorMessage)
+      () => this.modalService.showAlertDanger (this.modalTitlesAndBodies.error.title, this.modalTitlesAndBodies.error.body)
     );
   }
 
@@ -73,30 +67,27 @@ export class PersonsComponent extends BaseCardListComponent<PersonDTO> implement
       map (persons => {
         return persons.map ((person) => {
 
-          const DTO = new PersonDTO ();
-          Object.assign (DTO, person);
+          const dto = new PersonDTO ();
+          Object.assign (dto, person);
           this.hasError = false;
 
           // bucket url
-          const IMAGE_URL = `${environment.BUCKET_BASE_URL}/${this.imageUtilService.buildFileName (DTO.getName ())}.jpg`;
-          DTO.setImageUrl (IMAGE_URL);
+          let imageUrl = environment.BUCKET_BASE_URL;
+          imageUrl += `${this.imageUtilService.buildFileName(dto.getName())}.jpg`;
+          dto.setImageUrl (imageUrl);
 
-          const IMAGE_ELEMENT = document.createElement ('img');
-          IMAGE_ELEMENT.src = IMAGE_URL;
+          const imageElement = document.createElement ('img');
+          imageElement.src = imageUrl;
+          imageElement.addEventListener('error', () => dto.setImageUrl(environment.DEFAULT_AVATAR_IMG));
 
-          IMAGE_ELEMENT.onerror = () => {
-            DTO.setImageUrl (environment.DEFAULT_AVATAR_IMG);
-          };
-
-          return DTO;
+          return dto;
         });
       }),
 
-      catchError (error => {
-        console.log (error);
+      catchError (() => {
         this.error$.next (true);
         this.hasError = true;
-        this.handleError (this.loadingErrorTitle, this.loadingErrorMessage);
+        this.handleError (this.modalTitlesAndBodies.error.title, this.modalTitlesAndBodies.loading.body);
         return EMPTY;
       })
     ) as Observable<PersonDTO[]>;

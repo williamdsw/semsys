@@ -77,7 +77,7 @@ export class ProfileComponent extends BaseTranslateComponent implements OnInit, 
         this.person.imageUrl = imageUrl;
         const img = document.createElement('img');
         img.src = imageUrl;
-        img.onerror = () => this.person.imageUrl = environment.DEFAULT_AVATAR_IMG;
+        img.addEventListener('error', () => this.person.imageUrl = environment.DEFAULT_AVATAR_IMG);
       }),
     catchError(() => {
       this.isLoading = false;

@@ -14,7 +14,6 @@ export class BaseTranslateComponent {
     protected storageService: StorageService) {
     translateService.addLangs(['en', 'pt-br']);
     translateService.setDefaultLang(storageService.getDefaultLanguage());
-    // translateService.setDefaultLang ('en');
   }
 
   protected setDefaultLanguage(language: string): void {
