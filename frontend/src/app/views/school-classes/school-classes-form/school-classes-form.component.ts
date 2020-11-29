@@ -1,14 +1,16 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { SchoolClassNewDTO } from 'src/app/models/domain/new-dto/school-class.new.dto';
-import { BaseFormComponent } from 'src/app/shared/base-form/base-form.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
+import { BsModalRef } from 'ngx-bootstrap/modal';
+
+import { SchoolClassNewDTO } from 'src/app/models/domain/new-dto/school-class.new.dto';
+import { CourseDTO } from 'src/app/models/domain/dto/course.dto';
+
 import { TranslateService } from '@ngx-translate/core';
 import { StorageService } from 'src/app/services/storage.service';
-import { BsModalRef } from 'ngx-bootstrap/modal';
 import { SchoolClassService } from 'src/app/services/domain/school-class.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { CourseDTO } from 'src/app/models/domain/dto/course.dto';
-import { BsCustomDatesViewComponent } from 'ngx-bootstrap/datepicker/themes/bs/bs-custom-dates-view.component';
+
+import { BaseFormComponent } from 'src/app/shared/base-form/base-form.component';
 
 @Component({
   selector: 'app-school-classes-form',
@@ -16,12 +18,10 @@ import { BsCustomDatesViewComponent } from 'ngx-bootstrap/datepicker/themes/bs/b
 })
 export class SchoolClassesFormComponent extends BaseFormComponent<SchoolClassNewDTO> implements OnInit, OnDestroy {
 
-  // FIELDS
-
   public confirmResult: Subject<boolean>;
-  public todayDate: Date = new Date ();
+  public todayDate = new Date ();
   public bsDateConfig = { isAnimated: true };
-  public currentCourse: CourseDTO = new CourseDTO ();
+  public currentCourse = new CourseDTO ();
   public errorMessage: string;
 
   @Input('course') public set course(localCourse: CourseDTO) {
@@ -31,8 +31,6 @@ export class SchoolClassesFormComponent extends BaseFormComponent<SchoolClassNew
       courseId: this.currentCourse.getId ()
     });
   }
-
-  // CONSTRUCTOR
 
   constructor(
     protected translateService: TranslateService,
@@ -48,8 +46,6 @@ export class SchoolClassesFormComponent extends BaseFormComponent<SchoolClassNew
     this.confirmResult = new Subject();
   }
 
-  // LIFECYCLE HOOKS
-
   ngOnInit(): void {
     this.form = this.buildForm();
   }
@@ -58,40 +54,33 @@ export class SchoolClassesFormComponent extends BaseFormComponent<SchoolClassNew
     this.subscription$.unsubscribe ();
   }
 
-  // OVERRIDED FUNCTIONS
-
-  protected showValidationModal(form: any) {}
-  protected submit() {
+  protected showValidationModal(form: any): void {}
+  protected submit(): void {
     this.errorMessage = '';
     this.model = Object.assign (this.model, this.form.value) as SchoolClassNewDTO;
 
-    const START = this.model.getStart ();
-    const END = this.model.getEnd ();
+    const start = this.model.getStart ();
+    const end = this.model.getEnd ();
 
-    if (START > END) {
+    if (start > end) {
       this.errorMessage = 'classes.messages.start-greater-than-end';
       return;
     }
 
     this.subscription$ = this.schoolClassService.insertSchoolClass (this.model).subscribe (
-      response => {
-        if (response !== null && response.hasOwnProperty ('error')) {
+      (response) => {
+        if (response && response.hasOwnProperty ('error')) {
           this.confirmAndClose (false);
           return;
         }
 
         this.confirmAndClose (true);
       },
-      error => {
-        console.log (error);
-        this.confirmAndClose (false);
-      }
+      () => this.confirmAndClose (false)
     );
   }
 
-  // HELPER FUNCTIONS
-
-  private buildForm() {
+  private buildForm(): FormGroup {
     this.form = this.formBuilder.group({
       id: [null],
       name: [null, [Validators.required]],
@@ -103,7 +92,7 @@ export class SchoolClassesFormComponent extends BaseFormComponent<SchoolClassNew
     return this.form;
   }
 
-  private confirmAndClose(value?: boolean) {
+  private confirmAndClose(value?: boolean): void {
     this.modalRef.hide ();
 
     if (value != null) {
@@ -115,21 +104,19 @@ export class SchoolClassesFormComponent extends BaseFormComponent<SchoolClassNew
     this.confirmAndClose (null);
   }
 
-  private buildSchoolClassName() {
+  private buildSchoolClassName(): string {
+    const courseName = this.currentCourse.getName ();
+    const words = courseName.split(' ');
     let schoolClassName = '';
-    const COURSE_NAME = this.currentCourse.getName ();
-    const WORDS = COURSE_NAME.split (' ');
 
-    if (WORDS.length >= 2) {
-      WORDS.forEach (word => {
-        schoolClassName += word.charAt (0).toUpperCase ();
-      });
-    } else {
-      schoolClassName += COURSE_NAME.charAt (0).toUpperCase ();
+    if (words.length >= 2) {
+      words.forEach (word => schoolClassName += word.charAt (0).toUpperCase ());
+    }
+    else {
+      schoolClassName += courseName.charAt (0).toUpperCase ();
     }
 
     schoolClassName = `${schoolClassName} - Class`;
-
     return schoolClassName;
   }
 }

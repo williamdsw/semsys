@@ -1,9 +1,15 @@
-<!-- courses form -->
-<div class="modal-content" role="dialog" aria-hidden="true">
+
+<!-- new school classes -->
+<article class="modal-content" role="dialog" aria-hidden="true">
 
     <!-- header -->
     <div class="modal-header">
-        <h5 class="modal-title"> {{ 'global.buttons.new-class' | translate  }} </h5>
+        <header>
+            <h2 class="modal-title"> 
+                {{ 'global.buttons.new-class' | translate }} 
+            </h2>
+        </header>
+        
         <button type="button" class="close" aria-label="Close" (click)="onClose();">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -14,55 +20,82 @@
         <form class="needs-validation" novalidate [formGroup]="form" (ngSubmit)="onSubmit ();">
             
             <!-- name -->
-            <div class="form-row">
-                <div class="col-md-12 form-group">
-                    <label for="inputCourseName" class="required-label"> {{ 'global.personal.name' | translate }} * </label>
-                    <input type="text" id="inputCourseName" class="form-control" minlength="5" maxlength="120"
-                           formControlName="name" [ngClass]="buildValidationClass ('name')">
-                    <app-error-message [control]="form.get ('name')" [label]="'global.personal.name' | translate" ></app-error-message>
-                </div>
-            </div>
+            <div class="row my-2">
+                <div class="col-12">
+                    <input type="text" class="form-control" minlength="5" maxlength="120"
+                           [placeholder]="' * ' + ('global.personal.name' | translate)"
+                           formControlName="name" #nameInput
+                           [ngClass]="buildValidationClass ('name')">
 
-            <div class="form-row">
+                    <small class="text-muted">
+                        {{ 'global.other.needed' | translate }} {{ 'global.other.from' | translate }} 
+                        {{ nameInput.minLength }}
+                        {{ 'global.other.to' | translate }} {{ nameInput.maxLength }}
+                        {{ 'global.validations-messages.characters' | translate }}
+                    </small>
 
-                <!-- start -->
-                <div class="col-md-6 form-group">
-                    <label for="startInput" class="required-label"> {{ 'classes.start' | translate }} * </label>
-                    <input type="text" id="startInput" class="form-control" minlength="10" maxlength="10" 
-                           formControlName="start" [ngClass]="buildValidationClass ('start')"
-                           bsDatepicker [bsConfig]="bsDateConfig" [minDate]="todayDate">
-                    <app-error-message [control]="form.get ('start')" [label]="'classes.start' | translate"></app-error-message>
-                </div>
-
-                <!-- end -->
-                <div class="col-md-6 form-group">
-                    <label for="endInput" class="required-label"> {{ 'classes.end' | translate }} * </label>
-                    <input type="text" id="endInput" class="form-control" minlength="10" maxlength="10"
-                           formControlName="end" [ngClass]="buildValidationClass ('end')"
-                           bsDatepicker [bsConfig]="bsDateConfig" [minDate]="todayDate">
-                    <app-error-message [control]="form.get ('end')" [label]="'classes.end' | translate"></app-error-message>
+                    <app-error-message [control]="form.get ('name')" [label]="'global.personal.name' | translate">
+                    </app-error-message>
                 </div>
             </div>
 
             <!-- course -->
-            <div class="form-row">
-                <div class="col-md-12 form-group">
-                    <label class="required-label"> {{ 'course.course' | translate }} * </label>
+            <div class="row my-2">
+                <div class="col-12">
                     <input type="text" class="form-control" [value]="this.currentCourse.getName ()" readonly disabled>
                 </div>
             </div>
 
-            <b class="btn-outline-danger"> {{ errorMessage | translate }} </b>
+            <div class="row my-2">
 
-            <label class="required-label"> (*) {{ 'global.required-fields' | translate }} </label>
-            <button type="submit" class="d-none" #buttonSubmit> Submit </button>
+                <!-- start -->
+                <div class="col-6">
+                    <input type="text" class="form-control" minlength="10" maxlength="10" 
+                           formControlName="start" [ngClass]="buildValidationClass ('start')"
+                           [placeholder]="' * ' + ('classes.start' | translate)"
+                           bsDatepicker [bsConfig]="bsDateConfig" [minDate]="todayDate">
+
+                    <app-error-message [control]="form.get ('start')" [label]="'classes.start' | translate">
+                    </app-error-message>
+                </div>
+
+                <!-- end -->
+                <div class="col-6">
+                    <input type="text" class="form-control" minlength="10" maxlength="10"
+                           formControlName="end" [ngClass]="buildValidationClass ('end')"
+                           [placeholder]="' * ' + ('classes.end' | translate)"
+                           bsDatepicker [bsConfig]="bsDateConfig" [minDate]="todayDate">
+
+                    <app-error-message [control]="form.get ('end')" [label]="'classes.end' | translate">
+                    </app-error-message>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <span class="btn-outline-danger font-weight-bold">
+                        {{ errorMessage | translate }}
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <label class="required-label"> 
+                        (*) {{ 'global.required-fields' | translate }} 
+                    </label>
+                    <button type="submit" class="d-none" #buttonSubmit> Submit </button>
+                </div>
+            </div>
         </form>
     </div>
 
     <!-- footer -->
     <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="onClose ();"> {{ 'global.buttons.cancel' | translate }} </button>
-        <button type="button" class="btn btn-success float-right" (click)="buttonSubmit.click ()"> {{ 'global.buttons.submit' | translate }} </button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="onClose ();">
+            {{ 'global.buttons.cancel' | translate }}
+        </button>
+        <button type="button" class="btn btn-success float-right" (click)="buttonSubmit.click ()">
+            {{ 'global.buttons.submit' | translate }} 
+        </button>
     </div>
 
-</div>
+</article>

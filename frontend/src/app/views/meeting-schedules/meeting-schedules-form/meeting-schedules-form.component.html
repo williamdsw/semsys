@@ -24,9 +24,9 @@
                     <!-- employee -->
                     <div class="col-md-6">
                         <div *ngIf="userType === 'Employee'; else employeeSelect">
-                            <input type="text" class="form-control font-weight-bold" 
+                            <input type="text" class="form-control font-weight-bold" readonly disabled
                             [value]="employees[currentUserIndex]?.getName ()"
-                            [title]="employees[currentUserIndex]?.getName ()" readonly>
+                            [title]="employees[currentUserIndex]?.getName ()">
                         </div>
                         
                         <ng-template #employeeSelect>
@@ -47,9 +47,9 @@
                     <!-- student -->
                     <div class="col-md-6">
                         <div *ngIf="userType === 'Student'; else studentSelect">
-                            <input type="text" class="form-control font-weight-bold" 
+                            <input type="text" class="form-control font-weight-bold" readonly disabled 
                             [value]="students[currentUserIndex]?.getName ()"
-                            [title]="students[currentUserIndex]?.getName ()" readonly>
+                            [title]="students[currentUserIndex]?.getName ()">
                         </div>
 
                         <ng-template #studentSelect>

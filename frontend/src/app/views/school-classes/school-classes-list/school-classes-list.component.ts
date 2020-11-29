@@ -18,20 +18,18 @@ import { BaseTranslateComponent } from 'src/app/shared/base-translate/base-trans
 })
 export class SchoolClassesListComponent extends BaseTranslateComponent implements OnInit {
 
-  // FIELDS
-
-  public tableHeaders: string[] = ['#', 'global.personal.name', 'classes.start', 'classes.end'];
+  public tableHeaders: string[] = [
+    '#', 'global.personal.name', 'classes.start', 'classes.end'
+  ];
   public globalHeader = 'course.classes.classes';
   public records$: Observable<SchoolClassDTO[]>;
   public hasError = false;
-  public currentCourse: CourseDTO = new CourseDTO ();
+  public currentCourse = new CourseDTO ();
 
   @Input('course') public set course(localCourse: CourseDTO) {
     this.currentCourse = localCourse;
     this.onReload (this.currentCourse, '');
   }
-
-  // CONSTRUCTOR
 
   constructor(
     protected translateService: TranslateService,
@@ -43,11 +41,7 @@ export class SchoolClassesListComponent extends BaseTranslateComponent implement
     this.records$ = new Observable();
   }
 
-  // LIFECYCLE HOOKS
-
   ngOnInit(): void {}
-
-  // OVERRIDED FUNCTIONS
 
   public onUpdate(): void {}
   public onReload(course: CourseDTO, name: string): void {
@@ -55,11 +49,11 @@ export class SchoolClassesListComponent extends BaseTranslateComponent implement
     this.records$ = this.loadData(course, name);
   }
 
-  protected loadData(course: CourseDTO, name: string) {
+  protected loadData(course: CourseDTO, name: string): Observable<SchoolClassDTO[]> {
     return this.pipeFindAll (this.schoolClassService.findAllByCourseAndName (course.getId (), name));
   }
 
-  protected pipeFindAll(observable: Observable<any>) {
+  protected pipeFindAll(observable: Observable<any>): Observable<SchoolClassDTO[]> {
     return observable.pipe (
       map ((schoolClasses: SchoolClassDTO[]) => {
         return schoolClasses.map (schoolClass => {
@@ -69,15 +63,12 @@ export class SchoolClassesListComponent extends BaseTranslateComponent implement
         });
       }),
 
-      catchError (error => {
-        console.log (error);
+      catchError (() => {
         this.hasError = true;
         return EMPTY;
       })
     );
   }
-
-  // HELPER FUNCTIONS
 
   public onClose(): void {
     this.modalRef.hide ();
