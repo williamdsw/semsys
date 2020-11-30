@@ -48,9 +48,7 @@ public class StudentNewDTO extends PersonNewDTO {
 	}
 	
 	public Student toStudent(List<SchoolClass> schoolClasses) {
-		SchoolClass schoolClass = schoolClasses.stream().filter(sc -> sc.getId().equals(this.schoolClassId)).findFirst().get();
-		System.out.println("Stundent school class? " + schoolClass);
-		
+		SchoolClass schoolClass = schoolClasses.stream().filter(sc -> sc.getId().equals(this.schoolClassId)).findFirst().get();		
 		Student student = new Student(this.id, this.name, this.email, this.socialSecurityNumber, this.birthdate, password, null, schoolClass);
 		student.getPhoneNumbers().addAll(getPhoneNumbers());
 		return student;
