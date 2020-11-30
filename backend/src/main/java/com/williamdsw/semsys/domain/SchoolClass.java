@@ -132,4 +132,15 @@ public class SchoolClass implements Serializable {
 			return false;
 		return true;
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder str = new StringBuilder();
+		str.append(" id: ").append(this.id);
+		str.append(" | name: ").append(this.name);
+		str.append(" | course: ").append(this.getCourse());
+		str.append(" | start: ").append(this.start);
+		str.append(" | end: ").append(this.end);
+		return str.toString();
+	}
 }

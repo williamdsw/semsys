@@ -1,0 +1,52 @@
+[
+    {
+        "id": 1,
+        "name": "Wichita",
+        "stateId": 2
+    },
+    {
+        "id": 2,
+        "name": "Kansas City",
+        "stateId": 2
+    },
+    {
+        "id": 3,
+        "name": "Topeka",
+        "stateId": 2
+    },
+    {
+        "id": 4,
+        "name": "Lawrence",
+        "stateId": 2
+    },
+    {
+        "id": 5,
+        "name": "Beverly Hills",
+        "stateId": 1
+    },
+    {
+        "id": 6,
+        "name": "Los Angeles",
+        "stateId": 1
+    },
+    {
+        "id": 7,
+        "name": "Las Vegas",
+        "stateId": 3
+    },
+    {
+        "id": 8,
+        "name": "Long Beach",
+        "stateId": 4
+    },
+    {
+        "id": 9,
+        "name": "New York",
+        "stateId": 4
+    },
+    {
+        "id": 10,
+        "name": "James Town",
+        "stateId": 4
+    }
+]

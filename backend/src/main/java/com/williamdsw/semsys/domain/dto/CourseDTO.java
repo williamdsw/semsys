@@ -2,6 +2,8 @@ package com.williamdsw.semsys.domain.dto;
 
 import java.io.Serializable;
 import com.williamdsw.semsys.domain.Course;
+import com.williamdsw.semsys.domain.enums.CourseType;
+import com.williamdsw.semsys.domain.enums.TimePeriod;
 
 public class CourseDTO implements Serializable {
 	// FIELDS
@@ -57,5 +59,9 @@ public class CourseDTO implements Serializable {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+	
+	public Course toCourse() {
+		return new Course(this.id, this.name, TimePeriod.toEnum(this.period), CourseType.toEnum(this.type));
 	}
 }

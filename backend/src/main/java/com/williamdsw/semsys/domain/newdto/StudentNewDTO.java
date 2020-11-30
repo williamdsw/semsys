@@ -1,8 +1,12 @@
 package com.williamdsw.semsys.domain.newdto;
 
 import java.util.Date;
+import java.util.List;
+
 import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.williamdsw.semsys.domain.SchoolClass;
+import com.williamdsw.semsys.domain.Student;
 
 public class StudentNewDTO extends PersonNewDTO {
 	// FIELDS
@@ -37,5 +41,18 @@ public class StudentNewDTO extends PersonNewDTO {
 
 	public void setSchoolClassId(Integer schooClassId) {
 		this.schoolClassId = schooClassId;
+	}
+	
+	public Student toStudent() {
+		return new Student(this.id, this.name, this.email, this.socialSecurityNumber, this.birthdate, password, null, null);
+	}
+	
+	public Student toStudent(List<SchoolClass> schoolClasses) {
+		SchoolClass schoolClass = schoolClasses.stream().filter(sc -> sc.getId().equals(this.schoolClassId)).findFirst().get();
+		System.out.println("Stundent school class? " + schoolClass);
+		
+		Student student = new Student(this.id, this.name, this.email, this.socialSecurityNumber, this.birthdate, password, null, schoolClass);
+		student.getPhoneNumbers().addAll(getPhoneNumbers());
+		return student;
 	}
 }

@@ -38,7 +38,7 @@ public class State implements Serializable {
 
 	public State() {
 	}
-
+	
 	public State(Integer id, String name, String abbreviation, Country country) {
 		super();
 		this.id = id;
@@ -114,5 +114,15 @@ public class State implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder str = new StringBuilder();
+		str.append(" id: ").append(this.id);
+		str.append(" | name: ").append(this.name);
+		str.append(" | abbreviation: ").append(this.abbreviation);
+		str.append(" | country: ").append(this.getCountry().getName());
+		return str.toString();
 	}
 }

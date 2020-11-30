@@ -18,7 +18,6 @@ import com.williamdsw.semsys.domain.enums.MeetingStatus;
 
 @Entity
 public class MeetingSchedule implements Serializable {
-	// FIELDS
 
 	private static final long serialVersionUID = 1L;
 
@@ -28,11 +27,11 @@ public class MeetingSchedule implements Serializable {
 
 	private LocalDateTime datetime;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "employee_id")
 	private Employee employee;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "student_id")
 	private Student student;
 
@@ -41,8 +40,6 @@ public class MeetingSchedule implements Serializable {
 
 	@OneToOne(mappedBy = "schedule", cascade = CascadeType.ALL)
 	private Report report;
-
-	// CONSTRUCTORS
 
 	public MeetingSchedule() {
 	}
@@ -55,8 +52,6 @@ public class MeetingSchedule implements Serializable {
 		this.student = student;
 		this.status = (meetingStatus != null ? meetingStatus.getCode() : null);
 	}
-
-	// GETTERS / SETTERS
 
 	public Integer getId() {
 		return id;
@@ -105,8 +100,6 @@ public class MeetingSchedule implements Serializable {
 	public void setReport(Report report) {
 		this.report = report;
 	}
-
-	// OVERRIDED FUNCTIONS
 
 	@Override
 	public int hashCode() {

@@ -1,0 +1,74 @@
+[
+    {
+        "id": 1,
+        "publicPlace": "3947 Roosevelt Road",
+        "number": "165",
+        "complement": null,
+        "zipCode": "67202",
+        "employeeId": 1,
+        "cityId": 1
+    },
+    {
+        "id": 2,
+        "publicPlace": "2035 Fidler Drive",
+        "number": "178",
+        "complement": null,
+        "zipCode": "66101",
+        "employeeId": 2,
+        "cityId": 2
+    },
+    {
+        "id": 3,
+        "publicPlace": "4060  Hickman Street",
+        "number": "2265",
+        "complement": null,
+        "zipCode": "66601",
+        "employeeId": 3,
+        "cityId": 3
+    },
+    {
+        "id": 4,
+        "publicPlace": "4007  Sherman Street",
+        "number": "10",
+        "complement": null,
+        "zipCode": "66044",
+        "employeeId": 4,
+        "cityId": 4
+    },
+    {
+        "id": 5,
+        "publicPlace": "4007  Sherman Street",
+        "number": "10",
+        "complement": null,
+        "zipCode": "66044",
+        "employeeId": 5,
+        "cityId": 4
+    },
+    {
+        "id": 6,
+        "publicPlace": "621 Lilac Circle",
+        "number": "45",
+        "complement": null,
+        "zipCode": "90003",
+        "studentId": 1,
+        "cityId": 6
+    },
+    {
+        "id": 7,
+        "publicPlace": "643 Hickory Ridge Drive",
+        "number": "352",
+        "complement": null,
+        "zipCode": "89101",
+        "studentId": 2,
+        "cityId": 7
+    },
+    {
+        "id": 8,
+        "publicPlace": "4542 Elm Drive",
+        "number": "76",
+        "complement": null,
+        "zipCode": "10019",
+        "studentId": 3,
+        "cityId": 9
+    }
+]

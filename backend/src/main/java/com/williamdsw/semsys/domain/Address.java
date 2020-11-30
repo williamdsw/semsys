@@ -12,13 +12,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Address implements Serializable {
-	// FIELDS
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+
 	private String street;
 	private String number;
 	private String complement;
@@ -32,8 +32,6 @@ public class Address implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "city_id")
 	private City city;
-
-	// CONSTRUCTORS
 
 	public Address() {
 	}
@@ -49,8 +47,6 @@ public class Address implements Serializable {
 		this.person = person;
 		this.city = city;
 	}
-
-	// GETTERS / SETTERS
 
 	public Integer getId() {
 		return id;
@@ -108,8 +104,6 @@ public class Address implements Serializable {
 		this.city = city;
 	}
 
-	// OVERRIDED FUNCTIONS
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -133,5 +127,18 @@ public class Address implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder str = new StringBuilder();
+		str.append(" id: ").append(this.getId());
+		str.append(" | street: ").append(this.getStreet());
+		str.append(" | number: ").append(this.getNumber());
+		str.append(" | complement: ").append(this.getComplement());
+		str.append(" | zip code: ").append(this.getZipCode());
+		str.append(" | person: ").append(this.getPerson().getName());
+		str.append(" | city: ").append(this.getCity());
+		return str.toString();
 	}
 }

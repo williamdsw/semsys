@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "name": "Gary Lee Weinrib",
+        "email": "geddy@email.com",
+        "socialSecurityNumber": "500-28-0871",
+        "birthdate": "1998-07-29",
+        "password": "666",
+        "schoolClassId": 1,
+        "phoneNumbers": [ "213-200-1392" ]
+    },
+    {
+        "id": 2,
+        "name": "Alexandar Živojinović",
+        "email": "alex@email.com",
+        "socialSecurityNumber": "097-10-6026",
+        "birthdate": "2000-07-29",
+        "password": "777",
+        "schoolClassId": 2,
+        "phoneNumbers": [ "702-201-6185" ]
+    },
+    {
+        "id": 3,
+        "name": "Neil Ellwood Peart",
+        "email": "neil@email.com",
+        "socialSecurityNumber": "513-70-7489",
+        "birthdate": "2002-07-29",
+        "password": "888",
+        "schoolClassId": 3,
+        "phoneNumbers": [ "646-388-5724" ]
+    }
+]

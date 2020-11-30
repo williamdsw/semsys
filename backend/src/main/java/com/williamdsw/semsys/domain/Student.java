@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -16,7 +17,6 @@ import com.williamdsw.semsys.domain.enums.Profile;
 @Entity
 @JsonTypeName(value = "student")
 public class Student extends Person {
-	// FIELDS
 
 	private static final long serialVersionUID = 1L;
 	private Date birthdate;
@@ -27,10 +27,8 @@ public class Student extends Person {
 	private SchoolClass schoolClass;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "student")
+	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
 	private List<MeetingSchedule> schedules = new ArrayList<>();
-
-	// CONSTRUCTORS
 
 	public Student() {
 		this.addProfile(Profile.STUDENT);
@@ -43,8 +41,6 @@ public class Student extends Person {
 		this.schoolClass = schoolClass;
 		this.addProfile(Profile.STUDENT);
 	}
-
-	// GETTERS / SETTERS
 
 	public Date getBirthdate() {
 		return birthdate;

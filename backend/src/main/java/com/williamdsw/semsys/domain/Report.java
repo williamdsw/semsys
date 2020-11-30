@@ -14,7 +14,6 @@ import javax.validation.constraints.Size;
 
 @Entity
 public class Report implements Serializable {
-	// FIELDS
 
 	private static final long serialVersionUID = 1L;
 
@@ -34,8 +33,6 @@ public class Report implements Serializable {
 	@JoinColumn(name = "schedule_id")
 	private MeetingSchedule schedule;
 
-	// CONSTRUCTORS
-
 	public Report() {
 	}
 
@@ -47,8 +44,6 @@ public class Report implements Serializable {
 		this.emission = emission;
 		this.schedule = schedule;
 	}
-
-	// GETTERS / SETTERS
 
 	public Integer getId() {
 		return id;
@@ -89,8 +84,6 @@ public class Report implements Serializable {
 	public void setSchedule(MeetingSchedule schedule) {
 		this.schedule = schedule;
 	}
-
-	// OVERRIDED FUNCTIONS
 
 	@Override
 	public int hashCode() {

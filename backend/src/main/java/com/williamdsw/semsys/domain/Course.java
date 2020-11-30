@@ -117,4 +117,14 @@ public class Course implements Serializable {
 			return false;
 		return true;
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder str = new StringBuilder();
+		str.append(" id: ").append(this.id);
+		str.append(" | name: ").append(this.name);
+		str.append(" | period: ").append(this.getPeriod());
+		str.append(" | type: ").append(this.getType());
+		return str.toString();
+	}
 }

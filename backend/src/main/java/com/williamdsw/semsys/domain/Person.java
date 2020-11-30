@@ -23,7 +23,6 @@ import com.williamdsw.semsys.domain.enums.Profile;
 @Inheritance(strategy = InheritanceType.JOINED)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
 public abstract class Person implements Serializable {
-	// FIELDS
 
 	private static final long serialVersionUID = 1L;
 
@@ -50,12 +49,9 @@ public abstract class Person implements Serializable {
 	@CollectionTable(name = "profile")
 	private Set<Integer> profiles = new HashSet<>();
 
-	// CONSTRUCTORS
-
-	public Person() {
-	}
-
-	public Person(Integer id, String name, String email, String socialSecurityNumber, String password, Address address) {
+	public Person() {}
+	public Person(Integer id, String name, String email, String socialSecurityNumber, String password,
+			Address address) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -64,8 +60,6 @@ public abstract class Person implements Serializable {
 		this.password = password;
 		this.address = address;
 	}
-
-	// GETTERS / SETTERS
 
 	public Integer getId() {
 		return id;
@@ -127,8 +121,6 @@ public abstract class Person implements Serializable {
 		return profiles.stream().map(code -> Profile.toEnum(code)).collect(Collectors.toSet());
 	}
 
-	// OVERRIDED FUNCTIONS
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -153,8 +145,6 @@ public abstract class Person implements Serializable {
 			return false;
 		return true;
 	}
-
-	// HELPER FUNCTIONS
 
 	public void addProfile(Profile profile) {
 		profiles.add((profile != null ? profile.getCode() : Profile.STUDENT.getCode()));

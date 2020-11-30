@@ -13,9 +13,7 @@ public class CountryDTO implements Serializable {
 
 	// CONSTRUCTORS
 
-	public CountryDTO() {
-	}
-
+	public CountryDTO() {}
 	public CountryDTO(Country country) {
 		super();
 		this.id = country.getId();
@@ -47,5 +45,9 @@ public class CountryDTO implements Serializable {
 
 	public void setAbbreviation(String abbreviation) {
 		this.abbreviation = abbreviation;
+	}
+	
+	public Country toCountry() {
+		return new Country(this.id, this.name, this.abbreviation);
 	}
 }

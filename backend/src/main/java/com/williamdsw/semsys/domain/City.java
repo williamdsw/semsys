@@ -89,4 +89,13 @@ public class City implements Serializable {
 			return false;
 		return true;
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder str = new StringBuilder();
+		str.append(" id: ").append(this.id);
+		str.append(" | name: ").append(this.name);
+		str.append(" | state: ").append(this.getState().getName());
+		return str.toString();
+	}
 }

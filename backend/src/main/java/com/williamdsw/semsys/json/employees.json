@@ -1,0 +1,42 @@
+[
+    {
+        "id": 1,
+        "name": "Anthony Frank Iommi",
+        "email": "iommi@email.com",
+        "socialSecurityNumber": "039-58-6788",
+        "password": "111",
+        "phoneNumbers": [ "316-201-2184", "316-202-1340" ]
+    },
+    {
+        "id": 2,
+        "name": "Terence Michael Joseph Butler",
+        "email": "butler@email.com",
+        "socialSecurityNumber": "554-90-1122",
+        "password": "222",
+        "phoneNumbers": [ "913-214-6938" ]
+    },
+    {
+        "id": 3,
+        "name": "John Michael Osbourne",
+        "email": "osbourne@email.com",
+        "socialSecurityNumber": "464-38-6460",
+        "password": "333",
+        "phoneNumbers": [ "785-207-0079" ]
+    },
+    {
+        "id": 4,
+        "name": "William Thomas Ward",
+        "email": "ward@email.com",
+        "socialSecurityNumber": "426-24-7372",
+        "password": "444",
+        "phoneNumbers": [ "785-218-2226" ]
+    },
+    {
+        "id": 5,
+        "name": "Ronnie James Dio",
+        "email": "dio@email.com",
+        "socialSecurityNumber": "517-02-6017",
+        "password": "555",
+        "phoneNumbers": [ "785-218-2226" ]
+    }    
+]
