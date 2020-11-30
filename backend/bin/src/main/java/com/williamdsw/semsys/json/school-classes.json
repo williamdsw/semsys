@@ -1,0 +1,58 @@
+[
+    {
+        "id": 1,
+        "name": "CS - Class01",
+        "courseId": 1,
+        "start": "01/02/2018",
+        "end": "01/02/2021"
+    },
+    {
+        "id": 2,
+        "name": "CS - Class02",
+        "courseId": 1,
+        "start": "05/10/2019",
+        "end": "05/10/2022"
+    },
+    {
+        "id": 3,
+        "name": "IS - Class01",
+        "courseId": 2,
+        "start": "10/08/2015",
+        "end": "10/08/2018"
+    },
+    {
+        "id": 4,
+        "name": "IS - Class02",
+        "courseId": 2,
+        "start": "03/04/2016",
+        "end": "03/04/2019"
+    },
+    {
+        "id": 5,
+        "name": "IS - Class03",
+        "courseId": 2,
+        "start": "05/05/2019",
+        "end": "05/05/2022"
+    },
+    {
+        "id": 6,
+        "name": "Iot - Class01",
+        "courseId": 3,
+        "start": "01/03/2019",
+        "end": "01/03/2020"
+    },
+    {
+        "id": 7,
+        "name": "BDBI - Class01",
+        "courseId": 4,
+        "start": "01/02/2020",
+        "end": "01/08/2020"
+    },
+    {
+        "id": 8,
+        "name": "ITM - Class01",
+        "courseId": 5,
+        "start": "05/06/2020",
+        "end": "05/06/2022"
+    }
+]

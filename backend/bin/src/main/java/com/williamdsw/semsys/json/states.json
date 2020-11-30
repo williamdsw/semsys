@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "name": "California",
+        "abbreviation": "CA",
+        "countryId": 1
+    },
+    {
+        "id": 2,
+        "name": "Kansas",
+        "abbreviation": "KS",
+        "countryId": 1
+    },
+    {
+        "id": 3,
+        "name": "Nevada",
+        "abbreviation": "NV",
+        "countryId": 1
+    },
+    {
+        "id": 4,
+        "name": "New York",
+        "abbreviation": "NY",
+        "countryId": 1
+    }
+]

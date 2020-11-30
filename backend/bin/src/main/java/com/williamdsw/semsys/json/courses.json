@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "name": "Computer Science",
+        "period": "Morning",
+        "type": "Bachelor Degree"
+    },
+    {
+        "id": 2,
+        "name": "Information Systems",
+        "period": "Afternoon",
+        "type": "Bachelor Degree"
+    },
+    {
+        "id": 3,
+        "name": "Internet of Things: Business Implications and Opportunities",
+        "period": "Evening",
+        "type": "Technical Course"
+    },
+    {
+        "id": 4,
+        "name": "Specialization in Big Data and Business Intelligence",
+        "period": "Morning",
+        "type": "Technical Course"
+    },
+    {
+        "id": 5,
+        "name": "Information Technology Management",
+        "period": "Evening",
+        "type": "Technical Course"
+    }
+]
