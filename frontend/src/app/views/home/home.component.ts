@@ -1,6 +1,5 @@
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -17,36 +16,27 @@ import { BaseTranslateComponent } from 'src/app/shared/base-translate/base-trans
 })
 export class HomeComponent extends BaseTranslateComponent implements OnInit, OnDestroy {
 
-  // FIELDS
-
   private subscription$: Subscription;
-
-  // CONSTRUCTOR
 
   constructor(
     protected translateService: TranslateService,
     protected storageService: StorageService,
-    private authenticationService: AuthenticationService,
-    private router: Router) {
+    private authenticationService: AuthenticationService) {
 
     super(translateService, storageService);
     this.subscription$ = new Subscription();
   }
 
-  // LIFECYCLE HOOKS
-
   ngOnInit(): void {
     this.subscription$ = this.authenticationService.refreshToken ().subscribe (
-      response => {
-        const BEARER_TOKEN = response.headers.get ('Authorization');
+      (response) => {
+        const bearerToken = response.headers.get ('Authorization');
         let localUser = new LocalUser ();
         localUser = Object.assign (localUser, this.storageService.getLocalUser ());
-        localUser.setToken (BEARER_TOKEN.substring ('Bearer '.length));
+        localUser.setToken (bearerToken.substring ('Bearer '.length));
         this.storageService.setLocalUser (localUser);
       },
-      error => {
-        console.log (error);
-      }
+      () => alert('Error on refreshing the token!')
     );
   }
 
@@ -54,9 +44,7 @@ export class HomeComponent extends BaseTranslateComponent implements OnInit, OnD
     this.subscription$.unsubscribe ();
   }
 
-  // HELPER FUNCTIONS
-
-  public buildCarouselLinks() {
+  public buildCarouselLinks(): any {
     return [
       {
         src: 'assets/images/icons/persons.png',
