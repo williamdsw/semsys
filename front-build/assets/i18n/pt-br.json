@@ -1,0 +1,221 @@
+{
+    "global": {
+        "social-security-number": "Número da Segurança Social",
+        "password": "Senha",
+        "passwords": "Senha",
+        "confirm-password": "Confirme a Senha",
+        "required-fields": "Campos Obrigatórios",
+        "forgot-password": "Esqueci a minha senha",
+        "personal": {
+            "personal": "Dados Pessoais",
+            "name": "Nome",
+            "email": "Email",
+            "birthdate": "Data de Nascimento",
+            "phone-number": "Telefone",
+            "phone-numbers": "Telefones"
+        },
+        "address": {
+            "address": "Endereço",
+            "country": "País",
+            "state": "Estado",
+            "city": "Cidade",
+            "street": "Rua",
+            "complement": "Complemento",
+            "number": "Número",
+            "zip-code": "CEP"
+        },
+        "buttons": {
+            "sign-up": "Inscrever-se",
+            "login": "Entrar",
+            "cancel": "Cancelar",
+            "close": "Fechar",
+            "submit": "Enviar",
+            "delete": "Excluir",
+            "reload": "Recarregar",
+            "search": "Procurar",
+            "new-employee": "Novo Funcionário",
+            "new-meeting-schedule": "Novo Encontro",
+            "new-report": "Escrever Relatório",
+            "new-course": "Novo Curso",
+            "new-class": "Nova Classe",
+            "no": "Não",
+            "yes": "Sim",
+            "ok": "Ok",
+            "apply": "Aplicar"
+        },
+        "menu-links": {
+            "persons": "Pessoas",
+            "employees": "Funcionários",
+            "students": "Estudantes",
+            "courses": "Cursos",
+            "schedules": "Agendamentos",
+            "my-schedules": "Meus Horários",
+            "my-reports": "Meus Relatórios",
+            "profile": "Perfil",
+            "settings": "Configurações",
+            "about": "Sobre",
+            "logout": "Sair"
+        },
+        "messages": {
+            "loading": "Carregando",
+            "system-error": "Ocorreu um erro no sistema! Por favor, tente mais tarde ou contacte o administrador.",
+            "search-for-name": "Procure pelo nome...",
+            "nothing-found": "Nenhum registro foi encontrado!",
+            "not-found": "Página não encontrada!"
+        },
+        "other": {
+            "you": "Você",
+            "my": "Meus/Minhas",
+            "all": "Todos(as)",
+            "needed": "Necessário",
+            "to": "até",
+            "from": "de",
+            "this": "Esse",
+            "is-required": "é obrigatório",
+            "is-optional": "é opcional",
+            "optional": "Opcional",
+            "but-allows-up-to": "mas permite até",
+            "zip-code-load": "Utilize para encontrar o endereço"
+        },
+        "validations-messages": {
+            "required": "Este campo é obrigatório",
+            "min-length": "Número mínimo é de",
+            "max-length": "Número máximo é de",
+            "email": "Email é inválido!",
+            "equals-to": "não são iguais!",
+            "characters": "caracteres",
+            "must-match-password-field": "Deve ser igual ao campo de senha"
+        }
+    },
+    "modal": {
+        "titles": {
+            "error": "Erro",
+            "attention": "Atenção",
+            "confirmation": "Confirmação",
+            "success": "Sucesso",
+            "check-your-email": "Se esse email existe, será enviada uma nova senha...",
+            "required-title": "Por favor preencha ou revise os campos abaixo!"
+        },
+        "messages": {
+            "confirmation": "Você tem certeza?",
+            "zipcode-not-found": "Número da segurança social não encontrado!",
+            "ssn-not-found": "Seu número da segurança social não foi encontrado",
+            "ssn-found": "Esse número da segurança social já existe! Por favor coloque um diferente ou verifique seu login!",
+            "email-found": "Esse email já existe!",
+            "post-error": "Aconteceu algo de errado! Por favor, tente de novo!",
+            "post-success": "Cadastro completo!",
+            "delete-error": "Houve algum erro ao excluir o registro!",
+            "delete-success": "Registro excluído com sucesso!",
+            "forgot-password-success": "Sua nova senha gerada foi enviada para o seu email!",
+            "enter-valid-email": "Informe um email válido!",
+            "setting-applied": "Configurações aplicadas!",
+            "please-wait": "Por favor, aguarde...",
+            "wrong-data": "Número da segurança social ou senha inválidos! Tente novamente.",
+            "operation-succeed": "Operação bem-sucedida!"
+        }
+    },
+    "sign-up": {
+        "your-course": "Curso",
+        "your-class": "Classe"
+    },
+    "forgot-password": {
+        "back-login": "Voltar ao Login"
+    },
+    "meeting-schedules": {
+        "employee": "Funcionário",
+        "student": "Estudante",
+        "datetime": "Data",
+        "current-status": "Status Atual",
+        "status": {
+            "status": "Status",
+            "scheduled": "Agendado",
+            "finished": "Finalizado",
+            "canceled": "Cancelado"
+        },
+        "buttons": {
+            "cancel-schedule": "Cancelar Encontro"
+        },
+        "messages": {
+            "cancel-confirmation": "Você tem certeza que deseja cancelar o encontro? Isso não poderá ser desfeito.",
+            "cancel-success": "Encontro cancelado!",
+            "cancel-error": "Erro ao cancelar o encontro!",
+            "scheduled-success": "Encontro agendado!",
+            "scheduled-error": "Aconteceu algum erro ao agendar o encontro!"
+        }
+    },
+    "profile": {
+        "other-info": "Outras Informações",
+        "buttons": {
+            "select-file": "Escolha um arquivo",
+            "change-image": "Atualizar",
+            "upload-image": "Subir Imagem"
+        }
+    },
+    "report": {
+        "issuer": "Emitente",
+        "about": "Sobre",
+        "title": "Título",
+        "content": "Conteúdo",
+        "emission": "Data de Emissão",
+        "written-by": "Escrito por",
+        "information": "Informação",
+        "details": "Detalhes",
+        "employee-reports-not-found": "Nenhum relatório encontrado! Por favor, emita um novo após finalizar um encontro.",
+        "student-reports-not-found": "Não existem nenhum relatório sobre você.",
+        "report-details": "Detalhes do Relatório",
+        "issued-in": "Emitido em",
+        "messages": {
+            "report-success": "Novo relatório emitido!",
+            "report-error": "Aconteceu um erro ao emitir o relatório!"
+        }
+    },
+    "course": {
+        "course": "Curso",
+        "filter": "Filtro",
+        "period": {
+            "period": "Período",
+            "choose-period": "Escolha um Período",
+            "morning": "Manhã",
+            "afternoon": "Tarde",
+            "evening": "Noite"
+        },
+        "type": {
+            "type": "Tipo",
+            "choose-type": "Escolha um Tipo",
+            "technical-course": "Curso Técnico",
+            "licentiate": "Licenciatura",
+            "bachelor-degree": "Bacharelado"
+        },
+        "classes": {
+            "classes": "Classes",
+            "list": "Lista",
+            "new": "Nova"
+        },
+        "messages": {
+            "course-success": "Curso criado!",
+            "course-error": "Ocorreu algum erro na criação do Curso!",
+            "confirmation": "Tem certeza que deseja excluir o Curso e suas respectivas Classes?"
+        }
+    },
+    "classes": {
+        "start": "Ínicio",
+        "end": "Término",
+        "messages": {
+            "class-success": "Nova Classe criada!",
+            "class-error": "Ocorreu algum erro na criação da Classe!",
+            "start-greater-than-end": "Data inicial não pode ser maior que a data final!"
+        }
+    },
+    "settings": {
+        "language": "Idioma",
+        "choose-language": "Escolha um idioma!",
+        "choose-different-language": "Escolha um idioma diferente do atual!"
+    },
+    "about": {
+        "developed-by": "Desenvolvido por",
+        "contact": "Contato",
+        "credits": "Créditos",
+        "icons-made-by": "Ícones feito por",
+        "from": "direto do site"
+    }
+}
