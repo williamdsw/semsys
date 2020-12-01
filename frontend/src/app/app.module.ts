@@ -53,5 +53,5 @@ import { AboutModule } from './views/about/about.module';
 export class AppModule { }
 
 export function httpTranslateLoader(httpClient: HttpClient) {
-  return new TranslateHttpLoader (httpClient, '../../assets/i18n/', '.json');
+  return new TranslateHttpLoader (httpClient, 'assets/i18n/', '.json');
 }
